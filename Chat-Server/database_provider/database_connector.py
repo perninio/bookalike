@@ -17,16 +17,16 @@ class MongoDBConnector():
         to its array 'messages'
         """
         self.collection.find_one_and_update(
-                {'conversation_id': data['conversation_id']},
-                {
-                    '$push': {
-                        self.array: {
-                            'author': data['author'],
-                            'text': data['text'],
-                            'date': data['date']
-                        }
+            {'conversation_id': data['conversation_id']},
+            {
+                '$push': {
+                    self.array: {
+                        'author': data['author'],
+                        'text': data['text'],
+                        'date': data['date']
                     }
                 }
+            }
         )
 
     def create_conversation(self, data):
