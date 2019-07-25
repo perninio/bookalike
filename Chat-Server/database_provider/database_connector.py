@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import os
 
 
 class MongoDBConnector():
@@ -6,7 +7,7 @@ class MongoDBConnector():
         """ Generic MongoDB class
         self.collection -> collection from which we fetch data and upload to it
         """
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(os.environ["DB_IP_ADDR"], 27017)
         db = client['Messenger']
         self.collection = db[collection_name]
         self.array = 'messages'
@@ -29,19 +30,32 @@ class MongoDBConnector():
             }
         )
 
-    def create_conversation(self, data):
+    def create_conversation(self, conversation_id):
         """ Create conversation for users """
         conversation = {
-            'conversation_id': data['conversation_id'],
-            'messages': []
+            'conversation_id': conversation_id,
+            'messages': [],
+            'users': [],
+            'active_users': []
         }
 
         return self.collection.insert_one(conversation)
 
-    def fetch_conversation(self, data):
+    def return_active_users(self, conversation_id):
+        """ Returning all active users from conversation"""
+
+        return self.collection.find_one(
+            {"conversation_id": conversation_id}
+        )['active_users']
+
+    def fetch_conversation(self, conversation_id):
         """ Fetching all messages from conversation """
         conversation = self.collection.find_one(
-            {"conversation_id": data['conversation_id']}
+            {"conversation_id": conversation_id}
         )
-
         return conversation
+
+    def delete_conversation(self, conversation_id):
+        self.collection.delete_one(
+            {'conversation_id': conversation_id}
+        )

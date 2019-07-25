@@ -1,5 +1,8 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
+from database_provider.database_connector import MongoDBConnector
+
+mongoDBConnector = MongoDBConnector('conversations')
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -11,9 +14,9 @@ def test_connect():
 
 
 @socketio.on('message')
-def resend_message(message):
-    emit('update chat', message['data'], broadcast=True)
+def resend_message(data):
+    emit('update chat', data['message'], broadcast=True)
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='0.0.0.0')
