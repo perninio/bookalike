@@ -5,7 +5,8 @@ from flask_cors import CORS
 from database_provider.database_connector import MongoDBConnector
 from urllib.parse import unquote
 import requests
-
+import os
+import time
 mongoDBConnector = MongoDBConnector(['conversations', 'user'])
 
 
@@ -14,7 +15,17 @@ CORS(app)
 socketio = SocketIO(app)
 
 public_key = ""
-AUTHORIZATION_SERVER = "localhost:5000/"
+
+
+def get_public_key():
+    try:
+        print("http://"+os.environ["AUTH_IP_ADDR"] + ':5000/publickey')
+        public_key = requests.get(
+            "http://"+os.environ["AUTH_IP_ADDR"]+':5000/publickey',
+            headers={'Content-Type': 'application/json'}).json()['public_key']
+    except Exception:
+        time.sleep(5)
+        return get_public_key()
 
 
 def decode_message(token):
@@ -83,11 +94,5 @@ def send_message(data):
 
 
 if __name__ == '__main__':
-    try:
-        public_key = requests.get(
-            AUTHORIZATION_SERVER+'publickey',
-            headers={'Content-Type': 'application/json'}).json()['public_key']
-    except requests.exceptions.InvalidSchema:
-        print("XD")
-
-    socketio.run(app, host='0.0.0.0')
+    get_public_key()
+    socketio.run(app, host='172.18.0.2')

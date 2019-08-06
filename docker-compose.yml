@@ -1,0 +1,35 @@
+version: "2"
+
+services:
+  chat-server:
+    build: ./Chat-Server
+    command: python -u app.py
+    ports:
+      - "5069:5000"
+    environment:
+      - DB_IP_ADDR=172.18.0.3
+      - AUTH_IP_ADDR=172.18.0.4
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.2
+  db-chat:
+    image: mongo:3-xenial
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.3
+
+  authorization-server:
+    build: ./Authorization-Server
+    command: python -u authorization_server.py
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.4
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/28
+          gateway: 172.18.0.1
