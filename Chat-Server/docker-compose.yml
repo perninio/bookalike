@@ -4,7 +4,7 @@ services:
     build: .
     command: python -u app.py
     ports:
-      - "5000:5000"
+      - "5069:5000"
     volumes: [.:/app]
     environment:
       - DB_IP_ADDR=172.18.0.2

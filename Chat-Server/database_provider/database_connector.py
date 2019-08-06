@@ -1,61 +1,51 @@
 from pymongo import MongoClient
+from .conversation import Conversation
+from .user import User
 import os
 
 
 class MongoDBConnector():
-    def __init__(self, collection_name):
+    def __init__(self, collection_names):
         """ Generic MongoDB class
-        self.collection -> collection from which we fetch data and upload to it
+        self.collections -> dictionary of collections from which we fetch data
+        and upload to it
+
+        We inherit certain classes and pass the database to object
         """
+        self.collections = {}
+
         client = MongoClient(os.environ["DB_IP_ADDR"], 27017)
         db = client['Messenger']
-        self.collection = db[collection_name]
-        self.array = 'messages'
+        for collection_name in collection_names:
+            self.collections[collection_name] = db[collection_name]
 
-    def add_message_to_conversation(self, data):
-        """Add message to existing conversation
-        We find the conversation, and push a new message
-        to its array 'messages'
-        """
-        self.collection.find_one_and_update(
-            {'conversation_id': data['conversation_id']},
-            {
-                '$push': {
-                    self.array: {
-                        'author': data['author'],
-                        'text': data['text'],
-                        'date': data['date']
-                    }
-                }
-            }
-        )
+        self.conversation = Conversation(self.collections['conversations'])
+        self.user = User(self.collections['user'])
 
-    def create_conversation(self, conversation_id):
-        """ Create conversation for users """
-        conversation = {
-            'conversation_id': conversation_id,
-            'messages': [],
-            'users': [],
-            'active_users': []
-        }
+    # Handling conversation object
 
-        return self.collection.insert_one(conversation)
-
-    def return_active_users(self, conversation_id):
-        """ Returning all active users from conversation"""
-
-        return self.collection.find_one(
-            {"conversation_id": conversation_id}
-        )['active_users']
-
-    def fetch_conversation(self, conversation_id):
-        """ Fetching all messages from conversation """
-        conversation = self.collection.find_one(
-            {"conversation_id": conversation_id}
-        )
-        return conversation
+    def create_conversation(self, data):
+        pass
 
     def delete_conversation(self, conversation_id):
-        self.collection.delete_one(
-            {'conversation_id': conversation_id}
-        )
+        self.conversation.delete_conversation(conversation_id)
+
+    def fetch_messages(self, conversation_id, user_id):
+        conversation = self.conversation.fetch_conversation(conversation_id)
+        print(conversation)
+
+        if user_id in conversation['users']:
+            return conversation['messages']
+        else:
+            raise Exception("Forbidden")
+
+    def add_message_to_conversation(self, message):
+        self.conversation.add_message_to_conversation(message)
+
+    def return_active_user(self, conversation_id):
+        self.conversation.return_active_users(conversation_id)
+
+    # Handling user object
+
+    def fetch_user_conversation_ids(self, user_id):
+        return self.user.fetch_conversation_ids_for_user(user_id)
