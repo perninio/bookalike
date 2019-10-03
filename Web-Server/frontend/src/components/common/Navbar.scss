@@ -1,0 +1,10 @@
+$navbar-main: #574337;
+$navbar-option: #fff;
+
+.ba-navbar {
+  background-color: $navbar-main !important;
+
+  a {
+    color: $navbar-option !important;
+  }
+}
