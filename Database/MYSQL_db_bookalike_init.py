@@ -6,7 +6,7 @@ from mysql.connector import errorcode
 DB_NAME = 'bookalike'
 #Parametry konfiguracyjne do połączenia z bazą
 connString = {
-      'user': 'user',
+      'user': 'root',
       'password': 'admin1',
       'host': '127.0.0.1',
       'raise_on_warnings': True
@@ -56,7 +56,7 @@ tables['users'] = (
     ") ENGINE=InnoDB")
 
 
-def Connect_database(config):    
+def connect_database(config):    
     try:
       cnx = mysql.connector.connect(**config)
     except mysql.connector.Error as err:
@@ -67,9 +67,7 @@ def Connect_database(config):
       else:
         print(err)
     else:
-      print("Failed to connect database")
-      cnx.close()
-      exit(1)
+      print("connected")      
     return cnx
     
 def create_database(cursor):
@@ -97,7 +95,7 @@ def create_tables(cursor):
 
 ###############
 def main():
-    cnx=Connect_database(connString)
+    cnx=connect_database(connString)
     cursor=cnx.cursor()
     try:
         cursor.execute("USE {}".format(DB_NAME))
@@ -112,7 +110,8 @@ def main():
         else:
             print(err)
             exit(1) 
-            
+    else:
+        print("database exists")
     cursor.close()
     cnx.close()
     
