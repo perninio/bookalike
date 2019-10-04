@@ -38,7 +38,7 @@ tables['rates'] = (
     "CREATE TABLE `likes` ("
     "   'rateid' int NOT NULL AUTO_INCREMENT,"
     "  `bookid` int NOT NULL,"
-    "  `userid` int NOT NULL,"
+    "  `userid` varchar(40) NOT NULL,"
     "  `rate` int  NOT NULL,"
     "   CHECK (rate<5 AND rate>=0),"
     "  PRIMARY KEY `rateid`,"
@@ -47,7 +47,13 @@ tables['rates'] = (
     "  FOREIGN KEY (`userid`) "
     "     REFERENCES `user` (`userid`),"
     ") ENGINE=InnoDB")
-
+    
+tables['users'] = (
+    "CREATE TABLE `users` ("
+    "  'userid' varchar(40) NOT NULL,"
+    "  `username` int NOT NULL,"
+    "  PRIMARY KEY `userid`,"
+    ") ENGINE=InnoDB")
 
 
 def Connect_database(config):    
@@ -61,7 +67,9 @@ def Connect_database(config):
       else:
         print(err)
     else:
+      print("Failed to connect database")
       cnx.close()
+      exit(1)
     return cnx
     
 def create_database(cursor):
@@ -108,6 +116,6 @@ def main():
     cursor.close()
     cnx.close()
     
-if__name__== "__main__":
+if __name__== "__main__" :
     main()
  
