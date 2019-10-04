@@ -19,43 +19,41 @@ tables['books'] = (
     "  `book_name` varchar(100) NOT NULL,"
     "  `date` date,"
     "  `publishing_hause_name` varchar(10),"
-    "  `tag` enum('kryminał','przygodowa','sci-fi','fantasy','popularno-naukowa','belatrystyczna'),"
-    "  'book_foto' varchar(100),"
+    "  `tag` enum(`kryminał`,`przygodowa`,`sci-fi`,`fantasy`,`popularno-naukowa`,`belatrystyczna`),"
+    "  `book_foto` varchar(100),"
     "   PRIMARY KEY (`bookid`)",
     "   FOREIGN KEY (`authorid`) "
-    "       REFERENCES `authors` (`authorid`)"
-    ") ENGINE=InnoDB")
+    "       REFERENCES `authors` (`authorid`))")
 
 tables['authors'] = (
     "CREATE TABLE `authors` ("
     "  `authorid` int NOT NULL AUTO_INCREMENT,"
     "  `name` varchar(40) NOT NULL,"
-    "  'firstname' varchar(40) NOT NULL,"
-    "   PRIMARY KEY (`authorid`)",
-    ") ENGINE=InnoDB")
+    "  `firstname` varchar(40) NOT NULL,"
+    "   PRIMARY KEY (`authorid`))")
+
+tables['users'] = (
+    "CREATE TABLE `users` ("
+    "  `userid` varchar(40) NOT NULL,"
+    "  `username` int NOT NULL,"
+    "  PRIMARY KEY (`userid`))")
 
 tables['rates'] = (
     "CREATE TABLE `likes` ("
-    "   'rateid' int NOT NULL AUTO_INCREMENT,"
+    "  `rateid` int NOT NULL AUTO_INCREMENT,"
     "  `bookid` int NOT NULL,"
     "  `userid` varchar(40) NOT NULL,"
     "  `rate` int  NOT NULL,"
-    "   CHECK (rate<5 AND rate>=0),"
-    "  PRIMARY KEY `rateid`,"
+    "   CHECK (`rate`<5 AND `rate`>=0),"
+    "  PRIMARY KEY (`rateid`),"
     "  FOREIGN KEY (`bookid`) "
     "     REFERENCES `books` (`bookid`),"
     "  FOREIGN KEY (`userid`) "
-    "     REFERENCES `user` (`userid`),"
-    ") ENGINE=InnoDB")
+    "     REFERENCES `users` (`userid`))")
     
-tables['users'] = (
-    "CREATE TABLE `users` ("
-    "  'userid' varchar(40) NOT NULL,"
-    "  `username` int NOT NULL,"
-    "  PRIMARY KEY `userid`,"
-    ") ENGINE=InnoDB")
-
-
+#
+#Funkcje
+#
 def connect_database(config):    
     try:
       cnx = mysql.connector.connect(**config)
@@ -73,11 +71,11 @@ def connect_database(config):
 def create_database(cursor):
     try:
         cursor.execute(
-            "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
+            "CREATE DATABASE {} ".format(DB_NAME))
     except mysql.connector.Error as err:
         print("Failed creating database: {}".format(err))
         exit(1)
-    print("Database created")
+
     
 def create_tables(cursor):
     for table_name in tables:
@@ -104,14 +102,14 @@ def main():
         if err.errno == errorcode.ER_BAD_DB_ERROR:
             create_database(cursor)
             print("Database {} created successfully.".format(DB_NAME))
-            cnx.database = DB_NAME
-            cursor=cnx.cursor()
-            create_tables(cursor)
+            cursor.execute("USE {}".format(DB_NAME))
+            create_tables(cursor)            
         else:
             print(err)
             exit(1) 
     else:
-        print("database exists")
+        print("database {} already exists".format(DB_NAME))
+
     cursor.close()
     cnx.close()
     
