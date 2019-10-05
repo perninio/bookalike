@@ -1,0 +1,44 @@
+@import "../../common/Common.scss";
+
+.navbar {
+  padding: 0.2rem 1rem;
+}
+
+.ba-navbar {
+  background-color: $navbar-primary !important;
+
+  &__logo {
+    color: $navbar-font-color !important;
+  }
+
+  &__options {
+    color: $navbar-font-color !important;
+  }
+  &__options:hover {
+    background: $navbar-secondary !important;
+  }
+
+  &__options:hover {
+    color: $navbar-font-color !important;
+  }
+
+  &__menu {
+    background-color: $navbar-secondary;
+  }
+
+  &__menu--options {
+    color: $navbar-font-color !important;
+  }
+
+  &__menu--options:hover {
+    background-color: $navbar-tetriary !important;
+  }
+}
+
+// Footer.js
+
+.footer {
+  color: $navbar-font-color !important;
+  background-color: $navbar-secondary !important;
+  text-align: center;
+}

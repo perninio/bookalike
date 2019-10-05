@@ -1,0 +1,74 @@
+@import "../../common/Common.scss";
+
+body {
+  background-color: $navbar-secondary;
+}
+
+//common
+
+.jumbotron {
+  background-image: url(https://images.unsplash.com/photo-1459623837994-06d03aa27b9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80);
+  background-size: cover;
+  margin-bottom: 0;
+  padding-left: 1rem;
+
+  .display-4 {
+    color: $navbar-font-color;
+  }
+  p {
+    color: $navbar-font-color;
+  }
+  @media (max-width: $phone-width) {
+    height: 100vh;
+  }
+
+  @media (min-width: $phone-width) {
+    height: 90vh;
+  }
+}
+
+// RegisterPage
+.ba-form {
+  width: 50vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  div {
+    label {
+      color: $navbar-font-color !important;
+    }
+    small {
+      color: $navbar-font-color !important;
+    }
+  }
+}
+
+// card
+.card {
+  min-height: 30vh;
+
+  &-body {
+    background-color: $navbar-primary;
+  }
+
+  &-title {
+    color: $navbar-font-color;
+  }
+
+  &-img-top {
+    width: 100%;
+    object-fit: cover;
+
+    @media (max-width: $phone-width) {
+      height: 30vh;
+    }
+
+    @media (min-width: $phone-width) {
+      height: 50vh;
+    }
+
+    @media (min-width: $tablet-width) {
+      height: 30vh;
+    }
+  }
+}
