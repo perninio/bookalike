@@ -5,11 +5,10 @@ export const NavbarOptions = ({ role }) => {
   const NAVBAR_OPTIONS = {
     user: <UserOptions />,
     admin: <AdminOptions />,
-    moderator: <ModeratorOptions />,
-    guest: <GuestOptions />
+    moderator: <ModeratorOptions />
   };
 
-  return <div>{NAVBAR_OPTIONS[role]}</div>;
+  return <React.Fragment>{NAVBAR_OPTIONS[role]}</React.Fragment>;
 };
 
 const UserOptions = () => {
@@ -51,9 +50,5 @@ const AdminOptions = () => {
 };
 
 const ModeratorOptions = () => {
-  return "";
-};
-
-const GuestOptions = () => {
   return "";
 };
