@@ -21,3 +21,53 @@ export const cardsData = [
       "Dzięki naszemu autorskiemu narzędziu, uzyskasz rekomendacje bazujące na ocenach Twoich oraz Twoich przyjaciół. System ten jest w pełni darmowy!"
   }
 ];
+
+export const chartDataUsers = {
+  text: "Ilość nowych użytkowników w danym miesiącu",
+  data: {
+    labels: [
+      "Kwiecień",
+      "Maj",
+      "Czerwiec",
+      "Lipiec",
+      "Sierpień",
+      "Wrzesień",
+      "Październik"
+    ],
+    datasets: [
+      {
+        label: "Nowi użytkownicy",
+        data: [44, 56, 21, 44, 111, 43, 5],
+        backgroundColor: [
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)"
+        ]
+      }
+    ]
+  }
+};
+
+export const chartDataRates = {
+  text: "Oceny zarekomendowanych książek dla użytkowników",
+  data: {
+    labels: ["1", "2", "3", "4", "5"],
+    datasets: [
+      {
+        label: "Oceny",
+        data: [30, 133, 300, 180, 60],
+        backgroundColor: [
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)",
+          "rgb(255,255,255,0.5)"
+        ]
+      }
+    ]
+  }
+};

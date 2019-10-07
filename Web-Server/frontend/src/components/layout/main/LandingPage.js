@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { cardsData } from "./staticData";
+import { cardsData, chartDataUsers, chartDataRates } from "./staticData";
 import "./Styles.scss";
 import { Card } from "./Card";
+import { DataChart } from "./DataChart";
 
 export const LandingPage = () => {
   const cards = cardsData.map((cardData, index) => (
@@ -32,7 +33,18 @@ export const LandingPage = () => {
           </Link>
         </div>
       </div>
-      <div className="card-deck pt-4 ml-0 mr-0">{cards}</div>
+      <div className="row-fluid">
+        <div className="card-deck pt-4 pb-4">{cards}</div>
+      </div>
+      <div className="row ml-3 mr-3">
+        <div className="col-lg-12 col-xl-5 ba-chart mt-3">
+          <DataChart data={chartDataRates} />
+        </div>
+        <div className="col"></div>
+        <div className="col-lg-12 col-xl-5 ba-chart mt-3">
+          <DataChart data={chartDataUsers} />
+        </div>
+      </div>
     </div>
   );
 };
