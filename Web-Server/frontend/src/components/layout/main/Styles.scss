@@ -85,5 +85,6 @@ body {
 // chart
 
 .ba-chart {
-  background-color: rgb(109, 85, 71);
+  background-color: $navbar-primary;
+  border: 1px white solid;
 }

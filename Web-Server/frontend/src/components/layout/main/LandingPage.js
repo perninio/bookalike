@@ -34,7 +34,7 @@ export const LandingPage = () => {
         </div>
       </div>
       <div className="row-fluid">
-        <div className="card-deck pt-4 pb-4">{cards}</div>
+        <div className="card-deck pt-4 pb-4 mr-auto ml-auto">{cards}</div>
       </div>
       <div className="row ml-3 mr-3">
         <div className="col-lg-12 col-xl-5 ba-chart mt-3">

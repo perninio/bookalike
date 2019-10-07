@@ -5,7 +5,6 @@ export const DataChart = props => {
   defaults.global.defaultFontColor = "white";
   const { data, text } = props.data;
 
-  const height = window.innerHeight > 700 ? 1 : 2;
   const width = window.innerWidth > 1500 ? 3 : 2;
 
   return (
@@ -13,7 +12,7 @@ export const DataChart = props => {
       <Bar
         data={data}
         width={width}
-        height={height}
+        height={2}
         options={{
           title: {
             display: true,
