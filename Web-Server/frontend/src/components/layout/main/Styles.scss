@@ -4,6 +4,10 @@ body {
   background-color: $navbar-secondary;
 }
 
+hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 //common
 
 .jumbotron {

@@ -34,14 +34,17 @@ export const LandingPage = () => {
         </div>
       </div>
       <div className="row-fluid">
-        <div className="card-deck pt-4 pb-4 mr-auto ml-auto">{cards}</div>
+        <div className="card-deck mt-3 mr-3 ml-3">{cards}</div>
       </div>
-      <div className="row ml-3 mr-3">
+
+      <hr className="mt-4" />
+
+      <div className="row ml-3 mr-3 justify-content-lg-center">
         <div className="col-lg-12 col-xl-5 ba-chart mt-3">
           <DataChart data={chartDataRates} />
         </div>
-        <div className="col"></div>
-        <div className="col-lg-12 col-xl-5 ba-chart mt-3">
+        <div className="col-1"> </div>
+        <div className="col-lg-12 col-xl-5  ba-chart mt-3">
           <DataChart data={chartDataUsers} />
         </div>
       </div>
