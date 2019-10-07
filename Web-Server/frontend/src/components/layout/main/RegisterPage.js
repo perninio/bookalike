@@ -1,23 +1,24 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import classnames from "classnames";
 
 import "./Styles.scss";
 
 export const RegisterPage = props => {
-  const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  const { errors } = useSelector(state => state.error);
 
   const onSubmit = e => {
     e.preventDefault();
 
     const newUser = {
-      login: login,
       email: email,
       password: password
     };
 
-    console.log(newUser);
     // TODO: dodaj nowy actionCreator registerUser | dodaj przechwytywanie błędów
     // dispatch(registerUser());
   };
@@ -25,23 +26,13 @@ export const RegisterPage = props => {
   return (
     <div className="jumbotron jumbotron-fluid">
       <form className="ba-form">
-        <div className="form-group">
-          <label htmlFor="inputLogin">Login</label>
-          <input
-            className="form-control"
-            id="inputLogin"
-            placeholder="Login"
-            value={login}
-            onChange={e => {
-              setLogin(e.target.value);
-            }}
-          />
-        </div>
-        <div className="form-group">
+        <div novalidate className="form-group">
           <label htmlFor="inputEmail">Adres email</label>
           <input
             type="email"
-            className="form-control"
+            className={classnames("form-control", {
+              "is-invalid": errors.email
+            })}
             id="inputEmail"
             aria-describedby="emailHelp"
             placeholder="Wpisz e-mail"
@@ -50,6 +41,7 @@ export const RegisterPage = props => {
               setEmail(e.target.value);
             }}
           />
+          {errors.email && <div class="invalid-feedback">{errors.email}</div>}
           <small id="emailHelp" className="form-text text-muted">
             Nigdy nie udostępnimy Twojego adresu e-mail nigdzie! Jest z nami
             bezpieczny <i className="far fa-smile-wink"></i>
@@ -59,7 +51,9 @@ export const RegisterPage = props => {
           <label htmlFor="inputPassword">Hasło</label>
           <input
             type="password"
-            className="form-control"
+            className={classnames("form-control", {
+              "is-invalid": errors.password
+            })}
             id="inputPassword"
             placeholder="Hasło"
             value={password}
@@ -67,13 +61,18 @@ export const RegisterPage = props => {
               setPassword(e.target.value);
             }}
           />
+          {errors.password && (
+            <div class="invalid-feedback">{errors.password}</div>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="inputPasswordConfirm">Potwierdź hasło</label>
           <input
             type="password"
-            className="form-control"
+            className={classnames("form-control", {
+              "is-invalid": errors.password2
+            })}
             id="inputPasswordConfirm"
             placeholder="Potwierdź hasło"
             value={passwordConfirmation}
@@ -81,6 +80,9 @@ export const RegisterPage = props => {
               setPasswordConfirmation(e.target.value);
             }}
           />
+          {errors.password2 && (
+            <div class="invalid-feedback">{errors.password2}</div>
+          )}
         </div>
 
         <button
