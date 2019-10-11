@@ -1,4 +1,4 @@
-drop database bookalike;
+#drop database bookalike;
 create database bookalike;
 use bookalike;
 
