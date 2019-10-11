@@ -33,19 +33,36 @@ export const LandingPage = () => {
           </Link>
         </div>
       </div>
+
       <div className="row-fluid">
         <div className="card-deck mt-3 mr-3 ml-3">{cards}</div>
       </div>
 
       <hr className="mt-4" />
 
-      <div className="row ml-3 mr-3 justify-content-lg-center">
-        <div className="col-lg-12 col-xl-5 ba-chart mt-3">
-          <DataChart data={chartDataRates} />
-        </div>
-        <div className="col-1"> </div>
-        <div className="col-lg-12 col-xl-5  ba-chart mt-3">
-          <DataChart data={chartDataUsers} />
+      <div className="ba-community-background pt-5 pb-5">
+        <div className="row ml-3 mr-3 text-white">
+          <div className="col-12 text-center">
+            <h1>Trochę informacji o naszych użytkownikach</h1>
+            <p className="h4">
+              Nasza społeczność jest bardzo aktywna o czym świadczą dane na
+              poniższych wykresach
+              <br />
+              Większość z naszych użytkowników jest bardzo zadowolona z
+              otrzymanych rekomendacji książek.
+            </p>
+          </div>
+          <div className="col-12 pb-5">
+            <div className="row justify-content-lg-center ml-auto mr-auto">
+              <div className="col-lg-12 col-xl-5 ba-chart mt-4">
+                <DataChart data={chartDataRates} />
+              </div>
+              <div className="col-1"> </div>
+              <div className="col-lg-12 col-xl-5  ba-chart mt-4">
+                <DataChart data={chartDataUsers} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
