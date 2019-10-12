@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 
 import "./Styles.scss";
 import { NavbarLinks } from "./NavbarLinks";
-import { NavbarOptions } from "./NavbarOptions";
+import { NavbarSearch } from "./NavbarSearch";
 
 export const Navbar = () => {
   const { isAuthenticated } = useSelector(state => state.auth);
-  const { role } = useSelector(state => state.auth.user);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light ba-navbar sticky-top">
@@ -27,15 +26,15 @@ export const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarToggle">
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+      <div className="collapse navbar-collapse row" id="navbarToggle">
+        <ul className="navbar-nav mr-5 mt-2 mt-lg-0">
           <li className="nav-item">
             <Link className="nav-link ba-navbar__options" to="/">
               Strona Główna <span className="sr-only"></span>
             </Link>
           </li>
-          <NavbarOptions role={role} />
         </ul>
+        <NavbarSearch />
         <NavbarLinks isAuthenticated={isAuthenticated} />
       </div>
     </nav>

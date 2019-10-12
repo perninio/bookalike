@@ -22,7 +22,7 @@ export const LandingPage = () => {
             oddajemy w Waszą dyspozycję system rekomendacyjny, który wspomoże
             Was w wyborze następnej książki.
           </p>
-          <hr className="my-4" />
+          <hr />
           <p>
             Zarejestruj się jeszcze dziś, oceń parę książek - a już jutro,
             będziesz mógł przeglądać propozycje książek dla Ciebie
@@ -34,6 +34,8 @@ export const LandingPage = () => {
         </div>
       </div>
 
+      <hr className="mt-4" />
+
       <div className="row-fluid">
         <div className="card-deck mt-3 mr-3 ml-3">{cards}</div>
       </div>
@@ -43,7 +45,8 @@ export const LandingPage = () => {
       <div className="ba-community-background pt-5 pb-5">
         <div className="row ml-3 mr-3 text-white">
           <div className="col-12 text-center">
-            <h1>Trochę informacji o naszych użytkownikach</h1>
+            <h2>Trochę informacji o naszych użytkownikach</h2>
+            <hr />
             <p className="h4">
               Nasza społeczność jest bardzo aktywna o czym świadczą dane na
               poniższych wykresach

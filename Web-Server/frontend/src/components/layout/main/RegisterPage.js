@@ -26,7 +26,7 @@ export const RegisterPage = props => {
   return (
     <div className="jumbotron jumbotron-fluid">
       <form className="ba-form">
-        <div novalidate className="form-group">
+        <div noValidate className="form-group">
           <label htmlFor="inputEmail">Adres email</label>
           <input
             type="email"

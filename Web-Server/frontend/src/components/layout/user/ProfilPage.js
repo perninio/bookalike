@@ -1,5 +1,5 @@
 import React from "react";
 
-export const Profil = () => {
+export const ProfilPage = () => {
   return <div>Profile</div>;
 };

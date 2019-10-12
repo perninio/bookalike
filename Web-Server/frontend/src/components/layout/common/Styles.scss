@@ -33,6 +33,16 @@
   &__menu--options:hover {
     background-color: $navbar-tetriary !important;
   }
+
+  &__search {
+    float: left;
+
+    &--input {
+      @media (max-width: $phone-width) {
+        width: 81vw;
+      }
+    }
+  }
 }
 
 // Footer.js
