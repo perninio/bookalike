@@ -12,6 +12,7 @@ services:
     networks:
       app_net:
         ipv4_address: 172.18.0.2
+
   db-chat:
     image: mongo:3-xenial
     networks:
@@ -24,6 +25,19 @@ services:
     networks:
       app_net:
         ipv4_address: 172.18.0.4
+
+  db-dataserver:
+    build: ./Database
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./Database/initdb.sql:/data/application/init.sql
+    environment:
+      MYSQL_DATABASE: "bookalike"
+      MYSQL_USER: "root"
+      MYSQL_ROOT_PASSWORD: "admin"
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.5
 
 networks:
   app_net:

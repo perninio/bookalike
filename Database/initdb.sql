@@ -1,8 +1,9 @@
--- drop database bookalike; 
-create database bookalike;
+-- drop database bookalike;
+ 
+create database IF NOT EXISTS bookalike DEFAULT CHARACTER SET UTF8 COLLATE UTF8_unicode_ci;
 use bookalike;
 
-create table user (
+create table IF NOT EXISTS user (
 UserID varchar(255) primary key,
 Name varchar (255) not null,
 Password varchar (255) not null,
@@ -11,16 +12,16 @@ BirthDate date not null,
 Description varchar (8000),
 Graphic varchar(1000) #dostosować rozmiar
 );
-/*
-create table autor (
-AutorID int primary key auto_increment,
-Name varchar(255) not null,
-FirstName varchar (255) not null,
-Birthday date,
-Description varchar (8000)
-);
-*/
-create table books (
+
+-- create table autor (
+-- AutorID int primary key auto_increment,
+-- Name varchar(255) not null,
+-- FirstName varchar (255) not null,
+-- Birthday date,
+-- Description varchar (8000)
+-- );
+
+create table IF NOT EXISTS books (
 BookID int primary key auto_increment,
 Name varchar(255) not null,
 `Publishing-house` varchar (255),
@@ -34,7 +35,7 @@ createdAt DATETIME default CURRENT_TIMESTAMP,
 updatedAt DATETIME default CURRENT_TIMESTAMP
 );
 
-create table rates (
+create table IF NOT EXISTS rates (
 RateID int auto_increment primary key,
 UserID varchar(255) not null,
 BookID int not null,
@@ -46,7 +47,7 @@ createdAt DATETIME default CURRENT_TIMESTAMP,
 updatedAt DATETIME default CURRENT_TIMESTAMP
 );
 
-create table `groups` (
+create table IF NOT EXISTS `groups` (
 GroupID int primary key auto_increment,
 Name varchar (500) not null,
 Graphic varchar(1000), #dostosować rozmiar
@@ -55,7 +56,7 @@ createdAt DATETIME default CURRENT_TIMESTAMP,
 updatedAt DATETIME default CURRENT_TIMESTAMP
 );
 
-create table group_participants(
+create table IF NOT EXISTS group_participants(
 GroupParticipantsID int primary key auto_increment,
 UserID varchar(255) not null,
 foreign key (UserID) references user(UserID),
@@ -65,14 +66,14 @@ createdAt DATETIME default CURRENT_TIMESTAMP,
 updatedAt DATETIME default CURRENT_TIMESTAMP
 );
 
-create table user_user_approvement (
+create table IF NOT EXISTS user_user_approvement (
 ApproveID int primary key,
 FirstUserID int not null,
 SecondUserID int not null,
 Status enum('friends','rejected','follow')
 ); 
 
-create table post (
+create table IF NOT EXISTS post (
 PostID int primary key,
 UserID varchar(255) not null,
 foreign key(UserID) references user(UserID),
@@ -464,14 +465,12 @@ INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graph
 Mistrzowie konstruowania prezentują 36 niesamowitych projektów: od współczesnych metropolii, przez dawne cywilizacje i fantastyczne królestwa, na futurystycznych zonach kończąc. Po raz pierwszy te niesamowite krajobrazy zostały zebrane razem w jednej kolekcji.
 W książce znajdują się instrukcje 'krok po kroku' oraz porady dotyczą różnych poziomów trudności planowania i kreowania budynków, obiektów ulicznych, detali architektonicznych. Towarzyszy im bogaty materiał graficzny.
 To pierwsza książka, która pokazuje nie tylko technikę budowania w Minecraft®, ale również artystyczny kunszt w tworzeniu własnych, niesamowitych światów.","https://skupszop.pl/images/no.jpg");
-INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Pozycjonowanie w wyszukiwarkach internetowych. Wydanie II","None","Shari Thurow"," 2008","Informatyka","Opis książki Pozycjonowanie w wyszukiwarkach internetowych. Wydanie II - Shari Thurow
-Właściwe pozycjonowanie witryn i stron internetowych pod kątem wyszukiwarek jest kluczowe dla popularności naszej witryny wśród użytkowników. a co za tym idzie. ma wpływ na jej rentowność. Każdy użytkownik wpisujący konkretne hasło czy zapytanie do wyszukiwarki jest naszym potencjalnym klientem! Warto także pamiętać o tym. że przemyślana optymalizacja witryny. dokonana jeszcze przed nadaniem jej ostatecznego kształtu. oznacza ogromne oszczędności czasu i pieniędzy. Ponieważ miliony internautów dzięki wyszukiwarkom trafiają na różne witryny. musimy sprawić. aby nasza strona jakoś szczególnie się wyróżniała. Właśnie na tym polega dziś skuteczny marketing firmy.
-'Pozycjonowanie w wyszukiwarkach internetowych' to książka napisana dla wszystkich tych. którzy chcą tworzyć witryny internetowe spełniające zarówno oczekiwania użytkowników. jak i cele biznesowe. To idealny podręcznik dla projektantów witryn internetowych. programistów. webmasterów. ale też specjalistów od marketingu w internecie. Dzięki lekturze tej książki poznasz wiele skutecznych sposobów na osiąganie jak najwyższej pozycji w wyszukiwarkach. Uzyskasz także praktyczne porady i cenne wskazówki ułatwiające projektowanie oraz budowanie witryn. Najważniejsze zagadnienia omówione w książce to:
-typy serwisów wyszukujących oraz sposób wyświetlania wyników wyszukiwania;
-proces skutecznej optymalizacji witryny pod kątem wyszukiwarek;
-optymalizacja dokumentów nietekstowych (grafiki. plików audio oraz wideo);
-zgłaszanie witryn do wyszukiwarek i katalogów.
-Popularna i dochodowa - taka staje się witryna widoczna w internecie!","https://skupszop.pl/images/books/9788324615049.jpg");
+-- INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Pozycjonowanie w wyszukiwarkach internetowych. Wydanie II","None","Shari Thurow"," 2008","Informatyka","Opis książki Pozycjonowanie w wyszukiwarkach internetowych. Wydanie II - Shari Thurow. Właściwe pozycjonowanie witryn i stron internetowych pod kątem wyszukiwarek jest kluczowe dla popularności naszej witryny wśród użytkowników. a co za tym idzie. ma wpływ na jej rentowność. Każdy użytkownik wpisujący konkretne hasło czy zapytanie do wyszukiwarki jest naszym potencjalnym klientem! Warto także pamiętać o tym. że przemyślana optymalizacja witryny. dokonana jeszcze przed nadaniem jej ostatecznego kształtu. oznacza ogromne oszczędności czasu i pieniędzy. Ponieważ miliony internautów dzięki wyszukiwarkom trafiają na różne witryny. musimy sprawić. aby nasza strona jakoś szczególnie się wyróżniała. Właśnie na tym polega dziś skuteczny marketing firmy. 'Pozycjonowanie w wyszukiwarkach internetowych' to książka napisana dla wszystkich tych. którzy chcą tworzyć witryny internetowe spełniające zarówno oczekiwania użytkowników. jak i cele biznesowe. To idealny podręcznik dla projektantów witryn internetowych. programistów. webmasterów. ale też specjalistów od marketingu w internecie. Dzięki lekturze tej książki poznasz wiele skutecznych sposobów na osiąganie jak najwyższej pozycji w wyszukiwarkach. Uzyskasz także praktyczne porady i cenne wskazówki ułatwiające projektowanie oraz budowanie witryn. Najważniejsze zagadnienia omówione w książce to:
+-- typy serwisów wyszukujących oraz sposób wyświetlania wyników wyszukiwania;
+-- proces skutecznej optymalizacji witryny pod kątem wyszukiwarek;
+-- optymalizacja dokumentów nietekstowych (grafiki. plików audio oraz wideo);
+-- zgłaszanie witryn do wyszukiwarek i katalogów.
+-- Popularna i dochodowa - taka staje się witryna widoczna w internecie!","https://skupszop.pl/images/books/9788324615049.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Survival czyli jak zachować maniery w epoce fejsbu","None","Monika Piątkowska"," 2013","Informatyka","Przetrwać w dobie fejsbuka i nie oszaleć! A co jeśli... ...nie chcesz słuchać pytań o to, kiedy wreszcie porzucisz stan panieński, bo latka lecą? ...zamierzasz spędzić święta z dala od pełnej dobrych intencji rodziny, ale nie wiesz, jak im to powiedzieć? ...zechcesz opuścić przyjęcie po angielsku, ale towarzystwo skutecznie to utrudnia? ...potrzebujesz swoich pieniędzy, ale kolega dłużnik już drugi rok obiecuje, że jutro nastąpi „ten” dzień? ...chcesz „upłynnić” nietrafiony prezent? ...masz ambitny plan na wakacje, a znajomi znienacka podrzucą ci kota? Monika Piątkowska i Leszek Talko uważają, że współczesny savoir-vivre ma więcej wspólnego ze sztuką survivalu niż z tradycyjnie pojmowaną kindersztubą. Słowo „etykieta” pochodzi od etykietek, niewielkich karteczek rozdawanych na dworze francuskim, a później Katarzyny Wielkiej. Nie miały one wiele wspólnego z wielkim światem. Przypominały arystokratom o panujących zasadach: nie można spić się do nieprzytomności już na początku uczty – należy poczekać do końca, nie wolno bić żony w towarzystwie... Dziś etykieta to znowu bardziej umiejętność poruszania się w życiu, poradzenia sobie z zawistnym szefem, pasażerem w samolocie, który wbija kolana w nasze oparcie, sąsiadem, który kłuje w oczy zamożnością. Autorzy z dużą dawką wiedzy i humoru, nierzadko kontestując dawne poradniki, dziś już niestety bezużyteczne, pokazują, jak funkcjonować w szalonym świecie, który zaskakuje nas na każdym kroku.","https://skupszop.pl/images/books/9788377053881.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("RODO w mikroprzedsiębiorstwie - jak się przygotować do jego stosowania","None","Sierpień Marcin"," 2018","Informatyka","Dzięki praktycznym poradom zawartym w publikacji 'RODO w mikroprzedsiębiorstwie – jak się przygotować do jego stosowania' dowiesz się m.in., czy musisz wyznaczyć inspektora ochrony danych, jak powinna by skonstruowana umowa powierzenia przetwarzania danych osobowych oraz jakie obowiązki RODO nakłada na Twoją firmę. Zastosuj nasze wskazówki i zyskaj pewność, że wiesz wszystko o RODO.","https://skupszop.pl/images/books/9788326974588.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Looking for a challenge?","None","Diks Krzysztof"," 2018","Informatyka","Contest tasks say a lot about the quality of a programming competition. They should be original, engaging and of different levels of difficulty. Finding a solution should cause the contestant to feel great satisfaction, whereas being unable to solve a given task should encourage an individual to broaden their knowledge and develop new skills. This book contains the best tasks from algorithmic and programming competitions organized or co-organized by the University of Warsaw, together with their exemplary solutions.The selection of the tasks was undertaken by people who have played significant roles in the history of Polish algorithmic and programming competitions as their participants or organizers. All of the authors of texts presented in this book are closely affiliated with the Faculty of Mathematics, Informatics and Mechanics at the University of Warsaw, whether as former or current students or as academic staff.Each of the tasks presented and discussed in this book was used during one of the following events:Polish Olympiad in Informatics,  Junior Polish Olympiad in Informatics,  Polish Olympiad in Informatics Training Camp,  Central European Olympiad in Informatics,  Polish Collegiate Programming Contest,  Algorithmic Engagements.","https://skupszop.pl/images/books/9788301199470.jpg");
@@ -1050,24 +1049,23 @@ INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graph
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Małe Wielkie Podróże. Wakacje w Danii","None","Olga Morawska"," 2012","Nauki ścisłe, medycyna","To seria książek o podróżach i subiektywnych doświadczeniach autorki, prezentująca świeże spojrzenie na odwiedzane przez nią kraje. Olga Morawska pokazuje miejsca ważne w jej życiu. Poza opisami przygód, są tu także informacje o kraju, miastach, historii, sławnych ludziach, smacznych potrawach oraz zabawnych, i nie tylko, nawykach mieszkańców. To opowieść o tym, co przeżyłam i co zobaczyłam w Danii oraz dlaczego warto tam pojechać. Jestem człowiekiem w podróży, który z polskiej perspektywy patrzy na Danię, Duńczyków i ich mały, wielki świat! Oprócz subiektywnego wyboru tego, co w Danii warto zobaczyć, co zjeść, a co z pewnością można sobie podarować, staram się przybliżyć czytelnikowi historię i kulturę tego kraju. Dowiecie się, jaka atmosfera panuje na festiwalu rockowym w Roskilde, czemu warto pojechać na Wyspy Owcze, co można robić na Grenlandii i jakie duńskie jedzenie lubi Czesław Mozil. Dania jest tuż za rogiem. Naprawdę warto!  Olga Morawska - autorka książek o tematyce górskiej. Mama Ignacego i Gustawa. Kobieta pełna energii i wiary, że wiele dobrego jeszcze przed nią. Była żoną znakomitego himalaisty Piotra Morawskiego, który zginął w 2009 podczas kolejnej wysokogórskiej wyprawy. Prowadzi Memoriał im. Piotra Morawskiego 'Miej odwagę!'. Założycielka Fundacji 'Nagle sami', niosącej pomoc osobom, które niespodziewanie straciły bliskich.","https://skupszop.pl/images/books/9788375962741.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Morze Śródziemne. Porty i największe atrakcje...","None","praca zbiorowa"," 2015","Nauki ścisłe, medycyna","Ruszaj w świat z National Geographic! Morze Śródziemne. Porty i największe atrakcje w ich sąsiedztwie Gibraltar, Hiszpania, Francja, Monako, Włochy, Malta, Chorwacja, Grecja i Turcja Każdego dnia eksperci National Geographic przemierzają świat, zgłębiając kulturę i dzieje odwiedzanych krajów oraz przypatrując się ich mieszkańcom. Zdobytą wiedzę przekazują na łamach przewodników National Geographic, obejmujących: MARSZRUTY, uwzględniajace bogactwo atrakcji rozproszonych w sąsiedztwie północnych wybrzeży Morza Śródziemnego, pomogą zaplanować zwiedzanie adekwatnie do środka lokomocji (statek, samochód bądź pociąg). TRASY WYCIECZEK PIESZYCH, opatrzone klarownymi mapami i planami, m.in. spacerów po barcelońskim deptaku La Rambla i zabytkowych murach Dubrownika. RADY BYWALCÓW, od fotografików, podróżników i dziennikarzy National Geographic po rodzimych znawców rozmaitych zagadnień, dotyczące ulubionych miejsc, zasad postępowania i wielu innych kwestii. TURYSTYCZNE ABC niezbędne w każdym porcie, w tym dokładne informacje o miejscach cumowania, sposobach unikania wygórowanych kosztów wycieczek i czasie potrzebnym na zwiedzanie wybranych miejsc. PRZEKROJOWE RYSUNKI pokazujące układ lub odsłaniające wnętrza najsłynniejszych budowli, m.in. florenckiej katedry i ateńskiego Akropolu. WSPANIAŁE ZDJĘCIA, GRAFIKI, PLANY I MAPY, które ułatwiają podjęcie decyzji, poruszanie się i gruntowne poznanie każdego miejsca.","https://skupszop.pl/images/books/9788375967043.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Ucho na świat","None","Świdrak Katarzyna"," 2010","Nauki ścisłe, medycyna","Jaki dźwięk czyni Krzysztofa Hołowczyca absolutnie szczęśliwym? Dlaczego Kraków brzmi niebezpiecznie dla Czesława Mozila? Gdzie Martyna Wojciechowska usłyszała najpotworniejsze hałasy? Jaka muzyka pomagała Jaśkowi Meli w zdobywaniu biegunów? Jakie dźwięki potrafi wydobyć z każdego przedmiotu muzyczny czarodziej Joszko Broda? Co zafascynowało Wojciecha Manna w londyńskim metrze? Czym są kukabary, które Marek Niedźwiecki słyszał w australijskich miastach? I dlaczego Jerzy Stuhr cierpi we Florencji na chorobę Stendhala? Katarzyna Skawska i Krzysztof Świdrakowie, którzy w książce Świat w zasięgu nosa 'obwąchiwali' różne zakątki ziemi, tym razem postanowili nadstawić uszu i dowiedzieć się od 16 słynnych osób, co można usłyszeć, podróżując po świecie, i czy wszystko da się opisać za pomocą dźwięków. Zadbali także o naukową podbudowę swojej publikacji: wywiady przeplatane są fragmentami wypowiedzi ekspertów - fizyka, specjalistki od kultury Afryki i historyka sztuki z Muzeum Azji i Pacyfiku. Katarzyna i Krzysztof Świdrakowie - podróżni dziennikarze, dziennikarscy podróżnicy. Zaczynają podróż tam, gdzie inni kończą. Na wyprawy zawsze zabierają ze sobą dwa ulubione przewodniki: wyobraźnię i zmysły. Wielbiciele szczęścia w każdej postaci.","https://skupszop.pl/images/books/9788377050347.jpg");
-INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Szkolny słownik wyrazów obcych PWN","None","Wiśniakowska Lidia"," 2007","Podręczniki szkolne, edukacja","Szkolny słownik wyrazów obcych PWN - Wiśniakowska Lidia
-Słownik zawiera:
-10 000 haseł. w tym wiele takich. które niedawno weszły do polszczyzny;
-sentencje i zwroty obcojęzyczne;
-wyczerpujące informacje o pochodzeniu wyrazów;
-przystępne i precyzyjne definicje;
-wskazówki dotyczące wymowy;
-ujęte w ramki ciekawostki dotyczące niektórych haseł. a także dodatkowe objaśnienia lub pytania skłaniające do przemyśleń i pobudzające do dyskusji;
-wyróżnione kolorem wyrazy warte zapamiętania. bez znajomości których zrozumienie tekstów prasowych. popularnonaukowych i literackich nie jest w pełni możliwe.
-Słownik przeznaczony jest dla uczniów starszych klas szkół podstawowych i gimnazjów. Nowoczesny. funkcjonalny. niezbędny w sprawnym posługiwaniu się współczesną polszczyzną. Stanowi nieocenioną pomoc dla uczniów. a dla nauczycieli gotowy materiał do ćwiczeń i zabaw językowych.","https://skupszop.pl/images/books/9788301149376.jpg");
-INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Szkolny słownik synonimów PWN","None","Wiśniakowska Lidia"," 2007","Podręczniki szkolne, edukacja","Słownik zawiera:
+-- INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Szkolny słownik wyrazów obcych PWN","None","Wiśniakowska Lidia"," 2007","Podręczniki szkolne, edukacja","Szkolny słownik wyrazów obcych PWN - Wiśniakowska Lidia
+-- Słownik zawiera:
+-- 10 000 haseł. w tym wiele takich. które niedawno weszły do polszczyzny;
+-- sentencje i zwroty obcojęzyczne;
+-- wyczerpujące informacje o pochodzeniu wyrazów;
+-- przystępne i precyzyjne definicje;
+-- wskazówki dotyczące wymowy;
+-- ujęte w ramki ciekawostki dotyczące niektórych haseł. a także dodatkowe objaśnienia lub pytania skłaniające do przemyśleń i pobudzające do dyskusji;
+-- wyróżnione kolorem wyrazy warte zapamiętania. bez znajomości których zrozumienie tekstów prasowych. popularnonaukowych i literackich nie jest w pełni możliwe.
+-- Słownik przeznaczony jest dla uczniów starszych klas szkół podstawowych i gimnazjów. Nowoczesny. funkcjonalny. niezbędny w sprawnym posługiwaniu się współczesną polszczyzną. Stanowi nieocenioną pomoc dla uczniów. a dla nauczycieli gotowy materiał do ćwiczeń i zabaw językowych.","https://skupszop.pl/images/books/9788301149376.jpg");
+-- INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Szkolny słownik synonimów PWN","None","Wiśniakowska Lidia"," 2007","Podręczniki szkolne, edukacja","Słownik zawiera:
+-- 43 000 bliskoznacznych wyrazów, wyrażeń i zwrotów ułożonych w ciągi synonimów, z których można wybrać słowo najodpowiedniejsze w danej sytuacji;
+-- kwalifikatory pozwalające uniknąć błędu przy wyborze synonimu;
+-- objaśnienia przy hasłach mających taką samą postać, różnicujące ich znaczenia;
+-- ujęte w ramki objaśnienia niektórych wyrazów oraz pytania, często żartobliwe, skłaniające do aktywnego korzystania ze słownika i zabawy słowami.
 
-43 000 bliskoznacznych wyrazów, wyrażeń i zwrotów ułożonych w ciągi synonimów, z których można wybrać słowo najodpowiedniejsze w danej sytuacji;
-kwalifikatory pozwalające uniknąć błędu przy wyborze synonimu;
-objaśnienia przy hasłach mających taką samą postać, różnicujące ich znaczenia;
-ujęte w ramki objaśnienia niektórych wyrazów oraz pytania, często żartobliwe, skłaniające do aktywnego korzystania ze słownika i zabawy słowami.
-
-Słownik przede wszystkim przeznaczony jest dla uczniów starszych klas szkół podstawowych i gimnazjów. Pomoże uniknąć monotonnego powtarzania słów, precyzyjniej wyrazić myśl i wzbogacić swoje słownictwo. Funkcjonalny, przejrzysty, łatwy w korzystaniu.","https://skupszop.pl/images/books/9788301151294.jpg");
+-- Słownik przede wszystkim przeznaczony jest dla uczniów starszych klas szkół podstawowych i gimnazjów. Pomoże uniknąć monotonnego powtarzania słów, precyzyjniej wyrazić myśl i wzbogacić swoje słownictwo. Funkcjonalny, przejrzysty, łatwy w korzystaniu.","https://skupszop.pl/images/books/9788301151294.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Język polski Korepetycje gimnazjalisty","None","Białek Małgorzata"," 2014","Podręczniki szkolne, edukacja","Potrzebujesz korepetycji z polskiego? Powtórki przed egzaminem? Szybkiej pomocy przed klasówką? Nowa seria repetytoriów dla gimnazjalistów 'OLDSCHOOL - stara dobra szkoła' to skuteczna nauka tego, czego naprawdę potrzebujesz. Nie ogarniasz tematu? My w Ciebie wierzymy! Seria 'OLDSCHOOL - stara dobra szkoła' została przygotowana przez doświadczonych korepetytorów i metodyków, a wszystkie publikacje są konsultowane z nauczycielami i poddawane testom przez samych gimnazjalistów. Główne zalety repetytorium: - wszystkie istotne zagadnienia dotyczące lektur - motywy literackie, teoria literatury i gramatyka - zgodność z podstawą programową - klarowne objaśnienia i przykładowe zadania testowe - przejrzysty układ oraz staranna szata graficzna - tabele, cytaty, ilustracje, ciekawostki. Wiesz, jak jest! Egzamin gimnazjalny tylko z OLDSCHOOL!","https://skupszop.pl/images/books/9788378921523.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Geografia : vademecum maturalne 2011","None","Janusz Stasiak"," 2010","Podręczniki szkolne, edukacja","To kompleksowy program przygotowań do matury skierowany do nauczycieli i ich maturzystów!
 Z pomocą ekspertów stworzyliśmy profesjonalny program maturalny, który stanowi system wzajemnie uzupełniających się elementów. Teraz przygotowanie do egzaminów będzie naprawdę proste i skuteczne.","https://skupszop.pl/images/books/9788376801698.jpg");
@@ -1799,10 +1797,10 @@ INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graph
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Scooby Doo Superkomiks 11 Na statku","None","Karolina Mieszkowska (tłum.)"," 2009","Pozostałe książki","Ktoś zwinął wszystkie pieniądze na wypłaty z sejfu! A na dodatek zniknęła nasza największa gwiazda!FragmentNie przegap!Już wkrótce Tajemnicza Spółka rozwiąże kolejne zagadki!","https://skupszop.pl/images/books/9788375500493.jpg");
 INSERT INTO books (Name,`Publishing-house`,Autor,Year,BookType,Description,Graphic)VALUES("Dieta 5:2 Kate Harrison","None","Kate Harrison"," 2014","Pozostałe książki","Wyobraź sobie dietę, która przez większość czasu pozwala Ci jeść wszystko to, co najbardziej lubisz, a dodatkowo umożliwia skuteczne zrzucenie zbędnych kilogramów. Jest również całkowicie elastyczna, dopasowana do Twoich potrzeb, a przy tym daje trwałe efekty. Oto dieta 5:2, która obecnie bije rekordy popularności, zarówno w Polsce, jak i na świecie. Wystarczy, że przez 2 dni w tygodniu będziesz spożywał zaledwie 500- 600 kalorii, a przez 5 pozostałych jadł to, na co masz tylko ochotę. W rezultacie nie tylko schudniesz, ale jednocześnie będziesz czerpałąceści, takie jak: nie nowotworom, , , 2 wielu . zaprezentowane w publikacji porady zostały osobiście sprawdzone przez Autorkę, która kiedyś zmagała się z efektem jo-jo, a teraz cieszy się doskonałą sylwetką i zdrowiem. Przytoczone w książce badania medyczne i psychologiczne wyjaśniają dlaczego te 2 dni ograniczania się do spożywania 500-600 kalorii działają leczniczo na ciało i umysł. Znajdziesz tu także wskazówki jak przygotować się na dni „postu” i w jaki sposób utrzymać motywację. Autorka zachęca również do wspomagania odchudzania poprzez ruch na świeżym powietrzu i stosowanie prostych ćwiczeń. W swoim bestsellerze przytacza historie wielu osób, które odniosły sukces i teraz dzielą się swoimi doświadczeniami. Ponieważ przyrządzanie posiłku, gdy ma się do dyspozycji zjedzenie zaledwie 500-600 kalorii może być nie lada wyzwaniem, Kate Harrison podaje Ci proste przepisy na dania i przekąski, które sam przygotujesz wedle własnego uznania, a które pozwolą skutecznie oszukać głód. Już wkrótce się przekonasz, że to najprostszy i najskuteczniej wspierający zdrowie program zrzucania zbędnych kilogramów, jaki kiedykolwiek stosowałeś. To dieta idealna dla Ciebie!","https://skupszop.pl/images/books/9788364278129.jpg");
 
-#describe rate;
-#describe `user`;
-#describe `group`;
-#describe `autor`;
-#describe post;
-#describe user_user_approvement;	
-#describe group_participants;	
+-- describe rate;
+-- describe `user`;
+-- describe `group`;
+-- describe `autor`;
+-- describe post;
+-- describe user_user_approvement;	
+-- describe group_participants;	
