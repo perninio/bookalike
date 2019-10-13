@@ -33,11 +33,23 @@ services:
       - ./Database/initdb.sql:/data/application/init.sql
     environment:
       MYSQL_DATABASE: "bookalike"
-      MYSQL_USER: "root"
+      MYSQL_USER: "admin"
       MYSQL_ROOT_PASSWORD: "admin"
     networks:
       app_net:
         ipv4_address: 172.18.0.5
+
+  dataserver:
+    build: ./Data-Server
+    command: npm run start
+    ports:
+      - "5060:5000"
+    environment:
+      - AUTH_IP_ADDR=172.18.0.4
+      - DS_DB_IP_ADDR=172.18.0.5
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.6
 
 networks:
   app_net:
