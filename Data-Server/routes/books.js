@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 // @desc get all books from certain category
 // @access Public
 router.get("/:bookID", (req, res) => {
-  Book.findOne({ where: { BookID: req.params.bookID } })
+  Book.findOne({ where: { bookid: req.params.bookID } })
     .then(book => {
       if (book) {
         res.status(200).send(book);
@@ -38,7 +38,7 @@ router.get("/:bookID", (req, res) => {
 // @desc get all books from certain category
 // @access Public
 router.get("/category/:category", (req, res) => {
-  Book.findAll({ where: { BookType: req.params.category } })
+  Book.findAll({ where: { booktype: req.params.category } })
     .then(books => {
       if (books) {
         res.status(200).send(books);

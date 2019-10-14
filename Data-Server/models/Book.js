@@ -5,40 +5,44 @@ class Book extends Sequelize.Model {}
 
 Book.init(
   {
-    BookID: {
+    bookid: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    Name: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    "Publishing-house": {
+    publishinghouse: {
       type: Sequelize.STRING
     },
-    Year: {
+    author: {
       type: Sequelize.STRING
     },
-    BookType: {
+    year: {
       type: Sequelize.STRING
     },
-    Description: {
+    booktype: {
       type: Sequelize.STRING
     },
-    Graphic: {
+    description: {
       type: Sequelize.STRING
     },
-    createdAt: {
+    graphic: {
+      type: Sequelize.STRING
+    },
+    createdat: {
       type: Sequelize.DATE
     },
-    updatedAt: {
+    updatedat: {
       type: Sequelize.DATE
     }
   },
   {
     sequelize: db,
-    modelName: "book"
+    modelName: "book",
+    timestamps: false
   }
 );
 

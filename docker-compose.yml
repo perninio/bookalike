@@ -28,13 +28,10 @@ services:
 
   db-dataserver:
     build: ./Database
-    command: --init-file /data/application/init.sql
-    volumes:
-      - ./Database/initdb.sql:/data/application/init.sql
     environment:
-      MYSQL_DATABASE: "bookalike"
-      MYSQL_USER: "admin"
-      MYSQL_ROOT_PASSWORD: "admin"
+      POSTGRES_DB: "bookalike"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
     networks:
       app_net:
         ipv4_address: 172.18.0.5

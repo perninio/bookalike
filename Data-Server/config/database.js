@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
-module.exports = new Sequelize("bookalike", "root", "admin", {
-  host: process.env.HOST || "localhost",
-  dialect: "mysql",
+module.exports = new Sequelize("bookalike", "postgres", "postgres", {
+  host: process.env.DS_DB_IP_ADDR || "localhost",
+  dialect: "postgres",
   logging: false,
 
   pool: {
