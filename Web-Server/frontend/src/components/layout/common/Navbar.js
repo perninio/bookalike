@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import "./Styles.scss";
 import { NavbarLinks } from "./NavbarLinks";
 import { NavbarSearch } from "./NavbarSearch";
+import { CategoryOptions } from "./CategoryOptions";
 
 export const Navbar = () => {
   const { isAuthenticated } = useSelector(state => state.auth);
@@ -33,6 +34,7 @@ export const Navbar = () => {
               Strona Główna <span className="sr-only"></span>
             </Link>
           </li>
+          <CategoryOptions />
         </ul>
         <NavbarSearch />
         <NavbarLinks isAuthenticated={isAuthenticated} />

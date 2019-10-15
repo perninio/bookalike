@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
+
 export const BooksPage = props => {
   const bookCategory = props.match.params.category
     ? props.match.params.category
@@ -11,7 +13,7 @@ export const BooksPage = props => {
     const fetchData = async () => {
       axios
         .get(
-          "localhost:5000/api/books" +
+          serverAPIBooksEndpoint +
             (bookCategory !== "" ? "/" + bookCategory : "")
         )
         .then(result => {
@@ -22,12 +24,5 @@ export const BooksPage = props => {
     fetchData();
   }, [bookCategory]);
 
-  return (
-    <React.Fragment>
-      {console.log(
-        "localhost:5000/api/books" +
-          (bookCategory !== "" ? "/" + bookCategory : "")
-      )}
-    </React.Fragment>
-  );
+  return <React.Fragment>{console.log(data)}</React.Fragment>;
 };
