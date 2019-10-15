@@ -1,0 +1,99 @@
+@import "../../common/Common.scss";
+
+body {
+  background-color: $navbar-secondary;
+}
+
+hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+//common
+
+.jumbotron {
+  background-image: url(https://images.unsplash.com/photo-1459623837994-06d03aa27b9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80);
+  background-size: cover;
+  margin-bottom: 0;
+  padding-left: 1rem;
+
+  .display-4 {
+    color: $navbar-font-color;
+  }
+  p {
+    color: $navbar-font-color;
+  }
+  @media (max-width: $phone-width) {
+    height: 100vh;
+  }
+
+  @media (min-width: $phone-width) {
+    height: 90vh;
+  }
+}
+
+.is-invalid {
+  border: 2px solid red;
+}
+
+.invalid-feedback {
+  font-weight: bold;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+// RegisterPage
+.ba-form {
+  width: 50vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  div {
+    label {
+      color: $navbar-font-color !important;
+    }
+    small {
+      color: $navbar-font-color !important;
+    }
+  }
+}
+
+// card
+.card {
+  min-height: 30vh;
+
+  &-body {
+    background-color: $navbar-primary;
+  }
+
+  &-title {
+    color: $navbar-font-color;
+  }
+
+  &-img-top {
+    width: 100%;
+    object-fit: cover;
+
+    @media (max-width: $phone-width) {
+      height: 30vh;
+    }
+
+    @media (min-width: $phone-width) {
+      height: 50vh;
+    }
+
+    @media (min-width: $tablet-width) {
+      height: 30vh;
+    }
+  }
+}
+
+// chart
+
+.ba-chart {
+  background-color: $navbar-primary;
+  border: 1px white solid;
+}
+
+.ba-community-background {
+  background-image: url("https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  background-size: cover;
+}
