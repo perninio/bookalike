@@ -1,21 +1,21 @@
 const Neode = require('neode');
-
- 
-const instance = new Neode('bolt://localhost:7687', 'neo4j', 'admin');
-
-instance.model('Person', {
-    person_id: {
-        primary: true,
-        type: string
-    },
-    name:string,
-    surename:string,  
-    age: 'number'
+//connecting to db
+const instance = new Neode.fromEnv()
+instance.setEnterprise(true)
+//loading models
+instance.with({
+    Person: require("./models/Person")
 });
 
+//creating node
+function createNode(label,properties){
+    instance.create(label,properties)
+    .then(person => {
+        console.log("Person: "+person.get('userid')+" created"); // 'Adam'
+    }).catch((e) => {
+        console.log("Failed to create node \n" + e )
+    })
+}
 
-//cypher queris
-instance.cypher('CREATE (p:Person {name: {name}}) RETURN p', {name: "Adam"})
-    .then(res => {
-        console.log(res.records.length);
-    })h
+createNode('Person',{name:'Przemek'})
+createNode('Person',{userid:'przemek.1',name:'Przemek',email:'user@gmail.com',password:'admin1'})
