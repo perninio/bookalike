@@ -25,6 +25,7 @@ function findPersonByName(paramname){
     var imie=null
     instance.cypher('MATCH (p:Person {name: {name}}) RETURN p', {name: paramname})
     .then(res => {
+        console.log(/*JSON.jsonify*/(res.length))
         console.log(/*JSON.jsonify*/(res.records[28]._fields[0].properties))
         console.log(/*JSON.jsonify*/(res.records[28]._fields[0].properties.name))
         imie=res.records[28]._fields[0].properties.name
@@ -34,6 +35,7 @@ function findPersonByName(paramname){
 //example
 console.log("imie:"+findPersonByName('Przemek'))//oanswer undenified due to asynchronues javascript
 
+//id is element defined in ogm-in this case it's userid which is string
 function findPersonByID(id){    
 	instance.find('Person',id)
     .then(person => {
@@ -43,4 +45,17 @@ function findPersonByID(id){
     })
 	
 }
-findPersonByID('przemek.1')
+
+//findPersonByID('przemek.1')
+
+function dropAllNodes()
+{
+    instance.deleteAll('Person')
+    .then(() => console.log('Everyone has been deleted'));
+}
+function findPerson()
+{
+instance.first('Person', {name: 'Przemek'})
+    .then(przemek => {console.log(przemek.get('email'))})
+}
+//findPerson()
