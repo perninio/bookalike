@@ -2,6 +2,7 @@ from app.routes import token
 from app.routes import rsa
 from flask import Flask
 from flask_cors import CORS
+import requests
 
 
 def create_app():
