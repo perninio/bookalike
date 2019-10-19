@@ -1,1 +1,1 @@
-export const serverAPIBooksEndpoint = "http://172.18.0.6/api/books";
+export const serverAPIBooksEndpoint = "http://localhost:5060/api/books";

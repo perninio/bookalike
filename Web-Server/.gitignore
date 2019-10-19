@@ -177,3 +177,4 @@ typings/
 frontend/build
 
 backend/config
+.vscode/

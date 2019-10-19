@@ -7,10 +7,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static("./dist/"));
+app.use(express.static("./build/"));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./dist/index.html"));
+  res.sendFile(path.resolve(__dirname, "./build/index.html"));
 });
 
 const port = process.env.PORT || 5000;

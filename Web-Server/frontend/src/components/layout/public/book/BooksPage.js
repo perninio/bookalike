@@ -8,21 +8,28 @@ export const BooksPage = props => {
     ? props.match.params.category
     : "";
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  console.log(data);
+
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get(
           serverAPIBooksEndpoint +
-            (bookCategory !== "" ? "/" + bookCategory : "")
+            (bookCategory !== "" ? "/category/" + bookCategory : "")
         )
         .then(result => {
-          setData(result.data);
+          setData(result.data.data);
         })
-        .catch(err => console.log("XD"));
+        .catch(err =>
+          console.log(
+            serverAPIBooksEndpoint +
+              (bookCategory !== "" ? "category/" + bookCategory : "")
+          )
+        );
     };
     fetchData();
   }, [bookCategory]);
 
-  return <React.Fragment>{console.log(data)}</React.Fragment>;
+  return <React.Fragment></React.Fragment>;
 };

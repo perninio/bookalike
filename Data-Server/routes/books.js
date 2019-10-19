@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   Book.findAll()
     .then(books => {
       if (books) {
-        res.status(200).send(books);
+        res.status(200).json({ data: books });
       } else {
         res.status(404).json({ Msg: "Nie można znaleźć książek" });
       }
@@ -26,7 +26,7 @@ router.get("/:bookID", (req, res) => {
   Book.findOne({ where: { bookid: req.params.bookID } })
     .then(book => {
       if (book) {
-        res.status(200).send(book);
+        res.status(200).json({ data: book });
       } else {
         res.status(404).json({ Msg: "Nie można znaleźć takiej książki" });
       }
@@ -41,7 +41,7 @@ router.get("/category/:category", (req, res) => {
   Book.findAll({ where: { booktype: req.params.category } })
     .then(books => {
       if (books) {
-        res.status(200).send(books);
+        res.status(200).json({ data: books });
       } else {
         res.status(404).json({ Msg: "Nie można znaleźć takiego typu" });
       }

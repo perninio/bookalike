@@ -20,7 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && move build ../backend/dist",
+    "wbuild": "react-scripts build && move build ../backend/",
+    "lbuild": "react-scripts build && sudo cp -r -T build ../backend/build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

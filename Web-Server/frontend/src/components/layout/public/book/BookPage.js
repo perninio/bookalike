@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
+
 export const BookPage = props => {
   const idBook = props.match.params.id;
   const [data, setData] = useState({});
@@ -8,18 +10,16 @@ export const BookPage = props => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get("localhost:5000/api/books/" + idBook)
+        .get(serverAPIBooksEndpoint + "/" + idBook)
         .then(result => {
-          setData(result.data);
+          setData(result.data.data);
         })
         .catch(err => console.log("XD"));
     };
     fetchData();
   }, [idBook]);
 
-  return (
-    <React.Fragment>
-      <div>{data}</div>
-    </React.Fragment>
-  );
+  console.log(data);
+
+  return <React.Fragment></React.Fragment>;
 };
