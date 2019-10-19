@@ -41,6 +41,16 @@
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
+	
+	<!--Own theme gradient color for navbar-->
+	<style>
+	.collapse.navbar-collapse.row, .navbar.navbar-expand-lg.navbar-light.bg-light.ba-navbar.sticky-top, .navbar-brand{
+	background: #603813;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to bottom, #b29f94, #603813);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to bottom, #b29f94, #603813); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	}
+
+	</style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
