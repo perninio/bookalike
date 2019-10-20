@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Carousel from "./Carousel"
+
+//nowa karuzela
+// <Carousel items={items} active={0}/>
+import AliceCarousel from 'react-alice-carousel';
+import "./alice-carousel.css";
 
 import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
@@ -19,7 +25,35 @@ export const BookPage = props => {
     fetchData();
   }, [idBook]);
 
-  console.log(data);
+
+
+
+ //const galleryItems=[1,2,3,4,5,6]
+  const stagePadding =
+	 {
+      paddingLeft: 170,     // in pixels 170 najlepiej
+      paddingRight: 0
+  }
+ 
+  const responsive = {
+    0: { items: 1 },
+    1024: { items: 3 }
+  }
+ 
+function   onSlideChange(e) {
+    console.debug('Item`s position during a change: ', e.item)
+    console.debug('Slide`s position during a change: ', e.slide)
+  }
+ 
+ function onSlideChanged(e) {
+    console.debug('Item`s position after changes: ', e.item)
+    console.debug('Slide`s position after changes: ', e.slide)
+  }
+ 
+
+ 
+
+
 
   return <React.Fragment>
         
@@ -61,11 +95,29 @@ export const BookPage = props => {
         </div>
   </div>
 
- <div class="row justify-content-md-center my-row">
-        <div class="col-md-12 my-col text-center">
-               Carouzela z rekomndacjami
-               </div>
-      </div>
+ <div class="row my-row">
+        <div class="col-md-auto col-md-12 my-col">
+              <div class="carousel-div">
+			  
+			    <AliceCarousel class="alice-carousel__prev-btn"
+        //items={galleryItems}https://skupszop.pl/images/books/9788362170555.jpg
+        responsive={responsive}
+		stagePadding={stagePadding}
+        fadeOutAnimation={true}
+        mouseDragEnabled={true}
+        onSlideChange={onSlideChange}
+        onSlideChanged={onSlideChanged}
+		style="color:white"
+      >
+	  <img src="https://skupszop.pl/images/books/9788375780284.jpg" height="208" width="136"/>
+	  <img src="https://skupszop.pl/images/books/9788375680966.jpg"height="208" width="136"/>
+	  <img src=" https://skupszop.pl/images/books/9788362170555.jpg"height="208" width="136"/>
+
+	  </AliceCarousel>
+			   
+			  </div>
+        </div>
+</div>
 
 
     <div class="row my-row-comment">
@@ -79,4 +131,5 @@ export const BookPage = props => {
 </div>
   
   </React.Fragment>;
+
 };
