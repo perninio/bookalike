@@ -12,14 +12,18 @@ mainurl = "https://skupszop.pl/ksiazki/wszystkie-kategorie"
 url="https://skupszop.pl"
 catclass="child-categories"
 allcaturls=[]
+allpages=[]
+pagesnumber=5
 
 #estlink="https://skupszop.pl/trylogia-nordycka-t3-wojna-runow-marcin-mortka-9788328021976-uzywana-id1242588"
 
 def main():
     counter=1
     getallCatUrls()  
+    getCatBookPages()
+    
     print("Ogólna liczba książek do scrapowania:"+str(len(allcaturls)*30))
-    for link in allcaturls:
+    for link in allpages:
      odpowiedz= requests.get(link['link'])
      #print("scrapowanie linku:"+link['link'])
      #print("O tematyce: "+link['gatunek'])
@@ -38,6 +42,23 @@ def main():
     f.write(jsondump)
     f.close()
     print("Liczba ksiazek pobranych: "+str(len(ksiazki)))
+    
+def getCatBookPages():
+    counter=1
+    for link in allcaturls:
+        odpowiedz= requests.get(link['link'])
+        soup = BeautifulSoup(odpowiedz.text, 'html.parser')
+        allpages.append({'link':url+link['link'],'gatunek':link['gatunek']})
+        while soup.find(class_="pagination-button btn-next")!=None and counter<pagesnumber:
+            linkanswer=soup.find(class_="pagination-button btn-next")           
+            counter=counter+1
+            parturl=linkanswer.get("href")            
+            allpages.append({'link':url+parturl,'gatunek':link['gatunek']})
+            odpowiedz= requests.get(parturl)
+            soup = BeautifulSoup(odpowiedz.text, 'html.parser')
+        counter=0
+            
+    
 
 def getallCatUrls():
     odpowiedz= requests.get(mainurl)
@@ -47,7 +68,7 @@ def getallCatUrls():
         for link in answer.findAll('a'):
             parturl=link.get("href")            
             allcaturls.append({'link':url+parturl,'gatunek':link.span.get_text()})
-            #print("Cat urls: "+url+parturl+link.get_text())           
+            #print("Cat urls: "+url+parturl+link.get_text())
     else:
         print("Błąd scrapowania linków")
     
@@ -77,9 +98,10 @@ def getBookInfoSkupSzop(soup,gatunek,counter):
             if patterndata.match(obj.text):
                 data_wydania=obj.span.text.replace("\n", '');
             if patternstrony.match(obj.text):
-                liczbastron=obj.span.text.replace("\n", '');
-            if patternwydawnictwo.match(obj.text):
-                wydawnictwo=obj.span.text.replace("\n", '');            
+                liczbastron=obj.span.text.replace("\n", '');           
+    if(booksoup.find("span",class_="bookDetails-value"))!="None":
+                wydawnictwo=booksoup.find("span",class_="bookDetails-value").a.text.replace("\n", '');            
+                
     if(booksoup.find("a",class_="authors-item"))!="None":
         autor=booksoup.find("a",class_="authors-item").text.replace("\n", '');
         #print("Autor: "+autor)     
