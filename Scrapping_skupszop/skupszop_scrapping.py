@@ -13,7 +13,7 @@ url="https://skupszop.pl"
 catclass="child-categories"
 allcaturls=[]
 allpages=[]
-pagesnumber=5
+pagesnumber=3
 
 #estlink="https://skupszop.pl/trylogia-nordycka-t3-wojna-runow-marcin-mortka-9788328021976-uzywana-id1242588"
 
@@ -64,11 +64,16 @@ def getallCatUrls():
     odpowiedz= requests.get(mainurl)
     soup = BeautifulSoup(odpowiedz.text, 'html.parser')
     answer=soup.find(class_=catclass)
-    if  (answer)!="None":
+    if  (answer)!=None:
         for link in answer.findAll('a'):
-            parturl=link.get("href")            
-            allcaturls.append({'link':url+parturl,'gatunek':link.span.get_text()})
-            #print("Cat urls: "+url+parturl+link.get_text())
+            odpowiedz2= requests.get(url+link.get('href'))
+            soup2 = BeautifulSoup(odpowiedz2.text, 'html.parser')
+            answer2=soup2.find(class_='child-categories activeCategory')
+            if answer2.findAll('a')!=None :            
+                for link2 in answer2.findAll('a'):
+                    parturl=link2.get("href")            
+                    allcaturls.append({'link':url+parturl,'gatunek':link2.span.get_text()})
+                    #print("Cat urls: "+url+parturl+link.get_text())
     else:
         print("Błąd scrapowania linków")
     
