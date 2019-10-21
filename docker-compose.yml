@@ -56,7 +56,7 @@ services:
       - type: bind
         source: ./Web-Server/backend/
         target: /usr/src/app/
-    command: npm run start
+    command: npm run dev
     ports:
       - "5150:5000"
     networks:
