@@ -4,12 +4,14 @@ def jsonOpen():
      jsonloaded = json.load(inputfile)
     return jsonloaded
 def creatinsert(Name,Publishing_house,Autor,Year,BookType,Description,Graphic):
-    query=( "USE bookalike;\n INSERT INTO book (name,publishinghouse,autor,year,booktype,description,graphic)VALUES(\'"+
+    query=( "INSERT INTO book (name,publishinghouse,autor,year,booktype,description,graphic)VALUES(\'"+
     Name.replace("\'","''")+"','"+Publishing_house.replace("\'","''")+"\',\'"+Autor.replace("\'","''")+"\',\'"+Year+"','"+BookType+"','"+Description.replace("\'","''")+"','"+Graphic.replace("\'","''")+"');" )
     return query
     
 jsonloaded=jsonOpen()
-print(jsonloaded['ksiazka'][1]['autor'])
+
+f = open('queryInsert.sql', 'a',encoding='utf-8')
+f.write("USE bookalike;\n")
 for ksiazka in jsonloaded['ksiazka']:
     fullquery=creatinsert(ksiazka['tytul'],
         ksiazka['wydawnictwo'],
@@ -21,7 +23,6 @@ for ksiazka in jsonloaded['ksiazka']:
     buff=json.dumps(fullquery)
     buff2=json.loads(buff)
     fullquery+="\n"
-    print(fullquery[157])
 
     f = open('queryInsert.sql', 'a',encoding='utf-8')
     try:
