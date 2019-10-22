@@ -64,7 +64,9 @@ function   onSlideChange(e) {
             <span class='bookcover'>
 
       <img  src="https://skupszop.pl/images/books/9788375745368.jpg" alt='Pan lodowego ogrodu'>
-    </img>
+      		
+	</img>
+	<a class="float-right btn text-white btn-danger"> <i class="fa fa-thumbs-up"></i> Przeczytana</a>
 
 </span>
     </div>
@@ -122,10 +124,44 @@ function   onSlideChange(e) {
 
     <div class="row my-row-comment">
             <div  class="col-md-12 my-col text-center">
-                <span class="comment">
-                    <img src="https://www.tubefilter.com/wp-content/uploads/2013/11/new-youtube-comments-rosanna-pansino.jpg"/>
                 
-                </span>
+				
+				
+															
+															
+																										<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col-md-2">
+															<img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img rounded-circle img-fluid"/>
+															<p class="text-secondary text-center">15 Minutes Ago</p>
+														</div>
+														<div class="col-md-10">
+															<p>
+																<a class="float-left" ><strong>Przemek Pernak</strong></a>
+																<span class="float-right"><i class="text-warning fa fa-star"></i></span>
+																<span class="float-right"><i class="text-warning fa fa-star"></i></span>
+																<span class="float-right"><i class="text-warning fa fa-star"></i></span>
+																<span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+														   </p>
+														   <div class="clearfix"></div>
+															<p align='left' >Świetna książka. Bardzo mi się podobała</p>
+															<p>
+																<a class="float-right btn text-white btn-danger"> <i class="fa fa-thumbs-down"></i> DisLike</a>
+																<a class="float-right btn text-white btn-danger"> <i class="fa fa-thumbs-up"></i> Like</a>														  
+														  </p>
+														</div>
+													</div>
+														
+													</div>
+												</div>
+												
+															
+				
+				
+				
+				
             </div>
     </div>
 </div>
