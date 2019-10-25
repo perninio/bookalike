@@ -19,13 +19,13 @@ module.exports = {
 	},
     "surname": "string",
     "birthdate": "date",
-	friend: {
+	friends: {
         type: "relationship",
         target: "Person",
         relationship: "friends",
         direction: "out",
         properties: {
-            since: "date"
+            since: "string"
         },
         eager: true 
     }

@@ -18,8 +18,8 @@ function createPersonNode(properties){
     })
 }
 //example creating person
-createPersonNode({name:'Przemek'})//no success, missing min required data:userid,email,name,password
-createPersonNode({userid:'przemek.1',name:'Przemek',email:'user@gmail.com',password:'admin1'})//success
+//createPersonNode({name:'Przemek'})//no success, missing min required data:userid,email,name,password
+//createPersonNode({userid:'przemek.1',name:'Przemek',email:'user@gmail.com',password:'admin1'})//success
 //find person by name with cypher qurey language
 function findPersonByName(paramname){
     var imie=null
@@ -33,10 +33,10 @@ function findPersonByName(paramname){
     })
 }
 //example
-console.log("imie:"+findPersonByName('Przemek'))//oanswer undenified due to asynchronues javascript
+//console.log("imie:"+findPersonByName('Przemek'))//oanswer undenified due to asynchronues javascript
 
 //id is element defined in ogm-in this case it's userid which is string
-function findPersonByID(id){    
+function findPersonByPrimaryID(id){    
 	instance.find('Person',id)
     .then(person => {
         console.log("Person found with id: " + person.get('userid'))
@@ -46,16 +46,50 @@ function findPersonByID(id){
 	
 }
 
-//findPersonByID('przemek.1')
-
+//delete all nodes
 function dropAllNodes()
 {
     instance.deleteAll('Person')
     .then(() => console.log('Everyone has been deleted'));
 }
+
+//find person by name
 function findPerson()
 {
 instance.first('Person', {name: 'Przemek'})
     .then(przemek => {console.log(przemek.get('email'))})
 }
-//findPerson()
+
+
+//create relationship for two person
+function makerelationship()
+{
+	Promise.all([
+    instance.create('Person', {userid:'arek.2',name:'Arek',email:'user2@gmail.com',password:'admin2'}),
+	instance.create('Person', {userid:'arek.3',name:'Marek',email:'user3@gmail.com',password:'admin4'})
+])
+.then(([user1, user2]) => {
+    user1.relateTo(user2, 'friends', {since: '10-25-2019'})
+        .then(res => {
+            console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('since')); 
+        }).catch((e) => {
+        console.log("Failed to create relationship \n" + e );
+		})
+});
+}
+setTimeout(makerelationship, 6000);
+
+
+//user authorization
+function login(useremail,userpassword)
+{
+	instance.first('Person', {email: useremail, password: userpassword})
+    .then(result => {console.log("Proper email and password for user:"+result.get('email'))}).catch((e) => {
+        console.log("Failed to find node \n" + e )
+    })
+}
+
+//login('user@gmail.com','XD')
+
+
+
