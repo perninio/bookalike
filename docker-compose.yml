@@ -24,6 +24,7 @@ services:
     environment:
       - DATASERVER_IP=172.18.0.6
       - WEBSERVER_IP=172.18.0.7
+      - RECSERVER_IP=172.18.0.9
     networks:
       app_net:
         ipv4_address: 172.18.0.4
@@ -62,23 +63,35 @@ services:
     networks:
       app_net:
         ipv4_address: 172.18.0.7
-        
+
   redis:
-      build: ./Redis-Server
-      ports:
-      - "6379:6379"
-      networks:
-       app_net:
-         ipv4_address: 172.18.0.8
+    build: ./Redis-Server
+    ports:
+      - "5201:6379"
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.8
+
+  recommender-server:
+    build: ./Recommender-Server
+    command: python -u recommender_system.py
+    volumes:
+      - type: bind
+        source: ./Recommender-Server/
+        target: /src
+    ports:
+      - "5200:5000"
+    environment:
+      - DATASERVER_IP=172.18.0.6
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.9
 
 networks:
-   app_net:
+  app_net:
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 172.18.0.0/28
           gateway: 172.18.0.1
-          
-
-    
