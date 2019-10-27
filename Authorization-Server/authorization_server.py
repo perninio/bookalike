@@ -36,6 +36,6 @@ if __name__ == '__main__':
     send_public_key_and_auth_token(WSToken, "WEBSERVER_IP")
 
     # Recommender-Server token
-    # send_public_key_and_auth_token(RSToken, server_env)
+    send_public_key_and_auth_token(RSToken, "RECSERVER_IP")
 
     app.run(host="172.18.0.4")

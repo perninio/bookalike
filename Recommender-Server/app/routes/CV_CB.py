@@ -19,7 +19,7 @@ def tfidf_recommendations():
     cv = CountVectorizer(stop_words=stop_words)
 
     # utworzenie dwuwymiarowej tablicy ilosc_ksiazek x ilosc_ksiazek
-    cv_matrix = cv.fit_transform(df["dlugiopis"])
+    cv_matrix = cv.fit_transform(df["description"])
 
     # obliczenie podobieństwa między książkami
     cosine_sim = cosine_similarity(cv_matrix, cv_matrix)
