@@ -1,2 +1,2 @@
-const HOST = window.location.host;
-export const serverAPIBooksEndpoint = "http://" + HOST + "/api/books";
+const HOST = window.location.hostname;
+export const serverAPIBooksEndpoint = "http://" + HOST + ":5060/api/books";
