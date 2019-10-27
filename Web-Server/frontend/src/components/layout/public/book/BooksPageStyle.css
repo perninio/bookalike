@@ -1,0 +1,45 @@
+.bookstitle {
+	overflow: hidden;
+	text-overflow: ellipsis;
+    color:#2d160e;
+	font-family:"Libertad-Bold";	
+}
+.bookstitle:hover{
+	color:#823317;
+}
+
+.my-col-books {
+	width: 162px;
+	height: 275px;	
+	background-color: rgb(255,255,255,0.35);
+	border-radius:5px;
+	margin:5px;
+}
+.my-row-books2 {
+	.border: 3px solid red;
+}
+
+.bookscontainer{
+background-color: rgb(255,255,255,0.3);
+ -moz-box-shadow: 0px 0px 30px rgba(255, 255, 255,0.3);
+ -webkit-box-shadow: 0px 0px 30px rgba(255, 255, 255, .33);
+ box-shadow: 0px 0px 30px rgba(255, 255, 255, .4);
+ padding-bottom:5px;
+
+}
+div.my-col-books:hover 
+{
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 1px 2px 5px rgba(255,255, 255, .5);
+}
+
+.zoom {
+  padding-top:10px; 
+  transition: transform .2s;
+}
+.zoom:hover {
+  -ms-transform: scale(1.1); 
+  -webkit-transform: scale(1.1); 
+  transform: scale(1.1); 
+}

@@ -137,7 +137,7 @@ export const BookPage = props => {
                 <div class="row">
                   <div class="col-md-2">
                     <img
-                      src="https://image.ibb.co/jw55Ex/def_face.jpg"
+                      src="https://image.ibb.co/jw55Ex/def_face.jpg" height='100' width='100' 
                       class="img rounded-circle img-fluid"
                     />
                     <p class="text-secondary text-center">15 Minutes Ago</p>
