@@ -50,10 +50,11 @@ export const BookPage = props => {
   };
 
   return (
-    <React.Fragment>
+    <React.Fragment>	
       <div class="container">
         <div class="row my-row">
-          <div class="col-md=auto my-col order-sm-1">
+		 <div class="col-sm-12 col-md-auto text-center order-sm-1 my-col">
+
             <span class="bookcover2">
 			<div class="right">
 			<div>
@@ -71,7 +72,7 @@ export const BookPage = props => {
 			  </div>
             </span>
           </div>
-
+	
           <div class="col-md my-col  order-sm-2">
             <span class="bookinfo">
               <h2>Pan lodowego ogrodu</h2>
