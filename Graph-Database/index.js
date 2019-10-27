@@ -54,11 +54,7 @@ function dropAllNodes()
 }
 
 //find person by name
-function findPerson()
-{
-instance.first('Person', {name: 'Przemek'})
-    .then(przemek => {console.log(przemek.get('email'))})
-}
+
 
 
 //create relationship for two person
@@ -77,19 +73,29 @@ function makerelationship()
 		})
 });
 }
-setTimeout(makerelationship, 6000);
+//setTimeout(makerelationship, 6000);
 
 
 //user authorization
 function login(useremail,userpassword)
 {
 	instance.first('Person', {email: useremail, password: userpassword})
-    .then(result => {console.log("Proper email and password for user:"+result.get('email'))}).catch((e) => {
+    .then(result => {console.log("Proper email and password for user:"+result.get('email'))
+	 		return result.get('email');
+	}).catch((e) => {
         console.log("Failed to find node \n" + e )
-    })
+ 
+	})
 }
 
-//login('user@gmail.com','XD')
 
+function findPerson()
+{
+return  instance.first('Person', {name: 'Przemek'})
+    
+}
+
+findPerson().then( przemek => {
+console.log(przemek.get('email'))})
 
 
