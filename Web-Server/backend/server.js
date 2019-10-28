@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
+const user = require("./routes/user");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,8 +20,9 @@ app.post("/server/init", (req, res) => {
   }
 });
 
-app.use(express.static("./build/"));
+app.use("/api/user", user);
 
+app.use(express.static("./build/"));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./build/index.html"));
 });

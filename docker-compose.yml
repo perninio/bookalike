@@ -21,6 +21,10 @@ services:
   authorization-server:
     build: ./Authorization-Server
     command: python -u authorization_server.py
+    depends_on:
+      - dataserver
+      - webserver
+      - recommenderserver
     environment:
       - DATASERVER_IP=172.18.0.6
       - WEBSERVER_IP=172.18.0.7
@@ -42,6 +46,8 @@ services:
   dataserver:
     build: ./Data-Server
     command: npm run start
+    depends_on:
+      - db-dataserver
     ports:
       - "5060:5000"
     environment:
@@ -58,11 +64,21 @@ services:
         source: ./Web-Server/backend/
         target: /usr/src/app/
     command: npm run dev
+    depends_on:
+      - webserver-database
     ports:
       - "5150:5000"
     networks:
       app_net:
         ipv4_address: 172.18.0.7
+
+  webserver-database:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=neo4j/admin
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.10
 
   redis:
     build: ./Redis-Server
@@ -72,9 +88,11 @@ services:
       app_net:
         ipv4_address: 172.18.0.8
 
-  recommender-server:
+  recommenderserver:
     build: ./Recommender-Server
     command: python -u recommender_system.py
+    depends_on:
+      - dataserver
     volumes:
       - type: bind
         source: ./Recommender-Server/
