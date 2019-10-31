@@ -3,6 +3,7 @@ const router = express.Router();
 
 const db = require("../config/database");
 const Book = require("../models/Book");
+const jwtUtils = require("../utils/jwtUtils");
 
 // @route GET api/books/
 // @desc get all books
@@ -47,6 +48,32 @@ router.get("/category/:category", (req, res) => {
       }
     })
     .catch(err => console.log(err));
+});
+
+// @route POST api/books/set-recommendations
+// @desc recieve book recommendations from RS and put them in database
+// @access Server
+router.post("/set-recommendations", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).send();
+    } else {
+      if (data.role == "server") {
+        res.status(200).send("Git");
+        books = req.body.books;
+
+        for (let i =1 ; i<=Object.keys(books).length; i++){
+          Book.update({similar_books: books[i]},{where: {bookid: i}})
+        }
+      } else {
+        res.status(403).send("Nie serwer");
+      }
+    }
+  } else {
+    res.status(403).send("Błędny token");
+  }
 });
 
 module.exports = router;

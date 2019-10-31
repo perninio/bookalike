@@ -29,6 +29,9 @@ Book.init(
     description: {
       type: Sequelize.STRING
     },
+    similar_books: {
+      type: Sequelize.STRING
+    },
     graphic: {
       type: Sequelize.STRING
     },

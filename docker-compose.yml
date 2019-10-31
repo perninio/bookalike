@@ -45,7 +45,11 @@ services:
 
   dataserver:
     build: ./Data-Server
-    command: npm run start
+    command: npm run dev
+    volumes:
+      - type: bind
+        source: ./Data-Server/
+        target: /usr/src/app/
     depends_on:
       - db-dataserver
     ports:
