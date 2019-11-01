@@ -13,9 +13,7 @@ instance.with({
 async function createUserNode(properties) {
   instance
     .create("User", properties)
-    .then(User => {
-      console.log("User: " + User.get("email") + " created");
-    })
+    .then(() => {})
     .catch(e => {
       console.log("Failed to create node \n" + e);
     });
@@ -30,6 +28,18 @@ function findUserByEmail(paramemail) {
         salt: user.get("salt"),
         role: user.get("role")
       };
+    } else {
+      throw new Error("User not found");
+    }
+  });
+}
+
+// TODO: FIX
+function deleteUserByEmail(paramemail) {
+  return instance.first("User", { email: paramemail }).then(user => {
+    if (user) {
+      user.delete();
+      return;
     } else {
       throw new Error("User not found");
     }
@@ -73,4 +83,4 @@ function findUser() {
   });
 }
 
-module.exports = { createUserNode, findUserByEmail };
+module.exports = { createUserNode, findUserByEmail, deleteUserByEmail };

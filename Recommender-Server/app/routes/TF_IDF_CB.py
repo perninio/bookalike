@@ -11,7 +11,10 @@ blueprint = Blueprint('tfidf_cb', __name__)
 @blueprint.route("/recommend/tfidf", methods=['GET'])
 def tfidf_recommendations():
 
-    #TODO: jak już będzie logowanie to odkomentuj i dodaj sprawdzanie czy admin to wywołał
+    # if 'Authentication' not in request.headers:
+    #     abort(403)
+
+    # TODO: jak już będzie logowanie to odkomentuj i dodaj sprawdzanie czy admin to wywołał
     # token = request.headers.get('Authentication')
     # data = decode_message(token)
 
@@ -20,7 +23,7 @@ def tfidf_recommendations():
     # if 'role' in data:
     #     if data['role'] != 'admin'
     #         return make_response(jsonify({'Error': 'Unauthorized'}, 403)
-    
+
     full_df = getDataFrame()
 
     # pobieramy jedynie dlugi opis
@@ -40,7 +43,8 @@ def tfidf_recommendations():
     response = requests.post(
         "http://"+os.environ["DATASERVER_IP"] +
         ":5000/api/books/set-recommendations",
-        headers={'Authorization': constants.token, 'Content-Type': 'application/json'},
+        headers={'Authorization': constants.token,
+                 'Content-Type': 'application/json'},
         json={"books": similar_books})
     if response.status_code == 200:
         return make_response(200)

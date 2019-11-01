@@ -13,8 +13,10 @@
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "neode": "^0.3.6",
+    "nodemailer": "^6.3.1",
     "nodemon": "^1.19.4"
   },
   "devDependencies": {}

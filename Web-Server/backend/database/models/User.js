@@ -11,6 +11,10 @@ module.exports = {
     type: "string",
     required: true
   },
+  account_code: {
+    type: "string",
+    required: true
+  },
   salt: {
     type: "string",
     required: true
