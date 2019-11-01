@@ -26,7 +26,8 @@ function findUserByEmail(paramemail) {
         email: user.get("email"),
         password: user.get("password"),
         salt: user.get("salt"),
-        role: user.get("role")
+        role: user.get("role"),
+        status: user.get("status")
       };
     } else {
       throw new Error("User not found");

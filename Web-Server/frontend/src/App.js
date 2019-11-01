@@ -12,6 +12,7 @@ import { Footer } from "./components/layout/common/Footer";
 import { MainPage } from "./components/layout/main/MainPage";
 import { RegisterPage } from "./components/layout/main/RegisterPage";
 import { LoginPage } from "./components/layout/main/LoginPage";
+import { ActivateAccountPage } from "./components/layout/main/ActivateAccountPage";
 
 // public
 import { BooksPage } from "./components/layout/public/book/BooksPage";
@@ -32,6 +33,11 @@ function App() {
           <Navbar />
           <Switch>
             <Route exact path="/" component={MainPage} />
+            <Route
+              exact
+              path="/aktywuj-konto"
+              component={ActivateAccountPage}
+            />
             <Route exact path="/book/:id" component={BookPage} />
             <Route exact path="/books/" component={BooksPage} />
             <Route exact path="/books/:category" component={BooksPage} />

@@ -11,6 +11,10 @@ module.exports = {
     type: "string",
     required: true
   },
+  status: {
+    type: "string",
+    required: true
+  },
   account_code: {
     type: "string",
     required: true

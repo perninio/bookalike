@@ -1,26 +1,27 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../../../actions/authAction";
 import classnames from "classnames";
 
 import "./Styles.scss";
 
 export const RegisterPage = props => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { errors } = useSelector(state => state.error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const { errors } = useSelector(state => state.error);
-
   const onSubmit = e => {
     e.preventDefault();
-
     const newUser = {
       email: email,
       password: password
     };
-
-    // TODO: dodaj nowy actionCreator registerUser | dodaj przechwytywanie błędów
-    // dispatch(registerUser());
+    dispatch(registerUser(newUser, history));
   };
 
   return (
@@ -87,7 +88,9 @@ export const RegisterPage = props => {
 
         <button
           className="btn btn-primary float-right"
-          onClick={e => onSubmit(e)}
+          onClick={e => {
+            onSubmit(e);
+          }}
         >
           Zarejestruj się
         </button>

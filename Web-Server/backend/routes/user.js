@@ -15,7 +15,9 @@ router.post("/login", (req, res) => {
     .userExists(email)
     .then(user => {
       if (userUtils.checkPassword(user, password)) {
-        res.status(200).json({ email: user.email, role: user.role });
+        res
+          .status(200)
+          .json({ email: user.email, role: user.role, status: user.status });
       } else {
         res.status(404).json({ password: "Podane hasło jest nieprawidłowe" });
       }
@@ -32,7 +34,6 @@ router.post("/login", (req, res) => {
 // @access Public
 router.post("/register", (req, res) => {
   const { email, password } = req.body;
-
   userUtils
     .userExists(email)
     .then(user => {
@@ -48,6 +49,7 @@ router.post("/register", (req, res) => {
           email: email,
           password: hash,
           salt: salt,
+          status: "unactivated",
           account_code: account_code,
           role: "user"
         })

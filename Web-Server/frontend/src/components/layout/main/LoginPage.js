@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import md5 from "md5";
 import { loginUser } from "../../../actions/authAction";
 
+import classnames from "classnames";
+import "./Styles.scss";
+
 export const LoginPage = () => {
+  const dispatch = useDispatch();
+  const { errors } = useSelector(state => state.error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const dispatch = useDispatch();
 
   const onSubmit = e => {
     e.preventDefault();
 
     const userData = {
       email: email,
-      password: md5(password)
+      password: password
     };
 
     dispatch(loginUser(userData));
@@ -28,7 +31,9 @@ export const LoginPage = () => {
           <label htmlFor="inputEmail">Adres email</label>
           <input
             type="email"
-            className="form-control"
+            className={classnames("form-control", {
+              "is-invalid": errors.email
+            })}
             id="inputEmail"
             aria-describedby="emailHelp"
             placeholder="Wpisz e-mail"
@@ -37,13 +42,16 @@ export const LoginPage = () => {
               setEmail(e.target.value);
             }}
           />
+          {errors.email && <div class="invalid-feedback">{errors.email}</div>}
         </div>
 
         <div className="form-group">
           <label htmlFor="inputPassword">Hasło</label>
           <input
             type="password"
-            className="form-control"
+            className={classnames("form-control", {
+              "is-invalid": errors.password
+            })}
             id="inputPassword"
             placeholder="Hasło"
             value={password}
@@ -51,6 +59,9 @@ export const LoginPage = () => {
               setPassword(e.target.value);
             }}
           />
+          {errors.password && (
+            <div class="invalid-feedback">{errors.password}</div>
+          )}
         </div>
 
         <button
