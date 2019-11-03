@@ -1,9 +1,9 @@
 CREATE TABLE users (
-userid VARCHAR(255) PRIMARY KEY,
-name VARCHAR(255) NOT NULL,
-password VARCHAR(255) NOT NULL,
-firstname VARCHAR(255) NOT NULL,
-birthdate DATE NOT NULL,
+userid INT PRIMARY KEY,
+status VARCHAR(2555),
+firstname VARCHAR(255),
+lastname VARCHAR(255),
+birthdate DATE,
 description VARCHAR(8000),
 graphic VARCHAR(1000)
 );
@@ -33,7 +33,7 @@ updatedat DATE DEFAULT CURRENT_TIMESTAMP
  
 CREATE TABLE rates (
 rateid SERIAL PRIMARY KEY,
-userid VARCHAR(255) NOT NULL,
+userid INT NOT NULL,
 bookid INT NOT NULL,
 FOREIGN KEY(bookid) REFERENCES books(bookid),
 FOREIGN KEY(userid) REFERENCES users (userid),
@@ -54,7 +54,7 @@ updatedat DATE DEFAULT CURRENT_TIMESTAMP
  
 CREATE TABLE group_participants(
 groupparticipantsid SERIAL PRIMARY KEY ,
-userid VARCHAR(255) NOT NULL,
+userid INT NOT NULL,
 FOREIGN KEY (userid) REFERENCES users(userid),
 groupid INT NOT NULL,
 FOREIGN KEY (groupid) REFERENCES groups(groupid),
@@ -64,9 +64,9 @@ updatedat DATE DEFAULT CURRENT_TIMESTAMP
  
 CREATE TABLE user_user_approvements (
 PRIMARY KEY(firstuserid,seconduserid),
-firstuserid VARCHAR(255) NOT NULL,
+firstuserid INT NOT NULL,
 FOREIGN KEY (firstuserid) REFERENCES users(userid),
-seconduserid VARCHAR(255) NOT NULL,
+seconduserid INT NOT NULL,
 FOREIGN KEY (seconduserid) REFERENCES users(userid),
 status SMALLINT NOT NULL
 -- status enum("friends","rejected","follow")
@@ -74,7 +74,7 @@ status SMALLINT NOT NULL
  
 CREATE TABLE posts (
 postid INT PRIMARY KEY,
-userid VARCHAR(255) NOT NULL,
+userid INT NOT NULL,
 FOREIGN KEY(userid) REFERENCES users(userid),
 description VARCHAR(8000),
 graphic VARCHAR(500)

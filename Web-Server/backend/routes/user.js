@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
 
 const database = require("../database/database");
 const userUtils = require("../utils/userUtils");
@@ -15,9 +16,27 @@ router.post("/login", (req, res) => {
     .userExists(email)
     .then(user => {
       if (userUtils.checkPassword(user, password)) {
-        res
-          .status(200)
-          .json({ email: user.email, role: user.role, status: user.status });
+        axios
+          .get(
+            "http://" + process.env.DS_IP_ADDR + ":5000/api/user/" + user.userid
+          )
+          .then(resp => {
+            const { data } = resp.data;
+            const payload = {
+              id: user.userid,
+              role: user.role,
+              status: user.status,
+              profile: data
+            };
+            res.status(200).json({ data: payload });
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(400).json({
+              server:
+                "Nie można się połączyć z serwerem DS, proszę spróbować później"
+            });
+          });
       } else {
         res.status(404).json({ password: "Podane hasło jest nieprawidłowe" });
       }
@@ -36,7 +55,7 @@ router.post("/register", (req, res) => {
   const { email, password } = req.body;
   userUtils
     .userExists(email)
-    .then(user => {
+    .then(() => {
       res
         .status(409)
         .json({ email: "Ktoś zarejestrował już się z podanego adresu" });
@@ -53,15 +72,33 @@ router.post("/register", (req, res) => {
           account_code: account_code,
           role: "user"
         })
-        .then(() => {
-          emailUtils
-            .sendEmail(email, account_code)
-            .then(resp => {
-              res.status(200).send();
+        .then(user => {
+          axios
+            .post(
+              "http://" +
+                process.env.DS_IP_ADDR +
+                ":5000/api/user/initialize/" +
+                user.userid
+            )
+            .then(() => {
+              emailUtils
+                .sendEmail(email, account_code)
+                .then(() => {
+                  res.status(200).send();
+                })
+                .catch(err => {
+                  database.deleteUserByEmail(email);
+                  res.status(409).json({ email: err });
+                });
             })
             .catch(err => {
+              console.log(err);
               database.deleteUserByEmail(email);
-              res.status(409).json({ email: err });
+              res.status(400).json({
+                server:
+                  "Nie można się połączyć z serwerem DS, proszę spróbować później"
+              });
+              return;
             });
         })
         .catch(err => console.log(err));

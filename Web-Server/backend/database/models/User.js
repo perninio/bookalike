@@ -1,7 +1,4 @@
 module.exports = {
-  userid: {
-    type: "string"
-  },
   email: {
     type: "string",
     required: true,

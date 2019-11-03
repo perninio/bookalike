@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { loginUser } from "../../../actions/authAction";
@@ -8,6 +9,7 @@ import "./Styles.scss";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { errors } = useSelector(state => state.error);
 
   const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ export const LoginPage = () => {
       password: password
     };
 
-    dispatch(loginUser(userData));
+    dispatch(loginUser(userData, history));
   };
 
   return (

@@ -4,7 +4,7 @@ import { serverAPIUserEndpoint } from "../constants/serverEndpoint";
 
 import axios from "axios";
 
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData, history) => dispatch => {
   // TODO: wyślij zapytanie axiosem - Endpoint: /user, Type: GET
 
   // axios.post("http://localhost:XXXX/user", userData).then(localStorage.setItem("jwtToken", token) ...   return {type: LOGIN_USER, payload: userData};)
@@ -12,8 +12,8 @@ export const loginUser = userData => dispatch => {
   axios
     .post(serverAPIUserEndpoint + "/login", userData)
     .then(respond => {
-      const { email, role, status } = respond.data;
-      console.log("email: ", email);
+      const user = respond.data.data;
+      history.push("/potwierdz-kod", { user: user });
     })
     .catch(err => {
       console.log(err);
@@ -27,6 +27,22 @@ export const loginUser = userData => dispatch => {
     type: LOGIN_USER,
     payload: userData
   };
+};
+//TODO: ZRÓB TO
+export const activateCode = (codeData, userData, history) => dispatch => {
+  axios
+    .post(serverAPIUserEndpoint + "/activate/" + codeData, userData)
+    .then(user => {
+      axios.post("AUTHORIZATIONSERVER", user).then(data => {
+        localStorage.setItem("jwtToken", data);
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
 
 export const registerUser = (userData, history) => dispatch => {

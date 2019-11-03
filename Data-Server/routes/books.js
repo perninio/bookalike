@@ -60,19 +60,19 @@ router.post("/set-recommendations", (req, res) => {
     if (data.error) {
       res.status(400).send();
     } else {
-      if (data.role == "server") {
+      if (data.role == "server" && data.id == "RS") {
         res.status(200).send("Git");
         books = req.body.books;
 
-        for (let i =1 ; i<=Object.keys(books).length; i++){
-          Book.update({similar_books: books[i]},{where: {bookid: i}})
+        for (let i = 1; i <= Object.keys(books).length; i++) {
+          Book.update({ similar_books: books[i] }, { where: { bookid: i } });
         }
       } else {
         res.status(403).send("Nie serwer");
       }
     }
   } else {
-    res.status(403).send("Błędny token");
+    res.status(401).send("Wymagana jest autoryzacja");
   }
 });
 

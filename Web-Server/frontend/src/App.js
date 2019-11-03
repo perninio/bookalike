@@ -38,6 +38,11 @@ function App() {
               path="/aktywuj-konto"
               component={ActivateAccountPage}
             />
+            <Route
+              exact
+              path="/potwierdz-kod"
+              component={ActivateAccountPage}
+            />
             <Route exact path="/book/:id" component={BookPage} />
             <Route exact path="/books/" component={BooksPage} />
             <Route exact path="/books/:category" component={BooksPage} />

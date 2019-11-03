@@ -11,18 +11,24 @@ instance.with({
 
 //creating User node
 async function createUserNode(properties) {
-  instance
+  resp = await instance
     .create("User", properties)
-    .then(() => {})
+    .then(user => {
+      return {
+        userid: user.id()
+      };
+    })
     .catch(e => {
       console.log("Failed to create node \n" + e);
     });
+  return resp;
 }
 
 function findUserByEmail(paramemail) {
   return instance.first("User", { email: paramemail }).then(user => {
     if (user) {
       return {
+        userid: user.id(),
         email: user.get("email"),
         password: user.get("password"),
         salt: user.get("salt"),

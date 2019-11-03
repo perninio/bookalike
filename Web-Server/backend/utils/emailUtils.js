@@ -43,6 +43,7 @@ async function sendEmail(email, code) {
     .sendMail(mailOptions)
     .then(() => {})
     .catch(err => {
+      console.log(err);
       throw err.response;
     });
   return resp;

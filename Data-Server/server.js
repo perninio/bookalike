@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const books = require("./routes/books");
+const user = require("./routes/user");
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api/books", books);
+app.use("/api/user", user);
 
 app.post("/server/init", (req, res) => {
   if (app.locals.token || app.locals.publickey) {
