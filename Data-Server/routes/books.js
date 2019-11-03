@@ -27,7 +27,6 @@ router.get("/:bookID", (req, res) => {
   Book.findOne({ where: { bookid: req.params.bookID } })
     .then(book => {
       if (book) {
-        let similar_books;
         books = book.similar_books.split(",");
         bookUtils
           .getSimilarBooks(books)
