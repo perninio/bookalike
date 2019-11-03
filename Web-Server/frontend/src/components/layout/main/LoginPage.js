@@ -6,6 +6,7 @@ import { loginUser } from "../../../actions/authAction";
 
 import classnames from "classnames";
 import "./Styles.scss";
+import { setErrors } from "../../../actions/errorAction";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   const onSubmit = e => {
+    dispatch(setErrors({}));
     e.preventDefault();
 
     const userData = {

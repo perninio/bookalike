@@ -4,12 +4,10 @@ from . import TOKEN_GENERATOR
 blueprint = Blueprint('token', __name__)
 
 
-@blueprint.route('/token', methods=['GET'])
+@blueprint.route('/token', methods=['POST'])
 def create_token():
     """Creates a JWT token with data given in body (JSON format)
     """
-    if not request.json:
-        abort(400)
 
     payload = request.json
 

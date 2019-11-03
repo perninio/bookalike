@@ -12,6 +12,23 @@ async function userExists(email) {
     });
 }
 
+async function findUserById(id) {
+  return await database
+    .findUserById(id)
+    .then(user => {
+      return user;
+    })
+    .catch(err => console.log(err));
+}
+
+async function changeAccountData(user, newData) {
+  return await database.changeAccountData(user, newData);
+}
+
+function checkCode(user, activateCode) {
+  return user.account_code == activateCode;
+}
+
 function checkPassword(user, password) {
   hash = createHash(password, user.salt);
   return user.password === hash;
@@ -49,5 +66,8 @@ module.exports = {
   userExists,
   checkPassword,
   getHashAndSalt,
-  createAccountCode
+  createAccountCode,
+  findUserById,
+  checkCode,
+  changeAccountData
 };

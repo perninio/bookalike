@@ -1,7 +1,11 @@
-import { LOGIN_USER, SET_ERRORS } from "./types";
+import { SET_CURRENT_USER, SET_ERRORS } from "./types";
 import { setErrors } from "./errorAction";
-import { serverAPIUserEndpoint } from "../constants/serverEndpoint";
-
+import {
+  serverAPIUserEndpoint,
+  authorizationAPITokenEndpoint
+} from "../constants/serverEndpoint";
+import { setAuthorizationToken } from "../utils/jwtUtils";
+import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export const loginUser = (userData, history) => dispatch => {
@@ -13,7 +17,23 @@ export const loginUser = (userData, history) => dispatch => {
     .post(serverAPIUserEndpoint + "/login", userData)
     .then(respond => {
       const user = respond.data.data;
-      history.push("/potwierdz-kod", { user: user });
+      if (user.status == "unactivated") {
+        history.push("/potwierdz-kod", { user: user });
+      } else {
+        axios
+          .post(authorizationAPITokenEndpoint, user)
+          .then(data => {
+            const { token } = data.data;
+            localStorage.setItem("jwtToken", token);
+            setAuthorizationToken(token);
+            const decoded_data = jwt_decode(token);
+            dispatch(setCurrentUser(decoded_data));
+            history.push("/");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     })
     .catch(err => {
       console.log(err);
@@ -22,20 +42,23 @@ export const loginUser = (userData, history) => dispatch => {
         payload: err.response.data
       });
     });
-
-  return {
-    type: LOGIN_USER,
-    payload: userData
-  };
 };
-//TODO: ZRÓB TO
+
 export const activateCode = (codeData, userData, history) => dispatch => {
   axios
     .post(serverAPIUserEndpoint + "/activate/" + codeData, userData)
     .then(user => {
-      axios.post("AUTHORIZATIONSERVER", user).then(data => {
-        localStorage.setItem("jwtToken", data);
-      });
+      axios
+        .post(authorizationAPITokenEndpoint, user.data.data)
+        .then(data => {
+          const { token } = data.data;
+          localStorage.setItem("jwtToken", token);
+          setAuthorizationToken(token);
+          const decoded_data = jwt_decode(token);
+          dispatch(setCurrentUser(decoded_data));
+          history.push("/");
+        })
+        .catch(err => console.log(err));
     })
     .catch(err => {
       dispatch({
@@ -55,4 +78,18 @@ export const registerUser = (userData, history) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const setCurrentUser = data => {
+  return {
+    type: SET_CURRENT_USER,
+    payload: data
+  };
+};
+
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem("jwtToken");
+  setAuthorizationToken(null);
+  dispatch(setCurrentUser({}));
+  window.location.href = "/login";
 };

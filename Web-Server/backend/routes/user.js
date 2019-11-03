@@ -105,8 +105,55 @@ router.post("/register", (req, res) => {
     });
 });
 
-// @route GET api/user/confirmation/:confirmation-code
-// @desc endpoint which takes
+// @route GET api/user/activate/:confirmation-code
+// @desc endpoint which takes confirmation code and checks it with database confirmation code
 // @access Public
+router.post("/activate/:confirmationCode", (req, res) => {
+  const { id } = req.body;
+
+  userUtils
+    .findUserById(id)
+    .then(user => {
+      if (userUtils.checkCode(user, req.params.confirmationCode)) {
+        userUtils
+          .changeAccountData(user, { status: "activated" })
+          .then(user => {
+            axios
+              .get(
+                "http://" +
+                  process.env.DS_IP_ADDR +
+                  ":5000/api/user/" +
+                  user.userid
+              )
+              .then(resp => {
+                const { data } = resp.data;
+                const payload = {
+                  id: user.userid,
+                  role: user.role,
+                  status: user.status,
+                  profile: data
+                };
+                res.status(200).json({ data: payload });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(400).json({
+                  server:
+                    "Nie można się połączyć z serwerem DS, proszę spróbować później"
+                });
+              });
+          })
+          .catch(err => console.log(err));
+      } else {
+        res.status(404).json({ activateCode: "Kod nieprawidłowy" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(404)
+        .json({ email: "Użytkownik o podanym emailu nie istnieje" });
+    });
+});
 
 module.exports = router;

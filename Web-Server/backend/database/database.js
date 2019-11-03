@@ -41,6 +41,40 @@ function findUserByEmail(paramemail) {
   });
 }
 
+function changeAccountData(user, newData) {
+  return instance.first("User", { email: user.email }).then(userDb => {
+    if (userDb) {
+      return userDb.update(newData).then(userUpdated => {
+        return {
+          userid: userUpdated.id(),
+          role: userUpdated.get("role"),
+          status: userUpdated.get("status")
+        };
+      });
+    } else {
+      throw new Error("User not found");
+    }
+  });
+}
+
+function findUserById(id) {
+  return instance.findById("User", id).then(user => {
+    if (user) {
+      return {
+        userid: user.id(),
+        email: user.get("email"),
+        password: user.get("password"),
+        salt: user.get("salt"),
+        role: user.get("role"),
+        account_code: user.get("account_code"),
+        status: user.get("status")
+      };
+    } else {
+      throw new Error("User not found");
+    }
+  });
+}
+
 // TODO: FIX
 function deleteUserByEmail(paramemail) {
   return instance.first("User", { email: paramemail }).then(user => {
@@ -90,4 +124,10 @@ function findUser() {
   });
 }
 
-module.exports = { createUserNode, findUserByEmail, deleteUserByEmail };
+module.exports = {
+  createUserNode,
+  findUserByEmail,
+  findUserById,
+  deleteUserByEmail,
+  changeAccountData
+};

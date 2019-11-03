@@ -13,6 +13,7 @@ import { MainPage } from "./components/layout/main/MainPage";
 import { RegisterPage } from "./components/layout/main/RegisterPage";
 import { LoginPage } from "./components/layout/main/LoginPage";
 import { ActivateAccountPage } from "./components/layout/main/ActivateAccountPage";
+import { ActivateAccount } from "./components/layout/main/ActivateAccount";
 
 // public
 import { BooksPage } from "./components/layout/public/book/BooksPage";
@@ -24,6 +25,16 @@ import { ProfilPage } from "./components/layout/user/ProfilPage";
 import { RestrictedRoute } from "./components/common/RestrictedRoute";
 import { ManageUsers } from "./components/layout/admin/ManageUsers";
 import { NotFound } from "./components/layout/common/NotFound";
+
+import { setAuthorizationToken } from "./utils/jwtUtils";
+import { setCurrentUser } from "./actions/authAction";
+import jwt_decode from "jwt-decode";
+
+if (localStorage.getItem("jwtToken")) {
+  setAuthorizationToken(localStorage.getItem("jwtToken"));
+  const decoded_data = jwt_decode(localStorage.getItem("jwtToken"));
+  store.dispatch(setCurrentUser(decoded_data));
+}
 
 function App() {
   return (
@@ -38,11 +49,7 @@ function App() {
               path="/aktywuj-konto"
               component={ActivateAccountPage}
             />
-            <Route
-              exact
-              path="/potwierdz-kod"
-              component={ActivateAccountPage}
-            />
+            <Route exact path="/potwierdz-kod" component={ActivateAccount} />
             <Route exact path="/book/:id" component={BookPage} />
             <Route exact path="/books/" component={BooksPage} />
             <Route exact path="/books/:category" component={BooksPage} />

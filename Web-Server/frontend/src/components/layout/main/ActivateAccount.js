@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -8,7 +8,7 @@ import classnames from "classnames";
 import "./Styles.scss";
 
 export const ActivateAccount = props => {
-  const user = props.user ? props.user : {};
+  const user = props.location.state.user ? props.location.state.user : {};
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -19,11 +19,7 @@ export const ActivateAccount = props => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const code = {
-      accountCode: accountCode
-    };
-
-    dispatch(activateCode(code, user, history));
+    dispatch(activateCode(accountCode, user, history));
   };
 
   useEffect(() => {

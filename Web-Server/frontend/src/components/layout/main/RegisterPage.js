@@ -5,6 +5,7 @@ import { registerUser } from "../../../actions/authAction";
 import classnames from "classnames";
 
 import "./Styles.scss";
+import { setErrors } from "../../../actions/errorAction";
 
 export const RegisterPage = props => {
   const history = useHistory();
@@ -16,6 +17,8 @@ export const RegisterPage = props => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const onSubmit = e => {
+    dispatch(setErrors({}));
+
     e.preventDefault();
     const newUser = {
       email: email,

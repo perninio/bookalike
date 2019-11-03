@@ -1,12 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../actions/authAction";
 
 export const NavbarLinks = ({ isAuthenticated }) => {
+  const dispatch = useDispatch();
+
   const userOptions = (
     <div className="ml-auto">
-      <Link className="btn btn-outline-danger my-2 my-sm-0" to="/logout">
+      <button
+        className="btn btn-outline-danger my-2 my-sm-0"
+        onClick={() => {
+          dispatch(logoutUser());
+        }}
+      >
         wyloguj
-      </Link>
+      </button>
     </div>
   );
 
