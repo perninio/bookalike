@@ -22,8 +22,8 @@ export const BookPage = props => {
     };
     fetchData();
   }, [idBook]);
-/*Test Data*/
-/*
+  /*Test Data*/
+  /*
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -60,9 +60,9 @@ export const BookPage = props => {
   }
 
   return (
-    <React.Fragment>	
+    <React.Fragment>
       <div class="container">
-		<Book bookdata={data}/>
+        <Book bookdata={data.book} />
 
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
@@ -78,46 +78,54 @@ export const BookPage = props => {
                 onSlideChanged={onSlideChanged}
                 style="color:white"
               >
-			<div className="col-md-7">
-				<div>
-					<img
-					  src="https://skupszop.pl/images/books/9788375780284.jpg"
-					  height="208"
-					  width="136"
-					/>
-				</div>
-				<div><a>Wiedźmin Ostatnie Życzenie</a></div>
-			</div>
-			<div className="col-md-7">
-				<div>
-                <img
-                  src="https://skupszop.pl/images/books/9788375680966.jpg"
-                  height="208"
-                  width="136"
-                />
-				</div>
-				<div><a>Mroczny Rycerz</a></div>
-			</div>
-			<div className="col-md-7">
-				<div>
-                <img
-                  src=" https://skupszop.pl/images/books/9788362170555.jpg"
-                  height="208"
-                  width="136"
-                />
-								</div>
-				<div><a>Wielki Mistrz</a></div>
-			</div>
-			<div className="col-md-7">
-				<div>
-				<img
-                  src="https://skupszop.pl/images/books/9788362170210.jpg"
-                  height="208"
-                  width="136"
-                />
-								</div>
-				<div><a>Gildia magów</a></div>
-			</div>
+                <div className="col-md-7">
+                  <div>
+                    <img
+                      src="https://skupszop.pl/images/books/9788375780284.jpg"
+                      height="208"
+                      width="136"
+                    />
+                  </div>
+                  <div>
+                    <a>Wiedźmin Ostatnie Życzenie</a>
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div>
+                    <img
+                      src="https://skupszop.pl/images/books/9788375680966.jpg"
+                      height="208"
+                      width="136"
+                    />
+                  </div>
+                  <div>
+                    <a>Mroczny Rycerz</a>
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div>
+                    <img
+                      src=" https://skupszop.pl/images/books/9788362170555.jpg"
+                      height="208"
+                      width="136"
+                    />
+                  </div>
+                  <div>
+                    <a>Wielki Mistrz</a>
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div>
+                    <img
+                      src="https://skupszop.pl/images/books/9788362170210.jpg"
+                      height="208"
+                      width="136"
+                    />
+                  </div>
+                  <div>
+                    <a>Gildia magów</a>
+                  </div>
+                </div>
               </AliceCarousel>
             </div>
           </div>
@@ -130,7 +138,9 @@ export const BookPage = props => {
                 <div class="row">
                   <div class="col-md-2">
                     <img
-                      src="https://image.ibb.co/jw55Ex/def_face.jpg" height='100' width='100' 
+                      src="https://image.ibb.co/jw55Ex/def_face.jpg"
+                      height="100"
+                      width="100"
                       class="img rounded-circle img-fluid"
                     />
                     <p class="text-secondary text-center">15 Minutes Ago</p>
@@ -175,6 +185,3 @@ export const BookPage = props => {
     </React.Fragment>
   );
 };
-
-
-
