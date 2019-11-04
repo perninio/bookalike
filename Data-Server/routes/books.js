@@ -56,6 +56,29 @@ router.get("/category/:category", (req, res) => {
     .catch(err => console.log(err));
 });
 
+// @route GET api/books/categories
+// @desc get all books from certain category
+// @access Public
+router.get("/categories/all", (req, res) => {
+  Book.findAll({ attributes: ["booktype"] })
+    .then(books => {
+      if (books) {
+        let uniqueCategories = [
+          ...new Set(
+            books.map(bookCat => {
+              return bookCat.booktype;
+            })
+          )
+        ];
+
+        res.status(200).json({ data: uniqueCategories });
+      } else {
+        res.status(404).json({ Msg: "Nie można znaleźć takiego typu" });
+      }
+    })
+    .catch(err => console.log(err));
+});
+
 // @route POST api/books/set-recommendations
 // @desc recieve book recommendations from RS and put them in database
 // @access Server

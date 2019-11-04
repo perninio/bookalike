@@ -94,6 +94,7 @@ router.post("/register", (req, res) => {
             .catch(err => {
               console.log(err);
               database.deleteUserByEmail(email);
+              //TODO: send to DS delete user by id
               res.status(400).json({
                 server:
                   "Nie można się połączyć z serwerem DS, proszę spróbować później"

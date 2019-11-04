@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./BooksPageStyle.css";
-import Books from './components/Books';
-import Pagination from './components/Pagination';
+import Books from "./components/Books";
+import Pagination from "./components/Pagination";
 import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
 export const BooksPage = props => {
@@ -12,8 +12,8 @@ export const BooksPage = props => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage,setBooksPerPage] = useState(1);
-  const [bookpages,setBookPages] = useState();
+  const [booksPerPage, setBooksPerPage] = useState(1);
+  const [bookpages, setBookPages] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +24,7 @@ export const BooksPage = props => {
         )
         .then(result => {
           setData(result.data.data);
-		  setBookPages(result.data.data.length/booksPerPage)
+          setBookPages(result.data.data.length / booksPerPage);
         })
         .catch(err =>
           console.log(
@@ -36,8 +36,8 @@ export const BooksPage = props => {
     fetchData();
   }, [bookCategory]);
 
-/*Test*/
-/*
+  /*Test*/
+  /*
     useEffect(() => {
     const fetchData = async () => {
       axios
@@ -58,35 +58,32 @@ export const BooksPage = props => {
     fetchData();
   }, [bookCategory]);
 */
-  
+
   const indexOfLastPost = currentPage * booksPerPage;
   const indexOfFirstPost = indexOfLastPost - booksPerPage;
   const currentBooks = data.slice(indexOfFirstPost, indexOfLastPost);
   const handlePageClick = data => {
     let selected = data.selected;
-	setCurrentPage(selected+1);
-	};	
-const handleChange=(e)=>{    
-      setBooksPerPage(e.target.value);
-	  setBookPages(data.length/e.target.value)
-	  console.log(e.target.value);
-  }
-  
+    setCurrentPage(selected + 1);
+  };
+  const handleChange = e => {
+    setBooksPerPage(e.target.value);
+    setBookPages(data.length / e.target.value);
+    console.log(e.target.value);
+  };
+
   return (
-    <div className='container mt-5'>
-	    <div className="container">			
-			<Books booksdata={currentBooks} loading={loading} />
-		</div>	  
-	  <Pagination bookpages={bookpages} handlePageClick={handlePageClick}/>
-	  <select  onChange={handleChange.bind(this)} value={booksPerPage} >
-		<option value="10">10</option>
-		<option value="20">20</option>
-		<option value="30">30</option>
-		<option value="50">50</option>
-	  </select>
-	  
+    <div className="container mt-5">
+      <div className="container">
+        <Books booksdata={currentBooks} loading={loading} />
+      </div>
+      <Pagination bookpages={bookpages} handlePageClick={handlePageClick} />
+      <select onChange={handleChange.bind(this)} value={booksPerPage}>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+      </select>
     </div>
   );
 };
-
-

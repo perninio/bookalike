@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import { serverAPIBooksEndpoint } from "../../../constants/serverEndpoint";
 
 export const CategoryOptions = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(serverAPIBooksEndpoint + "/categories/all")
+        .then(result => {
+          setData(result.data.data);
+        })
+        .catch(err => console.log(err));
+    };
+    fetchData();
+  }, []);
+
   return (
     <li className="nav-item dropdown pl-3">
       <a
@@ -20,18 +37,15 @@ export const CategoryOptions = () => {
         className="dropdown-menu ba-navbar__menu"
         aria-labelledby="navbarDropdown"
       >
-        <Link
-          className="dropdown-item ba-navbar__menu--options"
-          to="/books/biografie"
-        >
-          Biografie
-        </Link>
-        <Link
-          className="dropdown-item ba-navbar__menu--options"
-          to="/books/poradniki"
-        >
-          Poradniki
-        </Link>
+        {data != [] &&
+          data.map(category => (
+            <Link
+              className="dropdown-item ba-navbar__menu--options"
+              to={"/books/" + category}
+            >
+              {category}
+            </Link>
+          ))}
       </div>
     </li>
   );
