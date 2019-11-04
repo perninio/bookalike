@@ -12,7 +12,7 @@ export const BooksPage = props => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(1);
+  const [booksPerPage, setBooksPerPage] = useState(10);
   const [bookpages, setBookPages] = useState();
 
   useEffect(() => {
