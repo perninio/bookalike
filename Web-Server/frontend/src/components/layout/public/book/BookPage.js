@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Carousel from "./Carousel";
-import ReactStars from "react-stars";
-
 import AliceCarousel from "react-alice-carousel";
 import "./alice-carousel.css";
+import Book from "./components/Book";
 
 import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
@@ -23,10 +22,25 @@ export const BookPage = props => {
     };
     fetchData();
   }, [idBook]);
+/*Test Data*/
+/*
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get('https://my-json-server.typicode.com/perninio/hello-world/databook')
+        .then(result => {
+          setData(result.data);
+		  console.log(result.data);
+        })
+        .catch(err => console.log(err));
+    };
+    fetchData();
+  }, [idBook]);
+*/
 
   //const galleryItems=[1,2,3,4,5,6]
   const stagePadding = {
-    paddingLeft: 170, // in pixels 170 najlepiej
+    paddingLeft: 160, // in pixels 170 najlepiej
     paddingRight: 0
   };
 
@@ -45,57 +59,10 @@ export const BookPage = props => {
     console.debug("Slide`s position after changes: ", e.slide);
   }
 
-  const ratingChanged = newRating => {
-    console.log(newRating);
-  };
-
   return (
     <React.Fragment>	
       <div class="container">
-        <div class="row my-row">
-		 <div class="col-sm-12 col-md-auto text-center order-sm-1 my-col">
-
-            <span class="bookcover2">
-			<div class="right">
-			<div>
-              <img
-                src="https://skupszop.pl/images/books/9788375745368.jpg"
-                alt="Pan lodowego ogrodu"
-              ></img>
-			  </div>
-			  <div>
-              <a class="float-center btn text-white btn-danger">
-                {" "}
-               <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Przeczytana				
-              </a>
-			  </div>
-			  </div>
-            </span>
-          </div>
-	
-          <div class="col-md my-col  order-sm-2">
-            <span class="bookinfo">
-              <h2>Pan lodowego ogrodu</h2>
-              <div>Ocena: 4,79/5</div>
-              <div>autor: Grzędowicz</div>
-              Opis: Dawno dawno temu, za siedmioma górami ....
-            </span>
-          </div>
-          <div class="col-md my-col order-md-3 order-sm-4">
-            reklamy kiedyś może google albo/rtbkit
-          </div>
-
-          <div class="col-md-12 my-col order-md-4 order-sm-3">
-            <span class="stars">
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={24}
-                color2={"#ffd700"}
-              />
-            </span>
-          </div>
-        </div>
+		<Book bookdata={data}/>
 
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
@@ -111,21 +78,46 @@ export const BookPage = props => {
                 onSlideChanged={onSlideChanged}
                 style="color:white"
               >
-                <img
-                  src="https://skupszop.pl/images/books/9788375780284.jpg"
-                  height="208"
-                  width="136"
-                />
+			<div className="col-md-7">
+				<div>
+					<img
+					  src="https://skupszop.pl/images/books/9788375780284.jpg"
+					  height="208"
+					  width="136"
+					/>
+				</div>
+				<div><a>Wiedźmin Ostatnie Życzenie</a></div>
+			</div>
+			<div className="col-md-7">
+				<div>
                 <img
                   src="https://skupszop.pl/images/books/9788375680966.jpg"
                   height="208"
                   width="136"
                 />
+				</div>
+				<div><a>Mroczny Rycerz</a></div>
+			</div>
+			<div className="col-md-7">
+				<div>
                 <img
                   src=" https://skupszop.pl/images/books/9788362170555.jpg"
                   height="208"
                   width="136"
                 />
+								</div>
+				<div><a>Wielki Mistrz</a></div>
+			</div>
+			<div className="col-md-7">
+				<div>
+				<img
+                  src="https://skupszop.pl/images/books/9788362170210.jpg"
+                  height="208"
+                  width="136"
+                />
+								</div>
+				<div><a>Gildia magów</a></div>
+			</div>
               </AliceCarousel>
             </div>
           </div>
