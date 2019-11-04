@@ -62,7 +62,7 @@ export const BookPage = props => {
   return (
     <React.Fragment>
       <div class="container">
-        <Book bookdata={data.book} />
+        {data.book && <Book bookdata={data.book} />}
 
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">

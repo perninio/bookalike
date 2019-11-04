@@ -20,11 +20,15 @@ export const RegisterPage = props => {
     dispatch(setErrors({}));
 
     e.preventDefault();
-    const newUser = {
-      email: email,
-      password: password
-    };
-    dispatch(registerUser(newUser, history));
+    if (password == passwordConfirmation) {
+      const newUser = {
+        email: email,
+        password: password
+      };
+      dispatch(registerUser(newUser, history));
+    } else {
+      dispatch(setErrors({ password2: "Hasła muszą się zgadzać" }));
+    }
   };
 
   return (
