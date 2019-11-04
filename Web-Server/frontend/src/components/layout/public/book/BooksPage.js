@@ -1,69 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./BooksPageStyle.css";
-import ReactPaginate from 'react-paginate';
-
+import Books from './components/Books';
+import Pagination from './components/Pagination';
 import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
-
-function printRowsBooks() {
-  var items = [
-    {
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-    {
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-    {
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-    {
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-    {
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-	{
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-	{
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-	{
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    },
-	{
-      Link: "https://skupszop.pl/images/books/9788392579601.jpg",
-      Title: "Gildia Magów. Księga I Trylogii Czarnego Maga"
-    }
-	
-  ];
-  var keys = Object.keys(items[0]);
-  console.log(keys);
-  return items.map((row, index) => {
-    console.log(row);
-    return (
-      <tr key={index}>
-        <RenderBook data={row} keys={keys} />
-      </tr>
-    );
-  });
-}
 
 export const BooksPage = props => {
   const bookCategory = props.match.params.category
     ? props.match.params.category
     : "";
-
   const [data, setData] = useState([]);
-  console.log(data);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage,setBooksPerPage] = useState(1);
+  const [bookpages,setBookPages] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -73,6 +24,7 @@ export const BooksPage = props => {
         )
         .then(result => {
           setData(result.data.data);
+		  setBookPages(result.data.data.length/booksPerPage)
         })
         .catch(err =>
           console.log(
@@ -84,23 +36,57 @@ export const BooksPage = props => {
     fetchData();
   }, [bookCategory]);
 
+/*Test*/
+/*
+    useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get('https://my-json-server.typicode.com/perninio/hello-world/db')
+        .then(result => {
+          setData(result.data.data);
+		  setBookPages(result.data.data.length/booksPerPage)		  
+		    console.log(result.data.data[0].name);
+			console.log(result.data.data.length);
+        })
+        .catch(err =>
+          console.log(
+            serverAPIBooksEndpoint +
+              (bookCategory !== "" ? "/category/" + bookCategory : "")
+          )
+        );		
+    };
+    fetchData();
+  }, [bookCategory]);
+*/
+  
+  const indexOfLastPost = currentPage * booksPerPage;
+  const indexOfFirstPost = indexOfLastPost - booksPerPage;
+  const currentBooks = data.slice(indexOfFirstPost, indexOfLastPost);
+  const handlePageClick = data => {
+    let selected = data.selected;
+	setCurrentPage(selected+1);
+	};	
+const handleChange=(e)=>{    
+      setBooksPerPage(e.target.value);
+	  setBookPages(data.length/e.target.value)
+	  console.log(e.target.value);
+  }
+  
   return (
-    <React.Fragment>
-      <div class="container">
-        <div class="row my-row-books">{printRowsBooks()}</div>
-      </div>	  
-    </React.Fragment>
+    <div className='container mt-5'>
+	    <div className="container">			
+			<Books booksdata={currentBooks} loading={loading} />
+		</div>	  
+	  <Pagination bookpages={bookpages} handlePageClick={handlePageClick}/>
+	  <select  onChange={handleChange.bind(this)} value={booksPerPage} >
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="50">50</option>
+	  </select>
+	  
+    </div>
   );
 };
 
-const RenderBook = function(book) {
-  return (
-    <div class="col-md my-col-books ">
-      <div class="zoom">
-        <img src={book.data[book.keys[0]]} width="129" height="190"></img>
-	  </div>
-      <div class="bookstitle"><h6>{book.data[book.keys[1]]}</h6></div>
-	</div>
 
-  );
-};
