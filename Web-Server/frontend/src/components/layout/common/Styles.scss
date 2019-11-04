@@ -52,3 +52,9 @@
   background-color: $navbar-secondary !important;
   text-align: center;
 }
+
+.vw-80 {
+  @media (max-width: $tablet-width) {
+    width: 81vw;
+  }
+}

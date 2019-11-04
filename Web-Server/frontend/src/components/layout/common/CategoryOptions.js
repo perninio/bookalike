@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import "./Styles.scss";
+
 import { serverAPIBooksEndpoint } from "../../../constants/serverEndpoint";
 
 export const CategoryOptions = () => {
@@ -20,7 +22,7 @@ export const CategoryOptions = () => {
   }, []);
 
   return (
-    <li className="nav-item dropdown pl-3">
+    <li className="nav-item dropdown pl-3 ">
       <a
         className="nav-link dropdown-toggle ba-navbar__options"
         id="navbarDropdown"
@@ -40,7 +42,7 @@ export const CategoryOptions = () => {
         {data != [] &&
           data.map(category => (
             <Link
-              className="dropdown-item ba-navbar__menu--options"
+              className="dropdown-item ba-navbar__menu--options vw-80"
               to={"/books/" + category}
             >
               {category}
