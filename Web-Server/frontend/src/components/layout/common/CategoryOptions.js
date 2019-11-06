@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "./Styles.scss";
 
-import { serverAPIBooksEndpoint } from "../../../constants/serverEndpoint";
+import { dataserverAPIBooksEndpoint } from "../../../constants/serverEndpoint";
 
 export const CategoryOptions = () => {
   const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ export const CategoryOptions = () => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(serverAPIBooksEndpoint + "/categories/all")
+        .get(dataserverAPIBooksEndpoint + "/categories/all")
         .then(result => {
           setData(result.data.data);
         })

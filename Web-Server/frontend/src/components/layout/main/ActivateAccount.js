@@ -34,13 +34,12 @@ export const ActivateAccount = props => {
         <div className="form-group">
           <label htmlFor="inputCode">Kod aktywacyjny</label>
           <input
-            type="email"
             className={classnames("form-control", {
               "is-invalid": errors.activateCode
             })}
             id="inputCode"
             aria-describedby="inputHelp"
-            placeholder="Wpisz e-mail"
+            placeholder="Wpisz kod"
             value={accountCode}
             onChange={e => {
               setAccountCode(e.target.value);

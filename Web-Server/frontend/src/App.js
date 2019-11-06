@@ -20,7 +20,7 @@ import { BooksPage } from "./components/layout/public/book/BooksPage";
 import { BookPage } from "./components/layout/public/book/BookPage";
 
 import { PrivateRoute } from "./components/common/PrivateRoute";
-import { ProfilPage } from "./components/layout/user/ProfilPage";
+import { EditProfilePage } from "./components/layout/user/EditProfilPage";
 
 import { RestrictedRoute } from "./components/common/RestrictedRoute";
 import { ManageUsers } from "./components/layout/admin/ManageUsers";
@@ -55,7 +55,11 @@ function App() {
             <Route exact path="/books/:category" component={BooksPage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/profil" component={ProfilPage} />
+            <PrivateRoute
+              exact
+              path="/profile/edit"
+              component={EditProfilePage}
+            />
             <RestrictedRoute
               exact
               path="/manage/users"

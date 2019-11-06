@@ -1,7 +1,7 @@
 import { SET_CURRENT_USER, SET_ERRORS } from "./types";
 import { setErrors } from "./errorAction";
 import {
-  serverAPIUserEndpoint,
+  webserverAPIUserEndpoint,
   authorizationAPITokenEndpoint
 } from "../constants/serverEndpoint";
 import { setAuthorizationToken } from "../utils/jwtUtils";
@@ -14,7 +14,7 @@ export const loginUser = (userData, history) => dispatch => {
   // axios.post("http://localhost:XXXX/user", userData).then(localStorage.setItem("jwtToken", token) ...   return {type: LOGIN_USER, payload: userData};)
   // Jeśli nie - np. usera nie ma, albo hasło się nie zgadza... no to wysyłamy Errory
   axios
-    .post(serverAPIUserEndpoint + "/login", userData)
+    .post(webserverAPIUserEndpoint + "/login", userData)
     .then(respond => {
       const user = respond.data.data;
       if (user.status == "unactivated") {
@@ -46,7 +46,7 @@ export const loginUser = (userData, history) => dispatch => {
 
 export const activateCode = (codeData, userData, history) => dispatch => {
   axios
-    .post(serverAPIUserEndpoint + "/activate/" + codeData, userData)
+    .post(webserverAPIUserEndpoint + "/activate/" + codeData, userData)
     .then(user => {
       axios
         .post(authorizationAPITokenEndpoint, user.data.data)
@@ -70,7 +70,7 @@ export const activateCode = (codeData, userData, history) => dispatch => {
 
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post(serverAPIUserEndpoint + "/register", userData)
+    .post(webserverAPIUserEndpoint + "/register", userData)
     .then(history.push("/aktywuj-konto"))
     .catch(err => {
       dispatch({

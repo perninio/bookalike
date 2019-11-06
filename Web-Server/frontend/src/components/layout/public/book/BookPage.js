@@ -5,7 +5,7 @@ import AliceCarousel from "react-alice-carousel";
 import "./alice-carousel.css";
 import Book from "./components/Book";
 
-import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
+import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
@@ -14,7 +14,7 @@ export const BookPage = props => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(serverAPIBooksEndpoint + "/" + idBook)
+        .get(dataserverAPIBooksEndpoint + "/" + idBook)
         .then(result => {
           setData(result.data.data);
         })

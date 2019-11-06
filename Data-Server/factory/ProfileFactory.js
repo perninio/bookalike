@@ -13,7 +13,7 @@ module.exports = class ProfileFactory extends FactoryInterface {
   getProfileData(profile) {
     switch (profile.status) {
       case "public":
-      case "private":
+      case "friends":
         return new PublicOrFriendProfileDTO(profile);
       case "private":
         return new PrivateProfileDTO(profile);
