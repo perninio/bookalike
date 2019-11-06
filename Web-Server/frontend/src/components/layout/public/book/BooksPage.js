@@ -3,7 +3,7 @@ import axios from "axios";
 import "./BooksPageStyle.css";
 import Books from "./components/Books";
 import Pagination from "./components/Pagination";
-import { serverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
+import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
 export const BooksPage = props => {
   const bookCategory = props.match.params.category
@@ -19,7 +19,7 @@ export const BooksPage = props => {
     const fetchData = async () => {
       axios
         .get(
-          serverAPIBooksEndpoint +
+          dataserverAPIBooksEndpoint +
             (bookCategory !== "" ? "/category/" + bookCategory : "")
         )
         .then(result => {
@@ -28,7 +28,7 @@ export const BooksPage = props => {
         })
         .catch(err =>
           console.log(
-            serverAPIBooksEndpoint +
+            dataserverAPIBooksEndpoint +
               (bookCategory !== "" ? "/category/" + bookCategory : "")
           )
         );
