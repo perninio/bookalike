@@ -1,0 +1,37 @@
+.content {
+  text-align: center;
+}
+.close {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: none;
+    color: var(--ifm-color-black);
+    cursor: pointer;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: var(--ifm-font-weight-bold);
+    line-height: 1;
+    opacity: .5;
+    outline: 0;
+    padding: 1rem;
+}
+
+.actions {
+    margin: auto;
+    width: 100%;
+    padding: 10px 5px;
+    text-align: center;
+}
+.content {
+    width: 100%;
+    padding: 10px 5px;
+}
+.header {
+    width: 100%;
+    border-bottom: 1px solid grey;
+    font-size: 18px;
+    text-align: center;
+    padding: 5px;
+}
