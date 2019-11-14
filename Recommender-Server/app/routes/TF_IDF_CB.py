@@ -46,7 +46,8 @@ def tfidf_recommendations():
         headers={'Authorization': constants.token,
                  'Content-Type': 'application/json'},
         json={"books": similar_books})
+
     if response.status_code == 200:
-        return make_response(200)
+        return make_response("OK", 200)
     else:
-        return make_response(402)
+        return make_response("ERROR", 402)
