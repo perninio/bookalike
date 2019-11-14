@@ -75,6 +75,21 @@ function findUserById(id) {
   });
 }
 
+async function getAllUsers() {
+  let resp = await instance.all("User").then(users => {
+    data = users.map(user => {
+      return {
+        email: user.get("email"),
+        role: user.get("role"),
+        account_code: user.get("account_code"),
+        status: user.get("status")
+      };
+    });
+    return data;
+  });
+  return resp;
+}
+
 // TODO: FIX
 function deleteUserByEmail(paramemail) {
   return instance.first("User", { email: paramemail }).then(user => {
@@ -129,5 +144,6 @@ module.exports = {
   findUserByEmail,
   findUserById,
   deleteUserByEmail,
-  changeAccountData
+  changeAccountData,
+  getAllUsers
 };

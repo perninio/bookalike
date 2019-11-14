@@ -24,6 +24,7 @@ import { EditProfilePage } from "./components/layout/user/EditProfilPage";
 
 import { RestrictedRoute } from "./components/common/RestrictedRoute";
 import { ManageUsers } from "./components/layout/admin/ManageUsers";
+import { RecommendationsPage } from "./components/layout/admin/RecommendationsPage";
 import { NotFound } from "./components/layout/common/NotFound";
 
 import { setAuthorizationToken } from "./utils/jwtUtils";
@@ -64,6 +65,11 @@ function App() {
               exact
               path="/manage/users"
               component={ManageUsers}
+            />
+            <RestrictedRoute
+              exact
+              path="/manage/recommendations"
+              component={RecommendationsPage}
             />
             <Route path="/" component={NotFound} />
           </Switch>

@@ -4,6 +4,7 @@ const axios = require("axios");
 
 const database = require("../database/database");
 const userUtils = require("../utils/userUtils");
+const jwtUtils = require("../utils/jwtUtils");
 const emailUtils = require("../utils/emailUtils");
 
 // @route GET api/user/login
@@ -31,7 +32,7 @@ router.post("/login", (req, res) => {
             res.status(200).json({ data: payload });
           })
           .catch(err => {
-            console.log(err);
+            console.log(err.data);
             res.status(400).json({
               server:
                 "Nie można się połączyć z serwerem DS, proszę spróbować później"
@@ -155,6 +156,69 @@ router.post("/activate/:confirmationCode", (req, res) => {
         .status(404)
         .json({ email: "Użytkownik o podanym emailu nie istnieje" });
     });
+});
+
+// @route GET api/user/init-admin
+// @desc initialize admin
+// @access Public
+router.get("/init-admin", (req, res) => {
+  userUtils
+    .userExists("admin")
+    .then(res.status(406).send())
+    .catch(() => {
+      const { salt, hash } = userUtils.getHashAndSalt("admin");
+      database
+        .createUserNode({
+          email: "admin",
+          password: hash,
+          salt: salt,
+          status: "activated",
+          account_code: "123456",
+          role: "admin"
+        })
+        .then(user => {
+          axios
+            .post(
+              "http://" +
+                process.env.DS_IP_ADDR +
+                ":5000/api/user/initialize/" +
+                user.userid
+            )
+            .then(() => {})
+            .catch(err => {
+              console.log(err);
+              database.deleteUserByEmail(email);
+              res.status(400).json({
+                server:
+                  "Nie można się połączyć z serwerem DS, proszę spróbować później"
+              });
+              return;
+            });
+        });
+    });
+});
+
+// @route GET api/user/
+// @desc get all users
+// @access Admin
+router.get("/", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).send();
+    } else {
+      if (data.role == "admin") {
+        database.getAllUsers().then(users => {
+          res.status(200).json({ data: users });
+        });
+      } else {
+        res.status(403).send("Nie serwer");
+      }
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
 });
 
 module.exports = router;

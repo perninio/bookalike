@@ -4,14 +4,17 @@ import { Link } from "react-router-dom";
 export const NavbarOptions = ({ role }) => {
   const NAVBAR_OPTIONS = {
     user: <UserOptions />,
-    admin: <AdminOptions />,
-    moderator: <ModeratorOptions />
+    admin: <AdminOptions />
   };
 
   return <React.Fragment>{NAVBAR_OPTIONS[role]}</React.Fragment>;
 };
 
 const UserOptions = () => {
+  return "";
+};
+
+const AdminOptions = () => {
   return (
     <li className="nav-item dropdown">
       <a
@@ -30,25 +33,22 @@ const UserOptions = () => {
         className="dropdown-menu ba-navbar__menu"
         aria-labelledby="navbarDropdown"
       >
-        <Link className="dropdown-item ba-navbar__menu--options" to="/">
+        <Link
+          className="dropdown-item ba-navbar__menu--options"
+          to="/manage/recommendations"
+        >
           Rekomendacje
         </Link>
-        <Link className="dropdown-item ba-navbar__menu--options" to="/">
-          Czat
+        <Link
+          className="dropdown-item ba-navbar__menu--options"
+          to="/manage/users"
+        >
+          Zarządzaj użytkownikami
         </Link>
-        <div className="dropdown-divider"></div>
         <Link className="dropdown-item ba-navbar__menu--options" to="/">
-          Wymiany
+          Sprawdź zgłoszenia
         </Link>
       </div>
     </li>
   );
-};
-
-const AdminOptions = () => {
-  return "XD";
-};
-
-const ModeratorOptions = () => {
-  return "";
 };
