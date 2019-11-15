@@ -1,4 +1,5 @@
 import jwt
+import datetime
 from .rsa_generator import RSA_Generator
 from . import DIRECTORY_PATH, PUBLIC_KEY_PATH, PRIVATE_KEY_PATH
 
@@ -25,5 +26,7 @@ class Token_Generator:
 
     def create_token(self, payload):
         """ Creates JWT token with user's data (payload) """
+        if payload["role"] != "server":
+            payload["exp"] = datetime.datetime.now() + datetime.timedelta(minutes=15)
         token = jwt.encode(payload, self.private_key, algorithm=self.algorithm)
         return token.decode('UTF-8')

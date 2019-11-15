@@ -87,7 +87,7 @@ router.post("/set-recommendations", (req, res) => {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
-      res.status(400).send();
+      res.status(400).json({ error: data.error });
     } else {
       if (data.role == "server" && data.id == "RS") {
         res.status(200).send("Git");

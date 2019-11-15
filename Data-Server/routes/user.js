@@ -16,7 +16,7 @@ router.post("/initialize/:userid", (req, res) => {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
-      res.status(400).send();
+      res.status(400).json({ error: data.error });
     } else {
       if (data.role == "server" && data.id == "WS") {
         const user = {
@@ -46,7 +46,7 @@ router.get("/:userid", (req, res) => {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
-      res.status(400).json({});
+      res.status(400).json({ error: data.error });
     } else {
       const { id, role } = data;
       User.findOne({ where: { userid: req.params.userid } })
@@ -88,18 +88,18 @@ router.get("/:userid", (req, res) => {
   }
 });
 
-// @route GET api/user/:userid
-// @desc get data from certain user profile
-// @access Public
+// @route PUT api/user/:userid
+// @desc update user's profile data - change can be made from Admin
+// @access Private/Admin
 router.put("/:userid", (req, res) => {
   if (req.headers["authorization"]) {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
-      res.status(400).send();
+      res.status(400).json({ error: data.error });
     } else {
-      const { id } = data;
-      if (req.params.userid == id) {
+      const { id, role } = data;
+      if (req.params.userid == id || role == "admin") {
         User.findOne({ where: { userid: req.params.userid } })
           .then(user => {
             user

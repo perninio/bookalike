@@ -4,7 +4,7 @@ function verifyToken(token, publickey) {
   try {
     return jwt.verify(token, publickey);
   } catch (e) {
-    return { error: "Invalid signature" };
+    return { error: e.name };
   }
 }
 

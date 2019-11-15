@@ -21,8 +21,8 @@ async function findUserById(id) {
     .catch(err => console.log(err));
 }
 
-async function changeAccountData(user, newData) {
-  return await database.changeAccountData(user, newData);
+async function updateAccountData(user, newData) {
+  return await database.updateAccountData(user, newData);
 }
 
 function checkCode(user, activateCode) {
@@ -69,5 +69,5 @@ module.exports = {
   createAccountCode,
   findUserById,
   checkCode,
-  changeAccountData
+  updateAccountData
 };

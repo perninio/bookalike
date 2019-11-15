@@ -16,7 +16,6 @@ export const EditProfilePage = () => {
   const history = useHistory();
 
   let auth = useSelector(state => state.auth);
-  console.log("auth: ", auth);
   const {
     status,
     firstname,
@@ -63,6 +62,41 @@ export const EditProfilePage = () => {
           .catch(err => {
             console.log(err);
           });
+      })
+      .catch(err => {
+        const { error } = err.response.data;
+        console.log(error);
+        if (error == "TokenExpiredError") {
+          axios
+            .post(authorizationAPITokenEndpoint, auth.user)
+            .then(data => {
+              const { token } = data.data;
+              setAuthorizationToken(token);
+              axios
+                .put(dataserverAPIUserEndpoint + "/" + id, {
+                  data: updatedProfile
+                })
+                .then(resp => {
+                  auth.user.profile = resp.data.data;
+                  axios
+                    .post(authorizationAPITokenEndpoint, auth.user)
+                    .then(data => {
+                      const { token } = data.data;
+                      console.log(token);
+                      localStorage.setItem("jwtToken", token);
+                      setAuthorizationToken(token);
+                      const decoded_data = jwt_decode(token);
+                      dispatch(setCurrentUser(decoded_data));
+                      history.push("/");
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                })
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+        }
       });
   };
 

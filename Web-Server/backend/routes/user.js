@@ -49,7 +49,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-// @route GET api/user/register
+// @route POST api/user/register
 // @desc register an user
 // @access Public
 router.post("/register", (req, res) => {
@@ -61,7 +61,7 @@ router.post("/register", (req, res) => {
         .status(409)
         .json({ email: "Ktoś zarejestrował już się z podanego adresu" });
     })
-    .catch(err => {
+    .catch(() => {
       const { salt, hash } = userUtils.getHashAndSalt(password);
       const account_code = userUtils.createAccountCode(email);
       database
@@ -107,7 +107,33 @@ router.post("/register", (req, res) => {
     });
 });
 
-// @route GET api/user/activate/:confirmation-code
+// @route PUT api/user/:userid
+// @desc endpoint where we can update user's data - changes can be made by admins
+// @access Private/Admin
+router.put("/:userid", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      console.log(data.error);
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id, role } = data;
+      updateData = req.params.data;
+      if (req.params.userid == id || role == "admin") {
+        userUtils.updateAccountData(user, updateData).then(user => {
+          res.status(200).json({ data: user });
+        });
+      } else {
+        res.status(409).send();
+      }
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
+// @route POST api/user/activate/:confirmation-code
 // @desc endpoint which takes confirmation code and checks it with database confirmation code
 // @access Public
 router.post("/activate/:confirmationCode", (req, res) => {
@@ -118,7 +144,7 @@ router.post("/activate/:confirmationCode", (req, res) => {
     .then(user => {
       if (userUtils.checkCode(user, req.params.confirmationCode)) {
         userUtils
-          .changeAccountData(user, { status: "activated" })
+          .updateAccountData(user, { status: "activated" })
           .then(user => {
             axios
               .get(
@@ -206,7 +232,7 @@ router.get("/", (req, res) => {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
-      res.status(400).send();
+      res.status(400).json({ error: data.error });
     } else {
       if (data.role == "admin") {
         database.getAllUsers().then(users => {

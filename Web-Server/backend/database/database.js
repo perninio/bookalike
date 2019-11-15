@@ -41,16 +41,22 @@ function findUserByEmail(paramemail) {
   });
 }
 
-function changeAccountData(user, newData) {
+function updateAccountData(user, newData) {
   return instance.first("User", { email: user.email }).then(userDb => {
     if (userDb) {
-      return userDb.update(newData).then(userUpdated => {
-        return {
-          userid: userUpdated.id(),
-          role: userUpdated.get("role"),
-          status: userUpdated.get("status")
-        };
-      });
+      return userDb
+        .update(newData)
+        .then(userUpdated => {
+          return {
+            userid: userUpdated.id(),
+            email: userUpdated.get("email"),
+            role: userUpdated.get("role"),
+            status: userUpdated.get("status")
+          };
+        })
+        .catch(err => {
+          throw new Error("Can't update user's data");
+        });
     } else {
       throw new Error("User not found");
     }
@@ -144,6 +150,6 @@ module.exports = {
   findUserByEmail,
   findUserById,
   deleteUserByEmail,
-  changeAccountData,
+  updateAccountData,
   getAllUsers
 };

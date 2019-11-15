@@ -27,6 +27,10 @@ services:
       - dataserver
       - webserver
       - recommenderserver
+    volumes:
+      - type: bind
+        source: ./Authorization-Server/
+        target: /src
     environment:
       - DATASERVER_IP=172.18.0.6
       - WEBSERVER_IP=172.18.0.7
