@@ -1,7 +1,8 @@
-import React from "react";
-import "./popup.css";
 
-export const Popup = props => {
+import "./popup.css";
+import React, { useState, useEffect} from 'react'
+
+export const Popup = props => {	
     return (
       <div className="popup">
         <div className="popup_inner">

@@ -1,0 +1,23 @@
+.right { 
+  float: right; 
+}
+.alice-carousel__stage{
+	float:center;
+}
+.bookpage{
+  color:white;
+}
+
+.stars{
+  float:left;
+}
+.bookinfo{
+  float:left;
+}
+.comment{
+  float:center;
+}
+.bookcover{
+  float:left;
+}
+

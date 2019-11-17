@@ -31,6 +31,9 @@ import { setAuthorizationToken } from "./utils/jwtUtils";
 import { setCurrentUser } from "./actions/authAction";
 import jwt_decode from "jwt-decode";
 
+// userlogged
+import { UserPage } from "./components/layout/user/UserPage";
+
 if (localStorage.getItem("jwtToken")) {
   setAuthorizationToken(localStorage.getItem("jwtToken"));
   const decoded_data = jwt_decode(localStorage.getItem("jwtToken"));
@@ -60,6 +63,11 @@ function App() {
               exact
               path="/profile/edit"
               component={EditProfilePage}
+            />
+            <PrivateRoute
+              exact
+              path="/user-page/:id"
+              component={UserPage}
             />
             <RestrictedRoute
               exact

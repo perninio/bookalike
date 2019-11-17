@@ -59,8 +59,8 @@ const Book = ({ bookdata }) => {
   };
 
   return (
-    <div className="row my-row">
-      <div class="col-sm-12 col-md-auto text-center order-sm-1 my-col">
+    <div className="row info-row">
+      <div class="col-sm-12 col-md-3 text-center order-sm-1 book-col">
         <span class="bookcover2">
           <div class="right">
             <div>
@@ -71,17 +71,17 @@ const Book = ({ bookdata }) => {
               ></img>
             </div>
             <div>
-              <button class={readclicked ? "float-center btn text-white btn-danger clicked-red" : "float-center btn text-white btn-danger"} onClick={bookread}>
+              <button className={readclicked ? "float-center btn text-white btn-danger clicked-red" : "float-center btn text-white btn-danger"} onClick={bookread}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Chcę przeczytać
               </button>
               <br />
-              <button class={wantreadclicked ? "float-center btn text-white btn-info clicked-blue" : "float-center btn text-white btn-info"} onClick={bookwantread}>
+              <button className={wantreadclicked ? "float-center btn text-white btn-info clicked-blue" : "float-center btn text-white btn-info"} onClick={bookwantread}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Przeczytałem
               </button>
               <br />
-              <button class={ownclicked ? "float-center btn text-white btn-success clicked-green" : "float-center btn text-white btn-success"} onClick={ownbook}>
+              <button className={ownclicked ? "float-center btn text-white btn-success clicked-green" : "float-center btn text-white btn-success"} onClick={ownbook}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Posiadam
               </button>
