@@ -12,7 +12,7 @@ export const Post = (props) => {
 	    <div className="col-md-2 book my-col d-flex justify-content-center">
 			<img src="https://skupszop.pl/images/books/9788377589915.jpg" width="120px"/>
 		</div>
-		<div className="col-md-8 my-col">
+		<div className="col-md-10 my-col">
 		<div className="float-left ">
 			<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="70px"/>
         </div>
@@ -26,7 +26,7 @@ export const Post = (props) => {
 
 		</div>
 		 <div className="row">
-		 <div className="offset-md-2 my-col col-md-8">
+		 <div className="offset-md-2 my-col col-md-10">
 		 skomentuj ten post
 		 </div>
 		 </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import UserContent from "./components/UserContent"
+import "./components/userpage.css"
 
 export const UserPage = () => {
   return (
@@ -11,11 +12,11 @@ export const UserPage = () => {
         >
           sidebar
         </div>
-        <div className="col-xs-12 col" style={{ backgroundColor: "grey" }}>
+        <div className="col-xs-12 col-sm-8 content-col" style={{ backgroundColor: "grey", marginLeft:0}}>
           <UserContent></UserContent>
         </div>
         <div
-          className="d-none d-xs-block d-sm-inline col-sm-2 col-md-3"
+          className="d-none d-xs-block d-sm-inline col-sm-2"
           style={{ backgroundColor: "red" }}
         >
           znajomi

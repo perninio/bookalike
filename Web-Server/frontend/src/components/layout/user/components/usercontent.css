@@ -1,12 +1,14 @@
-.user-container{
-color:white;
+.user-container {
+    color: white;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 
-button{
-    font-size:14px;
-    width:auto;
-    margin-top:auto;
-    margin-bottom:auto;
+button {
+    font-size: 14px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .close {
@@ -84,7 +86,7 @@ button{
     position: -webkit-sticky;
     position: sticky;
     overflow: hidden;
-    color:black;
+    color: black;
 }
 
 .stickbar-inactive {
@@ -94,21 +96,20 @@ button{
 }
 
 .tag-bar {
-    margin-left:-173px;
+    margin-left: -173px;
     transition: margin 1s;
-    float:left;
-    background:white;
-    width:130%;
-    height:auto;
-
+    float: left;
+    background: white;
+    width: 130%;
+    height: auto;
 }
 
 .tag-bar-move {
     transition: margin 1s;
-    float:left;
-    margin-top:45px;
-    background:white;
-    width:130%;
+    float: left;
+    margin-top: 45px;
+    background: white;
+    width: 130%;
 }
 
 img.user-profile-img {
@@ -122,13 +123,14 @@ img.user-profile-img:hover {
 .tag-bar-name {
     float: left;
     margin: 3px;
+    transition: 0.5s;
 }
 
 .tag-bar-name-phone {
     margin-left: 0px;
     float: left;
     margin: 3px;
-
+    transition: 0.5s;
 }
 
 .userpanel {
@@ -143,23 +145,29 @@ img.user-profile-img:hover {
 
 @media (max-width: 855px) {
     .tag-bar-name {
-        float: none;
-        margin-top: 70px;
+        float: left;
         opacity: 0;
         transition: 0.5s;
+        margin-left:-140px;
     }
     .tag-bar-name-phone {
-        float: none;
-        margin-top: 20px;
+        float: left;
         opacity: 1;
         transition: 0.5s;
     }
     .tag-bar {
-        float: none;
+        float: left;
         margin: 0px;
     }
     .float-right {
         float: left !important;
+    }
+    .tag-bar-move {
+        transition: margin 1s;
+        float: left;
+        margin-top: 45px;
+        background: white;
+        width: 130%;
     }
 }
 
