@@ -28,6 +28,7 @@ if __name__ == '__main__':
     DSToken = TOKEN_GENERATOR.create_token({"id": "DS", "role": "server"})
     WSToken = TOKEN_GENERATOR.create_token({"id": "WS", "role": "server"})
     RSToken = TOKEN_GENERATOR.create_token({"id": "RS", "role": "server"})
+    PSToken = TOKEN_GENERATOR.create_token({"id": "PS", "role": "server"})
 
     # Data-Server Token
     send_public_key_and_auth_token(DSToken, "DATASERVER_IP")
@@ -37,5 +38,8 @@ if __name__ == '__main__':
 
     # Recommender-Server token
     send_public_key_and_auth_token(RSToken, "RECSERVER_IP")
+
+    # Recommender-Server token
+    send_public_key_and_auth_token(PSToken, "POSTSERVER_IP")
 
     app.run(host="172.18.0.4")
