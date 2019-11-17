@@ -1,0 +1,19 @@
+button {
+    width: 170px;
+}
+
+.focus:focus {
+    color: red;
+}
+
+.clicked-blue {
+    background: hsl(188, 82%, 31%);
+}
+
+.clicked-red {
+    background:#c82333;
+}
+
+.clicked-green {
+    background:#218838;
+}

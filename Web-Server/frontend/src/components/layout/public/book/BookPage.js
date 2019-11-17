@@ -27,10 +27,10 @@ export const BookPage = props => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get('https://my-json-server.typicode.com/perninio/hello-world/databook')
+        .get('https://my-json-server.typicode.com/perninio/hello-world/data')
         .then(result => {
-          setData(result.data);
-		  console.log(result.data);
+          setData(result.data[0]);
+		  console.log(result.data[0]);
         })
         .catch(err => console.log(err));
     };
@@ -62,8 +62,8 @@ export const BookPage = props => {
   return (
     <React.Fragment>
       <div class="container">
-        {data.book && <Book bookdata={data.book} />}
-
+       {data.book && <Book bookdata={data.book} />}
+       {/*{data && <Book bookdata={data} />}*/}
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
             <div class="carousel-div">
