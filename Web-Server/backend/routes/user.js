@@ -19,7 +19,10 @@ router.post("/login", (req, res) => {
       if (userUtils.checkPassword(user, password)) {
         axios
           .get(
-            "http://" + process.env.DS_IP_ADDR + ":5000/api/user/" + user.userid
+            "http://" +
+              process.env.DS_IP_ADDR +
+              ":5000/api/users/" +
+              user.userid
           )
           .then(resp => {
             const { data } = resp.data;
@@ -78,7 +81,7 @@ router.post("/register", (req, res) => {
             .post(
               "http://" +
                 process.env.DS_IP_ADDR +
-                ":5000/api/user/initialize/" +
+                ":5000/api/users/initialize/" +
                 user.userid
             )
             .then(() => {
@@ -150,7 +153,7 @@ router.post("/activate/:confirmationCode", (req, res) => {
               .get(
                 "http://" +
                   process.env.DS_IP_ADDR +
-                  ":5000/api/user/" +
+                  ":5000/api/users/" +
                   user.userid
               )
               .then(resp => {
@@ -207,7 +210,7 @@ router.get("/init-admin", (req, res) => {
             .post(
               "http://" +
                 process.env.DS_IP_ADDR +
-                ":5000/api/user/initialize/" +
+                ":5000/api/users/initialize/" +
                 user.userid
             )
             .then(() => {})

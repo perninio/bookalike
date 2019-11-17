@@ -30,15 +30,26 @@ graphic VARCHAR(1000),
 createdat DATE DEFAULT CURRENT_TIMESTAMP,
 updatedat DATE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE books_users(
+PRIMARY KEY(bookid,userid),
+bookid INT NOT NULL,
+FOREIGN KEY (bookid) REFERENCES books(bookid),
+userid INT NOT NULL,
+FOREIGN KEY (userid) REFERENCES users(userid),
+status INT,
+createdat DATE DEFAULT CURRENT_TIMESTAMP,
+updatedat DATE DEFAULT CURRENT_TIMESTAMP
+);
  
 CREATE TABLE rates (
-rateid SERIAL PRIMARY KEY,
+ratesid SERIAL PRIMARY KEY,
 userid INT NOT NULL,
 bookid INT NOT NULL,
 FOREIGN KEY(bookid) REFERENCES books(bookid),
 FOREIGN KEY(userid) REFERENCES users (userid),
 rate INT NOT NULL,
-CHECK (rate<5 AND rate>=0),
+CHECK (rate<=5 AND rate>0),
 createdat DATE DEFAULT CURRENT_TIMESTAMP,
 updatedat DATE DEFAULT CURRENT_TIMESTAMP
 );
