@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-const Book_User = require("./Book_User");
-
 class User extends Sequelize.Model {}
 
 User.init(
@@ -37,7 +35,5 @@ User.init(
     timestamps: false
   }
 );
-
-User.hasMany(Book_User, { as: "rates" });
 
 module.exports = User;

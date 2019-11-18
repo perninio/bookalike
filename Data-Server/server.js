@@ -5,6 +5,7 @@ const cors = require("cors");
 const books = require("./routes/books");
 const users = require("./routes/users");
 const rates = require("./routes/rates");
+const book_users = require("./routes/book_users");
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use("/api/books", books);
 app.use("/api/users", users);
 app.use("/api/rates", rates);
+app.use("/api/book-user", book_users);
 
 app.post("/server/init", (req, res) => {
   if (app.locals.token || app.locals.publickey) {
