@@ -1,7 +1,7 @@
 const HOST = window.location.hostname;
 
 export const dataserverAPIBooksEndpoint = "http://" + HOST + ":5060/api/books";
-export const dataserverAPIUserEndpoint = "http://" + HOST + ":5060/api/user";
+export const dataserverAPIUserEndpoint = "http://" + HOST + ":5060/api/users";
 
 export const webserverAPIUserEndpoint = "http://" + HOST + ":5150/api/user";
 export const webserverAPIBookEndpoint = "http://" + HOST + ":5150/book/";

@@ -121,4 +121,5 @@ router.put("/:userid", (req, res) => {
     res.status(401).send("Wymagana jest autoryzacja");
   }
 });
+
 module.exports = router;
