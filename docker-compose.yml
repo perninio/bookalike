@@ -35,6 +35,7 @@ services:
       - DATASERVER_IP=172.18.0.6
       - WEBSERVER_IP=172.18.0.7
       - RECSERVER_IP=172.18.0.9
+      - POSTSERVER_IP=172.18.0.11
     networks:
       app_net:
         ipv4_address: 172.18.0.4
@@ -117,6 +118,33 @@ services:
     networks:
       app_net:
         ipv4_address: 172.18.0.9
+
+  postserver:
+    build: ./Post-Server
+    volumes:
+      - type: bind
+        source: ./Post-Server/
+        target: /usr/src/app/
+    command: npm run dev
+    depends_on:
+      - postserver-database
+    ports:
+      - "5400:5000"
+    environment:
+      - PS_DB_IP_ADDR=172.18.0.12
+      - AS_IP_ADDR=172.18.0.4
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.11
+
+  postserver-database:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.12
 
 networks:
   app_net:
