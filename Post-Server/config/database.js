@@ -6,5 +6,5 @@ mongoose
     user: "admin",
     pass: "admin"
   })
-  .then(console.log("OK"))
-  .catch(err => console.log(err));
+  .then(console.log("Połączenie ustanowione"))
+  .catch(err => console.log("Błąd w połączeniu: ", err));

@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const axios = require("axios");
+
 const database = require("./config/database");
 
 const posts = require("./routes/posts");
@@ -19,8 +21,8 @@ app.post("/server/init", (req, res) => {
   if (app.locals.token || app.locals.publickey) {
     res.status(500);
   } else {
-    app.locals.token = req.body.token;
     app.locals.publickey = req.body.publickey;
+    axios.defaults.headers.common["Authorization"] = req.body.token;
     console.log("RECIEVED TOKEN & PUBLIC KEY");
     res.status(200).send();
   }

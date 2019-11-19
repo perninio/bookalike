@@ -107,10 +107,6 @@ services:
     command: python -u recommender_system.py
     depends_on:
       - dataserver
-    volumes:
-      - type: bind
-        source: ./Recommender-Server/
-        target: /src
     ports:
       - "5200:5000"
     environment:
@@ -133,6 +129,7 @@ services:
     environment:
       - PS_DB_IP_ADDR=172.18.0.12
       - AS_IP_ADDR=172.18.0.4
+      - DS_IP_ADDR=172.18.0.6
     networks:
       app_net:
         ipv4_address: 172.18.0.11
