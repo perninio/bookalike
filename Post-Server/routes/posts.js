@@ -19,6 +19,8 @@ router.get("/", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id } = data;
+      //TODO: to get all users and his friend's posts - just fetch all ids and then use $in: []
+      // https://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
       Post.find({ userid: id })
         .then(posts => {
           if (posts) {
@@ -175,8 +177,8 @@ router.post("/:postId/comment", (req, res) => {
   }
 });
 
-// @route PUT api/posts/:postId/comment
-// @desc add comment to specific post
+// @route PUT api/posts/:postId/comment/:commentId
+// @desc updates specific comment
 // @access Private
 router.put("/:postId/comment/:commentId", (req, res) => {
   if (req.headers["authorization"]) {
@@ -213,8 +215,8 @@ router.put("/:postId/comment/:commentId", (req, res) => {
   }
 });
 
-// @route DELETE api/posts/:postId/comment
-// @desc add comment to specific post
+// @route DELETE api/posts/:postId/comment/:commentId
+// @desc deletes specific comment
 // @access Private
 router.delete("/:postId/comment/:commentId", (req, res) => {
   if (req.headers["authorization"]) {
