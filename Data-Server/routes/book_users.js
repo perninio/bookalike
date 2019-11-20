@@ -97,4 +97,35 @@ router.post("/", (req, res) => {
   }
 });
 
+// @route DELETE api/book-user/book/:bookId
+// @desc deletes interaction with book for user
+// @access Private
+router.delete("/book/bookId", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      Book_User.findOne({ where: { userid: id, bookid: req.params.bookid } })
+        .then(interaction => {
+          if (interaction) {
+            interaction
+              .destroy()
+              .then(res.status(200).send())
+              .catch(err => {
+                console.log(err);
+                res.status(400).send();
+              });
+          } else {
+            res.status(404).send();
+          }
+        })
+        .catch(err => console.log(err));
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 module.exports = router;

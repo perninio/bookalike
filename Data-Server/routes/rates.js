@@ -95,4 +95,36 @@ router.post("/", (req, res) => {
   }
 });
 
+// @route DELETE api/rates/book/:bookId
+// @desc delete certain rate for {userid,bookid} if it exists
+// @access Private
+router.delete("/book/:bookId", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      Rate.findOne({ where: { userid: id, bookid: req.params.bookId } })
+        .then(rate => {
+          if (rate) {
+            rate
+              .destroy()
+              .then(res.status(200).send())
+              .catch(err => {
+                console.log(err);
+                res.status(400).send();
+              });
+          } else {
+            res.status(404).send();
+          }
+        })
+        .catch(err => console.log(err));
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 module.exports = router;

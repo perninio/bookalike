@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 });
 
 // @route GET api/books/:bookID
-// @desc get all books from certain category
+// @desc get specific book and its similar books
 // @access Public
 router.get("/:bookID", (req, res) => {
   Book.findOne({ where: { bookid: req.params.bookID } })
@@ -58,7 +58,7 @@ router.get("/category/:category", (req, res) => {
 });
 
 // @route GET api/books/categories
-// @desc get all books from certain category
+// @desc get all unique categories
 // @access Public
 router.get("/categories/all", (req, res) => {
   Book.findAll({ attributes: ["booktype"] })
