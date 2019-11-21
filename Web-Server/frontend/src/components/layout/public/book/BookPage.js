@@ -3,6 +3,7 @@ import axios from "axios";
 import Carousel from "./Carousel";
 import AliceCarousel from "react-alice-carousel";
 import "./alice-carousel.css";
+import "./bookpage.css";
 import Book from "./components/Book";
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
@@ -23,7 +24,7 @@ export const BookPage = props => {
     fetchData();
   }, [idBook]);
   /*Test Data*/
-  /*
+  
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -36,7 +37,7 @@ export const BookPage = props => {
     };
     fetchData();
   }, [idBook]);
-*/
+
 
   //const galleryItems=[1,2,3,4,5,6]
   const stagePadding = {
@@ -61,9 +62,9 @@ export const BookPage = props => {
 
   return (
     <React.Fragment>
-      <div class="container">
+      <div class="container bookpage">
        {data.book && <Book bookdata={data.book} />}
-       {/*{data && <Book bookdata={data} />}*/}
+       {data && <Book bookdata={data} />}
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
             <div class="carousel-div">

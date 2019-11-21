@@ -14,6 +14,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-alice-carousel": "^1.15.3",
     "react-chartjs-2": "^2.8.0",
+    "react-cropper-image-editor": "^1.0.10",
     "react-dom": "^16.10.1",
     "react-paginate": "^6.3.0",
     "react-redux": "^7.1.1",
@@ -22,6 +23,7 @@
     "react-scripts": "3.2.0",
     "react-stars": "^2.2.5",
     "react-webpack": "^0.4.1",
+    "reactstrap": "^8.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
