@@ -17,6 +17,7 @@ function createPersonNode(properties){
         console.log("Failed to create node \n" + e )
     })
 }
+
 //example creating person
 //createPersonNode({name:'Przemek'})//no success, missing min required data:userid,email,name,password
 //createPersonNode({userid:'przemek.1',name:'Przemek',email:'user@gmail.com',password:'admin1'})//success
@@ -65,9 +66,9 @@ function makerelationship()
 	instance.create('Person', {userid:'arek.3',name:'Marek',email:'user3@gmail.com',password:'admin4'})
 ])
 .then(([user1, user2]) => {
-    user1.relateTo(user2, 'friends', {since: '10-25-2019'})
+    user1.relateTo(user2, 'friends', {relation: 'request_send'})
         .then(res => {
-            console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('since')); 
+            console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('relation')); 
         }).catch((e) => {
         console.log("Failed to create relationship \n" + e );
 		})
@@ -99,3 +100,6 @@ findPerson().then( przemek => {
 console.log(przemek.get('email'))})
 
 
+createPersonNode({userid:'przemek.1',name:'Przemek',email:'user@gmail.com',password:'admin1'})
+createPersonNode({userid:'adam.2',name:'Adam',email:'user@gmail.com',password:'admin2'})
+makerelationship()

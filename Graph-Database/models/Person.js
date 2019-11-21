@@ -22,10 +22,10 @@ module.exports = {
 	friends: {
         type: "relationship",
         target: "Person",
-        relationship: "friends",
+        relationship: "relationship",
         direction: "out",
         properties: {
-            since: "string"
+            relation: "string" //there are a few states: "request_send","request_accepted","request_rejected"
         },
         eager: true 
     }
