@@ -3,6 +3,8 @@ import pandas as pd
 import json
 import requests
 import os
+import jwt
+from . import constants
 from stop_words import get_stop_words
 
 stop_words = get_stop_words('pl')
@@ -59,10 +61,11 @@ def preprocessData(full_df):
     df = df.applymap(lambda s: s.lower() if type(s) == str else s)
     return df
 
+
 def decode_message(token):
     try:
         data = jwt.decode(token.encode('UTF-8'),
-                          public_key, algorithm='RS256')
+                          constants.publickey, algorithm='RS256')
     except jwt.exceptions.InvalidSignatureError:
         return {"Error": "Signature verification failed"}
     except jwt.exceptions.DecodeError:

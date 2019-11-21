@@ -1,28 +1,27 @@
-from . import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
-from flask import make_response, jsonify, Blueprint
-
+from flask import make_response, jsonify, Blueprint, request
+from . import *
 from . import constants
 
 blueprint = Blueprint('tfidf_cb', __name__)
 
-# change it so it sends data to DS
+
 @blueprint.route("/recommend/tfidf", methods=['GET'])
 def tfidf_recommendations():
 
-    # if 'Authentication' not in request.headers:
-    #     abort(403)
+    if 'Authorization' not in request.headers:
+        abort(403)
 
-    # TODO: jak już będzie logowanie to odkomentuj i dodaj sprawdzanie czy admin to wywołał
-    # token = request.headers.get('Authentication')
-    # data = decode_message(token)
+    token = request.headers.get('Authorization')
+    data = decode_message(token)
 
-    # if 'Error' in data:
-    #     return make_response(jsonify({'Error': data['Error']}), 401)
-    # if 'role' in data:
-    #     if data['role'] != 'admin'
-    #         return make_response(jsonify({'Error': 'Unauthorized'}, 403)
+    if 'Error' in data:
+        return make_response(jsonify({'Error': data['Error']}), 401)
+
+    if 'role' in data:
+        if data['role'] != 'admin':
+            return make_response(jsonify({'Error': 'Unauthorized'}), 403)
 
     full_df = getDataFrame()
 

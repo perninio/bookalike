@@ -107,6 +107,13 @@ services:
     command: python -u recommender_system.py
     depends_on:
       - dataserver
+      - redis
+    environment:
+      - RS_DB_IP_ADDR=172.18.0.8
+    volumes:
+      - type: bind
+        source: ./Recommender-Server/
+        target: /src
     ports:
       - "5200:5000"
     environment:

@@ -6,7 +6,7 @@ const jwtUtils = require("../utils/jwtUtils");
 
 // @route GET api/rates/
 // @desc get all rates for user
-// @access Private
+// @access Private/Server
 router.get("/", (req, res) => {
   if (req.headers["authorization"]) {
     token = req.headers["authorization"];
@@ -14,16 +14,31 @@ router.get("/", (req, res) => {
     if (data.error) {
       res.status(400).json({ error: data.error });
     } else {
-      const { id } = data;
-      Rate.findAll({ where: { userid: id } })
-        .then(rates => {
-          if (rates) {
-            res.status(200).json({ data: rates });
-          } else {
-            res.status(404).json({ rates: "Nie masz żadnych ocen" });
-          }
-        })
-        .catch(err => console.log(err));
+      const { id, role } = data;
+      if (role === "user" || role === "admin") {
+        Rate.findAll({ where: { userid: id } })
+          .then(rates => {
+            if (rates) {
+              res.status(200).json({ data: rates });
+            } else {
+              res.status(404).json({ rates: "Nie masz żadnych ocen" });
+            }
+          })
+          .catch(err => console.log(err));
+      } else {
+        Rate.findAll()
+          .then(rates => {
+            if (rates) {
+              res.status(200).json({ data: rates });
+            } else {
+              res.status(404).send();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(404).send();
+          });
+      }
     }
   } else {
     res.status(401).send("Wymagana jest autoryzacja");
