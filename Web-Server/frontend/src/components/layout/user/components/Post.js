@@ -14,7 +14,7 @@ export const Post = (props) => {
 		</div>
 		<div className="col-md-10 my-col">
 		<div className="float-left ">
-			<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="70px"/>
+			<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="60px"/>
         </div>
 		<div className="username-post float-left">{props.myprops1}</div>
 		<div className="username-post float-right">ble</div>
