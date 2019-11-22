@@ -3,11 +3,12 @@ import Popup from "./Popup";
 import "./usercontentdashboard.css";
 import UserInformation from "./UserInformation.js"
 import Post from "./Post.js"
+import posts from "./posts.json"
 
 const x = React.createContext({ myprops1: 'prop1', myProp2: 'prop2' });
 
+console.log(posts.posts[0])
 const UserContentDashboard = () => {
-
 	const [showPopup, setShowPopup] = useState(false)
 	const [isActive, setisActive] = useState(true)
 	const [barAniamtion, setBarAnimation] = useState(false)
@@ -31,7 +32,7 @@ const UserContentDashboard = () => {
 		setActiveTag(3)
 	}
 
-	
+
 	useEffect(() => {
 		document.addEventListener('scroll', () => {
 			const isTop = window.scrollY;
@@ -44,8 +45,8 @@ const UserContentDashboard = () => {
 
 	})
 
-
-	const sendpost =()=>{
+	//endpoint dla wysyłania
+	const sendpost = () => {
 		console.log("Wyślij")
 	}
 
@@ -54,9 +55,9 @@ const UserContentDashboard = () => {
 			<div class="container">
 				<div className='stickbar-dashboard'>
 					<img className="post-photo" src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="40px" />
-					
-					<textarea name="message" resize= "both" rows="5" cols="150" overflow="auto"  placeholder="Co słychać?"/>
-					<button className="float-right" onClick={sendpost}>Wyślij</button>
+
+					<textarea name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
+					<button className="float-right" onClick={sendpost}>Opublikuj</button>
 				</div>
 			</div>
 			{/*<div>
@@ -83,7 +84,9 @@ const UserContentDashboard = () => {
 							<div>Komentarze </div>
 						) :
 							activeTag == 1 ? (
-								<div>wszystkie<Post myprops1="Bruce" /></div>
+								<div>wszystkie
+{posts.posts.map((item) => { return <Post postingusername={item.imie+" "+item.nazwisko} id={item.id} posttext={item.text}/> })}
+								</div>
 							) :
 								null
 				}

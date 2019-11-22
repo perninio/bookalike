@@ -1,0 +1,19 @@
+{
+    "posts": [
+        {
+            "imie": "Czarek",
+            "id": "1",
+            "nazwisko":"Pernak",
+            "text":"Hej czy ktoś ma taką książke może do pożyczenia?"
+        },
+        {
+            "imie": "Jarek",
+            "id": "2",
+            "nazwisko":""
+        },
+        {
+            "imie": "Arek",
+            "id": "2"
+        }
+    ]
+}

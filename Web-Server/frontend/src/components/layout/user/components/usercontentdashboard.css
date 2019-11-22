@@ -15,7 +15,9 @@ button {
     margin-top: auto;
     margin-bottom: auto;
 }
-
+.side-carousel{
+    margin-top:5px;;
+}
 .close {
     -webkit-appearance: none;
     -moz-appearance: none;
