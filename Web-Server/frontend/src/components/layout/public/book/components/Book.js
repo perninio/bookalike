@@ -3,34 +3,23 @@ import axios from "axios";
 import ReactStars from "react-stars";
 import "./book.css"
 import { useSelector, useDispatch } from "react-redux";
-import Popup from "./Popup.js"
 
-const Book = ({ bookdata }) => {
+
+const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
   const [readclicked, setReadClicked] = useState(false);
   const [wantreadclicked, setWantReadClicked] = useState(false);
   const [ownclicked, setOwnClicked] = useState(false);
   const [auth, setAuth] = useState(useSelector(state => state.auth));
-  const [showPopup, setShowPopup] = useState(false)
 
-  const ratingChanged = newRating => {
-    if (auth.isAuthenticated == true) {
-      console.log("ok")
-    }
-    else {
-      console.log("notok")    
-    }
-    console.log(newRating);
-  };
 
   //let auth = useSelector(state => state.auth);
   //console.log(auth)
 
 
   const bookread = () => {
-
-    setReadClicked(!readclicked);
-
-    /*
+    if (auth.isAuthenticated == true) {
+      setReadClicked(!readclicked);
+          /*
     axios.post('/', {
       userID: '1' ,     
       info:"przeczytane"    
@@ -41,11 +30,16 @@ const Book = ({ bookdata }) => {
         console.log(error);
       });
       */
+    }
+    else {
+      setShowPopup(true);
+    }
   };
 
   const bookwantread = () => {
-    setWantReadClicked(!wantreadclicked);
-    /*   
+    if (auth.isAuthenticated == true) {
+      setWantReadClicked(!wantreadclicked);
+          /*   
      axios.post('/', {
       userID: '1',
       info:"chce przeczytać"      
@@ -56,11 +50,16 @@ const Book = ({ bookdata }) => {
         console.log(error);
       });
       */
+    }
+    else {
+      setShowPopup(true);
+    }
   };
 
   const ownbook = () => {
-    setOwnClicked(!ownclicked);
-    /*
+    if (auth.isAuthenticated == true) {
+      setOwnClicked(!ownclicked);
+          /*
     axios.post('/', {
       userID: '1',
       info: "posiadam ksiazke"      
@@ -71,9 +70,16 @@ const Book = ({ bookdata }) => {
         console.log(error);
       });
     */
+    }
+    else {
+      setShowPopup(true);
+    }
   };
 
+
+
   return (
+
     <div className="row info-row">
       <div class="col-sm-12 col-md-2 text-center order-sm-1 book-col">
         <span class="bookcover2">
@@ -117,7 +123,7 @@ const Book = ({ bookdata }) => {
 
       {/*<div class="col-md-3 my-col order-md-3 order-sm-4">
         reklamy kiedyś może google albo/rtbkit
-  </div>*/}
+      </div>*/}
 
       <div class="col-md-12 my-col order-md-4 order-sm-3">
         <span class="stars">
@@ -127,19 +133,10 @@ const Book = ({ bookdata }) => {
             size={24}
             color2={"#ffd700"}
           />
-        </span>
-
-				<div>
-					{showPopup ? (
-						<Popup className="image-upload-popup"
-							/*closePopup={closePopup.bind(this)}*/
-							content="Hello world"
-						/>
-					) : null}
-				</div>
-
+        </span>       
       </div>
     </div>
+
   );
 };
 

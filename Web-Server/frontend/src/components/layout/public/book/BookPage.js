@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Carousel from "./Carousel";
-import AliceCarousel from "react-alice-carousel";
+import AliceCarouselRecomendation from "./AliceCarouselRecomendation";
 import "./alice-carousel.css";
 import "./bookpage.css";
 import Book from "./components/Book";
+import Comment from "./components/Comment";
+import { useSelector, useDispatch } from "react-redux";
+import Popup from "./components/Popup"
+import { Badge } from 'reactstrap';
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
   const [data, setData] = useState({});
+  const [auth, setAuth] = useState(useSelector(state => state.auth));
+  const [showPopup, setShowPopup] = useState(false)
+  const closebtn = () => {
+    setShowPopup(false)
+  }
 
-console.log(props)
+  const ratingChanged = newRating => {
+    setShowPopup(true)
+    if (auth.isAuthenticated == true) {
+      console.log("ok")
+    }
+    else {
+      console.log("notok")
+    }
+    console.log(newRating);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,163 +44,62 @@ console.log(props)
     fetchData();
   }, [idBook]);
   /*Test Data*/
-  
+
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get('https://my-json-server.typicode.com/perninio/hello-world/data')
         .then(result => {
           setData(result.data[0]);
-		  console.log(result.data[0]);
+          console.log(result.data[0]);
         })
         .catch(err => console.log(err));
     };
     fetchData();
   }, [idBook]);
 
+  const commentpopup = <div className="popup-comment">"Napisz swój komentarz"</div>
 
-  //const galleryItems=[1,2,3,4,5,6]
-  const stagePadding = {
-    paddingLeft: 160, // in pixels 170 najlepiej
-    paddingRight: 0
-  };
+  const redirectpopup = <div> <div className="popup-comment">Załóż konto lub zaloguj się aby korzystać z pełnych funkcjonalności strony</div>
+    <div>
+      <h2><Badge color="primary"><a href="/"> Zaloguj się </a></Badge></h2>
+      <h2> <Badge color="secondary"><a href="/register">Zarejestruj</a></Badge></h2>
+    </div>
+  </div>
 
-  const responsive = {
-    0: { items: 1 },
-    1024: { items: 3 }
-  };
+  const comment={
+    "desc":"Świetna książka. Bardzo mi się podobała",
+    "imie":"Przemysław Pernak",
+    "graphic":"https://image.ibb.co/jw55Ex/def_face.jpg"
 
-  function onSlideChange(e) {
-    console.debug("Item`s position during a change: ", e.item);
-    console.debug("Slide`s position during a change: ", e.slide);
   }
-
-  function onSlideChanged(e) {
-    console.debug("Item`s position after changes: ", e.item);
-    console.debug("Slide`s position after changes: ", e.slide);
-  }
-
+  
   return (
     <React.Fragment>
       <div class="container bookpage">
-       {data.book && <Book bookdata={data.book} />}
-       {data && <Book bookdata={data} />}
+        {data.book && <Book bookdata={data.book} ratingChanged={ratingChanged}/>}
+        {data && <Book bookdata={data} ratingChanged={ratingChanged} setShowPopup={setShowPopup} />}
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
             <div class="carousel-div">
-              <AliceCarousel
-                class="alice-carousel__prev-btn"
-                //items={galleryItems}https://skupszop.pl/images/books/9788362170555.jpg
-                responsive={responsive}
-                stagePadding={stagePadding}
-                fadeOutAnimation={true}
-                mouseDragEnabled={true}
-                onSlideChange={onSlideChange}
-                onSlideChanged={onSlideChanged}
-                style="color:white"
-              >
-                <div className="col-md-8">
-                  <div>
-                    <img
-                      src="https://skupszop.pl/images/books/9788375780284.jpg"
-                      height="208"
-                      width="136"
-                    />
-                  </div>
-                  <div>
-                    <a>Wiedźmin Ostatnie Życzenie</a>
-                  </div>
-                </div>
-                <div className="col-md-8">
-                  <div>
-                    <img
-                      src="https://skupszop.pl/images/books/9788375680966.jpg"
-                      height="208"
-                      width="136"
-                    />
-                  </div>
-                  <div>
-                    <a>Mroczny Rycerz</a>
-                  </div>
-                </div>
-                <div className="col-md-8">
-                  <div>
-                    <img
-                      src=" https://skupszop.pl/images/books/9788362170555.jpg"
-                      height="208"
-                      width="136"
-                    />
-                  </div>
-                  <div>
-                    <a>Wielki Mistrz</a>
-                  </div>
-                </div>
-                <div className="col-md-8">
-                  <div>
-                    <img
-                      src="https://skupszop.pl/images/books/9788362170210.jpg"
-                      height="208"
-                      width="136"
-                    />
-                  </div>
-                  <div>
-                    <a>Gildia magów</a>
-                  </div>
-                </div>
-              </AliceCarousel>
+              <AliceCarouselRecomendation></AliceCarouselRecomendation>
             </div>
           </div>
         </div>
 
         <div class="row my-row-comment">
           <div class="col-md-12 my-col text-center">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-2">
-                    <img
-                      src="https://image.ibb.co/jw55Ex/def_face.jpg"
-                      height="100"
-                      width="100"
-                      class="img rounded-circle img-fluid"
-                    />
-                    <p class="text-secondary text-center">15 Minutes Ago</p>
-                  </div>
-                  <div class="col-md-10">
-                    <p>
-                      <a class="float-left">
-                        <strong>Przemek Pernak</strong>
-                      </a>
-                      <span class="float-right">
-                        <i class="text-warning fa fa-star"></i>
-                      </span>
-                      <span class="float-right">
-                        <i class="text-warning fa fa-star"></i>
-                      </span>
-                      <span class="float-right">
-                        <i class="text-warning fa fa-star"></i>
-                      </span>
-                      <span class="float-right">
-                        <i class="text-warning fa fa-star"></i>
-                      </span>
-                    </p>
-                    <div class="clearfix"></div>
-                    <p align="left">Świetna książka. Bardzo mi się podobała</p>
-                    <p>
-                      <a class="float-right btn text-white btn-danger">
-                        {" "}
-                        <i class="fa fa-thumbs-down"></i> DisLike
-                      </a>
-                      <a class="float-right btn text-white btn-danger">
-                        {" "}
-                        <i class="fa fa-thumbs-up"></i> Like
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Comment data={comment}/>
           </div>
+        </div>
+
+        <div>
+          {showPopup ? (
+            <Popup className="comment-popup"
+              closePopup={closebtn.bind(this)}
+              content={auth.isAuthenticated ? { commentpopup } : redirectpopup}
+            />
+          ) : null}
         </div>
       </div>
     </React.Fragment>
