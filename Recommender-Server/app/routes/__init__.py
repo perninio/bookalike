@@ -9,6 +9,7 @@ from stop_words import get_stop_words
 
 stop_words = get_stop_words('pl')
 amount_of_books = 5
+voting_system_ratings = ['1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
 
 
 def getDataFrame():

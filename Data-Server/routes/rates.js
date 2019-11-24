@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Rate = require("../models/Rate");
 const jwtUtils = require("../utils/jwtUtils");
+const userUtils = require("../utils/userUtils");
 
 // @route GET api/rates/
 // @desc get all rates for user
@@ -15,7 +16,7 @@ router.get("/", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id, role } = data;
-      if (role === "user" || role === "admin") {
+      if (userUtils.isAdmin(role) || userUtils.isUser(role)) {
         Rate.findAll({ where: { userid: id } })
           .then(rates => {
             if (rates) {
