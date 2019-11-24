@@ -5,9 +5,6 @@ import UserInformation from "./UserInformation.js"
 import Post from "./Post.js"
 import posts from "./posts.json"
 
-const x = React.createContext({ myprops1: 'prop1', myProp2: 'prop2' });
-
-console.log(posts.posts[0])
 const UserContentDashboard = () => {
 	const [showPopup, setShowPopup] = useState(false)
 	const [isActive, setisActive] = useState(true)
@@ -85,7 +82,7 @@ const UserContentDashboard = () => {
 						) :
 							activeTag == 1 ? (
 								<div>wszystkie
-{posts.posts.map((item) => { return <Post postingusername={item.imie+" "+item.nazwisko} id={item.id} posttext={item.text}/> })}
+{posts.posts.map((item) => { return <Post postingusername={item.imie+" "+item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic}/> })}
 								</div>
 							) :
 								null

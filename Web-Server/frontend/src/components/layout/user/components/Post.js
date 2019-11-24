@@ -13,15 +13,18 @@ export const Post = (props) => {
 		<div className="container">
 			<div className="row">
 				<div className="col-md-2 book my-col d-flex justify-content-center">
-					<img src="https://skupszop.pl/images/books/9788377589915.jpg" width="120px" />
+					<img src={props.graphic} width="120px" alt="postbookimage" />
+					
 				</div>
 				<div className="col-md-10 my-col">
 					<div className="float-left ">
 						<a href={"user-page/" + props.id}>
-							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="55px" />
+							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="userimage" height="55px" />
 						</a>
 					</div>
-					<div className="username-post float-left">{props.postingusername}</div>
+					<a href={"user-page/" + props.id} >
+						<div className="username-post float-left">{props.postingusername}</div>
+					</a>
 					<div className="username-post float-right">
 						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
 							<DropdownToggle caret>

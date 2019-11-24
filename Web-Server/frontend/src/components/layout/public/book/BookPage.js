@@ -12,6 +12,8 @@ export const BookPage = props => {
   const idBook = props.match.params.id;
   const [data, setData] = useState({});
 
+console.log(props)
+
   useEffect(() => {
     const fetchData = async () => {
       axios
@@ -79,7 +81,7 @@ export const BookPage = props => {
                 onSlideChanged={onSlideChanged}
                 style="color:white"
               >
-                <div className="col-md-7">
+                <div className="col-md-8">
                   <div>
                     <img
                       src="https://skupszop.pl/images/books/9788375780284.jpg"
@@ -91,7 +93,7 @@ export const BookPage = props => {
                     <a>Wiedźmin Ostatnie Życzenie</a>
                   </div>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-8">
                   <div>
                     <img
                       src="https://skupszop.pl/images/books/9788375680966.jpg"
@@ -103,7 +105,7 @@ export const BookPage = props => {
                     <a>Mroczny Rycerz</a>
                   </div>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-8">
                   <div>
                     <img
                       src=" https://skupszop.pl/images/books/9788362170555.jpg"
@@ -115,7 +117,7 @@ export const BookPage = props => {
                     <a>Wielki Mistrz</a>
                   </div>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-8">
                   <div>
                     <img
                       src="https://skupszop.pl/images/books/9788362170210.jpg"
