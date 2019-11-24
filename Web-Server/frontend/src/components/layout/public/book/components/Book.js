@@ -2,14 +2,29 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReactStars from "react-stars";
 import "./book.css"
+import { useSelector, useDispatch } from "react-redux";
+import Popup from "./Popup.js"
 
 const Book = ({ bookdata }) => {
   const [readclicked, setReadClicked] = useState(false);
   const [wantreadclicked, setWantReadClicked] = useState(false);
   const [ownclicked, setOwnClicked] = useState(false);
+  const [auth, setAuth] = useState(useSelector(state => state.auth));
+  const [showPopup, setShowPopup] = useState(false)
+
   const ratingChanged = newRating => {
+    if (auth.isAuthenticated == true) {
+      console.log("ok")
+    }
+    else {
+      console.log("notok")    
+    }
     console.log(newRating);
   };
+
+  //let auth = useSelector(state => state.auth);
+  //console.log(auth)
+
 
   const bookread = () => {
 
@@ -60,28 +75,28 @@ const Book = ({ bookdata }) => {
 
   return (
     <div className="row info-row">
-      <div class="col-sm-12 col-md-3 text-center order-sm-1 book-col">
+      <div class="col-sm-12 col-md-2 text-center order-sm-1 book-col">
         <span class="bookcover2">
           <div class="right">
             <div>
               <img
                 src={bookdata.graphic}
                 alt={bookdata.name}
-                width="150px"
+                width="180px"
               ></img>
             </div>
             <div>
-              <button className={readclicked ? "float-center btn text-white btn-danger clicked-red" : "float-center btn text-white btn-danger"} onClick={bookread}>
+              <button className={readclicked ? "float-center btn  w-100 text-white btn-danger clicked-red" : "float-center btn  w-100 text-white btn-danger"} onClick={bookread}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Chcę przeczytać
               </button>
               <br />
-              <button className={wantreadclicked ? "float-center btn text-white btn-info clicked-blue" : "float-center btn text-white btn-info"} onClick={bookwantread}>
+              <button className={wantreadclicked ? "float-center w-100 btn text-white btn-info clicked-blue" : "float-center  w-100 btn text-white btn-info"} onClick={bookwantread}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Przeczytałem
               </button>
               <br />
-              <button className={ownclicked ? "float-center btn text-white btn-success clicked-green" : "float-center btn text-white btn-success"} onClick={ownbook}>
+              <button className={ownclicked ? "float-center btn  w-100 text-white btn-success clicked-green" : "float-center btn  w-100 text-white btn-success"} onClick={ownbook}>
                 {" "}
                 <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Posiadam
               </button>
@@ -113,6 +128,16 @@ const Book = ({ bookdata }) => {
             color2={"#ffd700"}
           />
         </span>
+
+				<div>
+					{showPopup ? (
+						<Popup className="image-upload-popup"
+							/*closePopup={closePopup.bind(this)}*/
+							content="Hello world"
+						/>
+					) : null}
+				</div>
+
       </div>
     </div>
   );
