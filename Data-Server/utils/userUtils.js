@@ -10,4 +10,8 @@ function isServer(role) {
   return role === "server";
 }
 
-module.exports = { isOwner, isAdmin, isServer };
+function isUser(role) {
+  return role === "user";
+}
+
+module.exports = { isOwner, isAdmin, isServer, isUser };

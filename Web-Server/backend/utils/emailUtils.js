@@ -1,7 +1,5 @@
 const nodeMailer = require("nodemailer");
-const ip = require("ip");
 
-const ipAddr = ip.address();
 async function sendEmail(email, code) {
   let transporter = nodeMailer.createTransport({
     host: "poczta.o2.pl",
@@ -9,7 +7,7 @@ async function sendEmail(email, code) {
     secure: true,
     auth: {
       user: "bookalike-noreply@tlen.pl",
-      pass: "Palec123"
+      pass: "bookalike-noreply-123-KkK"
     }
   });
 
