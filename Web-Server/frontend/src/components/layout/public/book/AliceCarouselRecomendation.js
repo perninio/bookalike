@@ -2,28 +2,28 @@ import AliceCarousel from "react-alice-carousel";
 import React from "react";
 import "./alice-carousel.css";
 
-const AliceCarouselRecomendation = () => {
+const AliceCarouselRecomendation = ({ books }) => {
 
-  //const galleryItems=[1,2,3,4,5,6]
-  const stagePadding = {
-    paddingLeft: 160, // in pixels 170 najlepiej
-    paddingRight: 0
-  };
+    //const galleryItems=[1,2,3,4,5,6]
+    const stagePadding = {
+        paddingLeft: 160, // in pixels 170 najlepiej
+        paddingRight: 0
+    };
 
-  const responsive = {
-    0: { items: 1 },
-    1024: { items: 3 }
-  };
+    const responsive = {
+        0: { items: 1 },
+        1024: { items: 3 }
+    };
 
-  function onSlideChange(e) {
-    console.debug("Item`s position during a change: ", e.item);
-    console.debug("Slide`s position during a change: ", e.slide);
-  }
+    function onSlideChange(e) {
+        console.debug("Item`s position during a change: ", e.item);
+        console.debug("Slide`s position during a change: ", e.slide);
+    }
 
-  function onSlideChanged(e) {
-    console.debug("Item`s position after changes: ", e.item);
-    console.debug("Slide`s position after changes: ", e.slide);
-  }
+    function onSlideChanged(e) {
+        console.debug("Item`s position after changes: ", e.item);
+        console.debug("Slide`s position after changes: ", e.slide);
+    }
 
     return (
         <AliceCarousel
@@ -37,19 +37,23 @@ const AliceCarouselRecomendation = () => {
             onSlideChanged={onSlideChanged}
             style="color:white"
         >
-            <div className="col-md-8">
-                <div>
-                    <img
-                        src="https://skupszop.pl/images/books/9788375780284.jpg"
-                        height="208"
-                        width="136"
-                    />
-                </div>
-                <div>
-                    <a>Wiedźmin Ostatnie Życzenie</a>
-                </div>
-            </div>
-            <div className="col-md-8">
+            {books.map((res) => { return(
+                <div className="col-md-8">
+                    <div>
+                    <a href={"/"+res.bookid} >
+                        <img
+                            src={res.graphic}
+                            height="208"
+                            width="136"
+                        />
+                        </a>
+                    </div>
+                    <div>
+                        <a href={"/"+res.bookid} >{res.name}</a>
+                    </div>
+                </div>)
+            })}
+            {/* <div className="col-md-8">
                 <div>
                     <img
                         src="https://skupszop.pl/images/books/9788375680966.jpg"
@@ -84,7 +88,8 @@ const AliceCarouselRecomendation = () => {
                 <div>
                     <a>Gildia magów</a>
                 </div>
-            </div>
+            </div>*/}
+
         </AliceCarousel>
     );
 }

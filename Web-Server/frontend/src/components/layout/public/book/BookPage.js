@@ -39,7 +39,7 @@ export const BookPage = props => {
         .then(result => {
           setData(result.data.data);
         })
-        .catch(err => console.log("XD"));
+        .catch(err => console.log("Failed to get book data"));
     };
     fetchData();
   }, [idBook]);
@@ -82,7 +82,7 @@ export const BookPage = props => {
         <div class="row my-row">
           <div class="col-md-auto col-md-12 my-col">
             <div class="carousel-div">
-              <AliceCarouselRecomendation></AliceCarouselRecomendation>
+              <AliceCarouselRecomendation books={data.similar_books} ></AliceCarouselRecomendation>
             </div>
           </div>
         </div>

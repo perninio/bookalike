@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import UserContentDashboard from "./components/UserContentDashboard"
 import SideCarousel from "./components/SideCarousel"
+import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
 
 const items = [
   {
@@ -13,6 +15,20 @@ const items = [
 ];
 
 export const UserDashboard = () => {
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios  
+        .get(postserverAPIEndpoint+"/")
+        .then(result => {
+          console.log("Works")
+        })
+        .catch(err => console.log("Failed to get post data"));
+    };
+    fetchData();
+  }, []);
+  /*Test Data*/
 
   return (
     <div className="container-fluid">
