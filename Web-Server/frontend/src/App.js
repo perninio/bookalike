@@ -32,7 +32,6 @@ import { setCurrentUser } from "./actions/authAction";
 import jwt_decode from "jwt-decode";
 
 // userlogged
-import { UserDashboard } from "./components/layout/user/UserDashboard";
 import { UserPage } from "./components/layout/user/UserPage";
 
 if (localStorage.getItem("jwtToken")) {
@@ -65,16 +64,7 @@ function App() {
               path="/profile/edit"
               component={EditProfilePage}
             />
-            <PrivateRoute
-              exact
-              path="/user-page/:id"
-              component={UserPage}
-            />
-            <PrivateRoute
-              exact
-              path="/dashboard"
-              component={UserDashboard}
-            />
+            <PrivateRoute exact path="/user-page/:id" component={UserPage} />
             <RestrictedRoute
               exact
               path="/manage/users"

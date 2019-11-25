@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
           if (posts) {
             postUtils
               .getPostsData(posts)
-              .then(data => res.status(200).send(data))
+              .then(data => res.status(200).json({ posts: data }))
               .catch(err => {
                 console.log(err);
                 res.status(404).send();

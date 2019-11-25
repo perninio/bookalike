@@ -121,6 +121,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label htmlFor="inputFirstName">Imię</label>
         <input
+          required
           className="form-control"
           id="inputFirstName"
           aria-describedby="firstNameHelp"
@@ -135,6 +136,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label htmlFor="inputLastName">Nazwisko</label>
         <input
+          required
           className="form-control"
           id="inputLastName"
           aria-describedby="lastNameHelp"
@@ -149,6 +151,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label htmlFor="inputBirthdate">Data urodzenia</label>
         <input
+          required
           type="date"
           className="form-control"
           id="inputBirthdate"
@@ -163,6 +166,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label htmlFor="inputDescription">Opis</label>
         <input
+          required
           className="form-control"
           id="inputDescription"
           aria-describedby="descriptionhelp"
@@ -176,6 +180,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label htmlFor="inputGraphic">Podaj link do zdjęcia</label>
         <input
+          required
           className="form-control"
           id="inputGraphic"
           aria-describedby="graphicHelp"

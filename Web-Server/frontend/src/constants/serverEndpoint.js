@@ -5,7 +5,7 @@ export const dataserverAPIUserEndpoint = "http://" + HOST + ":5060/api/users";
 
 export const webserverAPIUserEndpoint = "http://" + HOST + ":5150/api/user";
 export const webserverAPIBookEndpoint = "http://" + HOST + ":5150/book/";
-export const postserverAPIEndpoint = "http://" + HOST + ":5400/api/post";
+export const postserverAPIEndpoint = "http://" + HOST + ":5400/api/posts";
 
 export const recommendationserverAPIEndpoint =
   "http://" + HOST + ":5200/recommend/";
