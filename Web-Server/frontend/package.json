@@ -22,6 +22,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-stars": "^2.2.5",
+    "react-table": "^6.10.3",
     "react-webpack": "^0.4.1",
     "reactstrap": "^8.1.1",
     "redux": "^4.0.4",

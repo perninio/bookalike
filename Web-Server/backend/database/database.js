@@ -85,6 +85,7 @@ async function getAllUsers() {
   let resp = await instance.all("User").then(users => {
     data = users.map(user => {
       return {
+        userid: user.id(),
         email: user.get("email"),
         role: user.get("role"),
         account_code: user.get("account_code"),
