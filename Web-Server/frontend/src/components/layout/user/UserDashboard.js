@@ -15,19 +15,17 @@ const items = [
 ];
 
 export const UserDashboard = () => {
-
+const [posts,setPosts]=useState()
 
   useEffect(() => {
     const fetchData = async () => {
       axios  
         .get(postserverAPIEndpoint+"/")
-        .then(result => {
-          console.log("Works")
-        })
+        .then(result=>{setPosts(result.data);console.log(result.data)})
         .catch(err => console.log("Failed to get post data"));
     };
     fetchData();
-  }, []);
+  }, [])};
   /*Test Data*/
 
   return (
@@ -41,8 +39,8 @@ export const UserDashboard = () => {
       </div>
 
         <div className="col-xs-12 col-sm-8 content-col" style={{ backgroundColor: "white", marginLeft: 0 }}>
-          <UserContentDashboard />
-          content
+          { posts.posts && <UserContentDashboard /> }
+
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"

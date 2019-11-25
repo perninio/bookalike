@@ -40,7 +40,7 @@ const AliceCarouselRecomendation = ({ books }) => {
             {books.map((res) => { return(
                 <div className="col-md-8">
                     <div>
-                    <a href={"/"+res.bookid} >
+                    <a href={"book/"+res.bookid} >
                         <img
                             src={res.graphic}
                             height="208"
