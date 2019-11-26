@@ -45,7 +45,7 @@ export const UserColumns = [
         <React.Fragment>
           <Link
             className="btn btn-info ml-3"
-            to={"edit-user-profile/" + props.original.userid}
+            to={"/manage/edit-user-profile/" + props.original.userid}
           >
             Edytuj
           </Link>

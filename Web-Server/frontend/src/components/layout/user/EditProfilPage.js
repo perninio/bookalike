@@ -8,6 +8,7 @@ import {
 } from "../../../constants/serverEndpoint";
 
 import { setAuthorizationToken } from "../../../utils/jwtUtils";
+import { formatDate } from "../../../utils/dateUtils";
 import { setCurrentUser } from "../../../actions/authAction";
 import jwt_decode from "jwt-decode";
 
@@ -29,7 +30,7 @@ export const EditProfilePage = () => {
   const [_status, set_Status] = useState(status);
   const [_firstName, set_FirstName] = useState(firstname);
   const [_lastName, set_LastName] = useState(lastname);
-  const [_birthdate, set_Birtdate] = useState(birthdate);
+  const [_birthdate, set_Birtdate] = useState(formatDate(birthdate));
   const [_description, set_Description] = useState(description);
   const [_graphic, set_Graphic] = useState(graphic);
 
@@ -65,7 +66,6 @@ export const EditProfilePage = () => {
       })
       .catch(err => {
         const { error } = err.response.data;
-        console.log(error);
         if (error == "TokenExpiredError" || error == "JsonWebTokenError") {
           axios
             .post(authorizationAPITokenEndpoint, auth.user)
@@ -82,7 +82,7 @@ export const EditProfilePage = () => {
                     .post(authorizationAPITokenEndpoint, auth.user)
                     .then(data => {
                       const { token } = data.data;
-                      console.log(token);
+
                       localStorage.setItem("jwtToken", token);
                       setAuthorizationToken(token);
                       const decoded_data = jwt_decode(token);
@@ -105,7 +105,7 @@ export const EditProfilePage = () => {
       <div className="form-group">
         <label for="selectStatus"> Wybierz status profilu</label>
         <select
-          defaultValue={_status}
+          value={_status}
           class="form-control"
           id="selectStatus"
           onChange={e => {

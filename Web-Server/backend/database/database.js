@@ -41,8 +41,8 @@ function findUserByEmail(paramemail) {
   });
 }
 
-function updateAccountData(user, newData) {
-  return instance.first("User", { email: user.email }).then(userDb => {
+function updateAccountData(userid, newData) {
+  return instance.findById("User", userid).then(userDb => {
     if (userDb) {
       return userDb
         .update(newData)
@@ -55,6 +55,7 @@ function updateAccountData(user, newData) {
           };
         })
         .catch(err => {
+          console.log(err);
           throw new Error("Can't update user's data");
         });
     } else {

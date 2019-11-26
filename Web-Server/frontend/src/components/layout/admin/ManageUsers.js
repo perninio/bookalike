@@ -22,13 +22,12 @@ export const ManageUsers = () => {
         })
         .catch(err => {
           const { error } = err.response.data;
-          console.log(error);
           if (error == "TokenExpiredError" || error == "JsonWebTokenError") {
             axios
               .post(authorizationAPITokenEndpoint, auth.user)
               .then(data => {
                 const { token } = data.data;
-                console.log(token);
+
                 setAuthorizationToken(token);
                 axios
                   .get(webserverAPIUserEndpoint)
