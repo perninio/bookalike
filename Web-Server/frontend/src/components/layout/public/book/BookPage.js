@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Carousel from "./Carousel";
 import AliceCarouselRecomendation from "./AliceCarouselRecomendation";
+import ReactStars from "react-stars";
 import "./alice-carousel.css";
 import "./bookpage.css";
 import Book from "./components/Book";
 import Comment from "./components/Comment";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Popup from "./components/Popup";
-import { Badge } from "reactstrap";
+import { Badge, Button } from "reactstrap";
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
@@ -17,21 +17,30 @@ export const BookPage = props => {
   const [data, setData] = useState({});
   const [auth, setAuth] = useState(useSelector(state => state.auth));
   const [showPopup, setShowPopup] = useState(false);
+  const [ratingval, setratingval] = useState(0);
+  const [bookcomment, setBookComment] = useState("elo");
   const closebtn = () => {
     setShowPopup(false);
   };
 
-  console.log(data);
-
   const ratingChanged = newRating => {
     setShowPopup(true);
-    if (auth.isAuthenticated == true) {
-      console.log("ok");
+    if (!auth.isAuthenticated == true) {
+      console.log("User logged");
+      setratingval(newRating);
     } else {
-      console.log("notok");
+      console.log("Not Loggged");
     }
-    console.log(newRating);
   };
+
+  const ratingpopup = newRating => {
+    setratingval(newRating);
+  };
+
+  const sendcomment = () => {
+    console.log(bookcomment);
+    console.log(ratingval);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +69,19 @@ export const BookPage = props => {
   // }, [idBook]);
 
   const commentpopup = (
-    <div className="popup-comment">"Napisz swój komentarz"</div>
+    <div className="popup-comment">
+      <div>
+        <ReactStars
+          value={ratingval}
+          count={5}
+          onChange={ratingpopup}
+          size={28}
+          color2={"#ffd700"}
+        />
+        <textarea onChange={(event) => { setBookComment(event.target.value) }} maxLength="800" required="required" className="comment-textarea" resize="both" rows="5" cols="150" overflow="auto" placeholder="Podziel się swoją opinią na temata książki" />
+        <Button className="float-right" onClick={sendcomment} color="primary">Opublikuj</Button>
+      </div>
+    </div>
   );
 
   const redirectpopup = (
@@ -86,15 +107,21 @@ export const BookPage = props => {
     </div>
   );
 
-  const comment = {
+  const comment = [{
     desc: "Świetna książka. Bardzo mi się podobała",
     imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg"
-  };
+    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+    rate:2
+  },{
+    desc: "Świetna książka. Bardzo mi się podobała",
+    imie: "Przemysław Pernak",
+    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+    rate:5
+  }];
 
   return (
     <React.Fragment>
-      <div class="container bookpage">
+      <div className="container bookpage">
         {data.book && (
           <Book
             bookdata={data.book}
@@ -102,16 +129,16 @@ export const BookPage = props => {
             setShowPopup={setShowPopup}
           />
         )}
-        {/* {data.book && (
+        {/*data && (
           <Book
             bookdata={data}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )} */}
-        <div class="row my-row">
-          <div class="col-md-auto col-md-12 my-col">
-            <div class="carousel-div">
+        )*/}
+        <div className="row my-row">
+          <div className="col-md-auto col-md-12 my-col">
+            <div className="carousel-div">
               {data.similar_books && (
                 <AliceCarouselRecomendation
                   books={data.similar_books}
@@ -121,9 +148,9 @@ export const BookPage = props => {
           </div>
         </div>
 
-        <div class="row my-row-comment">
-          <div class="col-md-12 my-col text-center">
-            <Comment data={comment} />
+        <div className="row my-row-comment">
+          <div className="col-md-12 my-col text-center">
+            <Comment comments={comment} />
           </div>
         </div>
 
@@ -132,7 +159,7 @@ export const BookPage = props => {
             <Popup
               className="comment-popup"
               closePopup={closebtn.bind(this)}
-              content={auth.isAuthenticated ? { commentpopup } : redirectpopup}
+              content={auth.isAuthenticated ? commentpopup : redirectpopup}
             />
           ) : null}
         </div>
