@@ -68,21 +68,21 @@ router.post("/", (req, res) => {
     if (data.error) {
       res.status(400).json({ error: data.error });
     } else {
-      const { bookid, status } = req.body;
       const { id } = data;
-      const newInteraction = { userid: id, bookid: bookid, status: status };
-      Book_User.findOne({ where: { userid: id, bookid: bookid } })
+      const req_data = req.body;
+      req_data["userid"] = id;
+      Book_User.findOne({ where: { userid: id, bookid: req_data.bookid } })
         .then(interaction => {
           if (interaction) {
             interaction
-              .update(newInteraction)
+              .update(req_data)
               .then(res.status(200).send())
               .catch(err => {
                 console.log(err);
                 res.status(400).send();
               });
           } else {
-            Book_User.create(newInteraction)
+            Book_User.create(req_data)
               .then(res.status(200).send())
               .catch(err => {
                 console.log(err);
@@ -100,13 +100,14 @@ router.post("/", (req, res) => {
 // @route DELETE api/book-user/book/:bookId
 // @desc deletes interaction with book for user
 // @access Private
-router.delete("/book/bookId", (req, res) => {
+router.delete("/book/:bookid", (req, res) => {
   if (req.headers["authorization"]) {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
     if (data.error) {
       res.status(400).json({ error: data.error });
     } else {
+      const { id } = data;
       Book_User.findOne({ where: { userid: id, bookid: req.params.bookid } })
         .then(interaction => {
           if (interaction) {

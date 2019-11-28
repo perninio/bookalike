@@ -15,13 +15,17 @@ Books_Users.init(
       allowNull: false,
       primaryKey: true
     },
-    status: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      validate: {
-        min: 0,
-        max: 7
-      }
+    wants_read: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    has_book: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    has_read: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
     createdat: {
       type: Sequelize.DATE

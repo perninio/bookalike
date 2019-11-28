@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require("../models/User");
 const jwtUtils = require("../utils/jwtUtils");
 const userUtils = require("../utils/userUtils");
+const sequelize = require("sequelize");
 
 const ProfileFactory = require("../factory/ProfileFactory");
 const profileFactory = new ProfileFactory();
@@ -36,6 +37,38 @@ router.post("/initialize/:userid", (req, res) => {
   } else {
     res.status(401).send("Wymagana jest autoryzacja");
   }
+});
+
+// @route GET api/user/name/:name
+// @desc get all users with certain name (check in first and last name)
+// @access Public
+router.get("/name/:name", (req, res) => {
+  const lowerCased = req.params.name.toLowerCase();
+  User.findAll({
+    limit: 10,
+    where: {
+      [sequelize.Op.or]: [
+        {
+          firstname: {
+            [sequelize.Op.iLike]: "%" + lowerCased + "%"
+          }
+        },
+        {
+          lastname: {
+            [sequelize.Op.iLike]: "%" + lowerCased + "%"
+          }
+        }
+      ]
+    }
+  })
+    .then(books => {
+      if (books) {
+        res.status(200).json({ data: books });
+      } else {
+        res.status(404).json({ Msg: "Nie można znaleźć książek" });
+      }
+    })
+    .catch(err => console.log(err));
 });
 
 // @route GET api/user/:userid
