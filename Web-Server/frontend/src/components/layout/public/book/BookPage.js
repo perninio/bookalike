@@ -12,13 +12,26 @@ import { Badge, Button } from "reactstrap";
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
+const comment = [{
+  desc: "Świetna książka. Bardzo mi się podobała",
+  imie: "Przemysław Pernak",
+  graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+  rate:2
+},{
+  desc: "Świetna książka. Bardzo mi się podobała",
+  imie: "Przemysław Pernak",
+  graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+  rate:5
+}];
+
 export const BookPage = props => {
   const idBook = props.match.params.id;
   const [data, setData] = useState({});
   const [auth, setAuth] = useState(useSelector(state => state.auth));
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);
-  const [bookcomment, setBookComment] = useState("elo");
+  const [bookcomment, setBookComment] = useState("");
+  const [commentdata,setCommentData] = useState(comment);
   const closebtn = () => {
     setShowPopup(false);
   };
@@ -38,35 +51,42 @@ export const BookPage = props => {
   };
 
   const sendcomment = () => {
+    if(bookcomment!=""){
     console.log(bookcomment);
     console.log(ratingval);
+    commentdata.push({desc: bookcomment,
+    imie: "Przemysław Pernak",
+    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+    rate:ratingval})
+    }
+    console.log(comment)
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      axios
-        .get(dataserverAPIBooksEndpoint + "/" + idBook)
-        .then(result => {
-          setData(result.data.data);
-        })
-        .catch(err => console.log("Failed to get book data"));
-    };
-    fetchData();
-  }, [idBook]);
-  /*Test Data*/
 
   // useEffect(() => {
   //   const fetchData = async () => {
   //     axios
-  //       .get("https://my-json-server.typicode.com/perninio/hello-world/data")
+  //       .get(dataserverAPIBooksEndpoint + "/" + idBook)
   //       .then(result => {
-  //         setData(result.data[0]);
-  //         console.log(result.data[0]);
+  //         setData(result.data.data);
   //       })
-  //       .catch(err => console.log(err));
+  //       .catch(err => console.log("Failed to get book data"));
   //   };
   //   fetchData();
   // }, [idBook]);
+  /*Test Data*/
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get("https://my-json-server.typicode.com/perninio/hello-world/data")
+        .then(result => {
+          setData(result.data[0]);
+          console.log(result.data[0]);
+        })
+        .catch(err => console.log(err));
+    };
+    fetchData();
+  }, [idBook]);
 
   const commentpopup = (
     <div className="popup-comment">
@@ -106,36 +126,23 @@ export const BookPage = props => {
       </div>
     </div>
   );
-
-  const comment = [{
-    desc: "Świetna książka. Bardzo mi się podobała",
-    imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-    rate:2
-  },{
-    desc: "Świetna książka. Bardzo mi się podobała",
-    imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-    rate:5
-  }];
-
   return (
     <React.Fragment>
       <div className="container bookpage">
-        {data.book && (
+        {/* {data.book && (
           <Book
             bookdata={data.book}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )}
-        {/*data && (
+        )} */}
+        {data && (
           <Book
             bookdata={data}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )*/}
+        )}
         <div className="row my-row">
           <div className="col-md-auto col-md-12 my-col">
             <div className="carousel-div">
@@ -150,7 +157,7 @@ export const BookPage = props => {
 
         <div className="row my-row-comment">
           <div className="col-md-12 my-col text-center">
-            <Comment comments={comment} />
+            <Comment comments={commentdata} />
           </div>
         </div>
 
@@ -159,7 +166,7 @@ export const BookPage = props => {
             <Popup
               className="comment-popup"
               closePopup={closebtn.bind(this)}
-              content={auth.isAuthenticated ? commentpopup : redirectpopup}
+              content={!auth.isAuthenticated ? commentpopup : redirectpopup}
             />
           ) : null}
         </div>
