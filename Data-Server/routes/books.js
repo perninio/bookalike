@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const db = require("../config/database");
+const sequelize = require("sequelize");
 const Book = require("../models/Book");
 const jwtUtils = require("../utils/jwtUtils");
 const bookUtils = require("../utils/booksUtils");
@@ -11,6 +11,30 @@ const bookUtils = require("../utils/booksUtils");
 // @access Public
 router.get("/", (req, res) => {
   Book.findAll()
+    .then(books => {
+      if (books) {
+        res.status(200).json({ data: books });
+      } else {
+        res.status(404).json({ Msg: "Nie można znaleźć książek" });
+      }
+    })
+    .catch(err => console.log(err));
+});
+
+// @route GET api/books/name/:name
+// @desc get all books with certain name
+// @access Public
+router.get("/name/:name", (req, res) => {
+  const lowerCased = req.params.name.toLowerCase();
+  console.log(lowerCased);
+  Book.findAll({
+    limit: 10,
+    where: {
+      name: {
+        [sequelize.Op.iLike]: "%" + lowerCased + "%"
+      }
+    }
+  })
     .then(books => {
       if (books) {
         res.status(200).json({ data: books });

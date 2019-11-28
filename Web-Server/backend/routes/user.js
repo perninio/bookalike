@@ -149,7 +149,7 @@ router.post("/activate/:confirmationCode", (req, res) => {
     .then(user => {
       if (userUtils.checkCode(user, req.params.confirmationCode)) {
         userUtils
-          .updateAccountData(user, { status: "activated" })
+          .updateAccountData(id, { status: "activated" })
           .then(user => {
             axios
               .get(
