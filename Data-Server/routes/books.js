@@ -26,7 +26,6 @@ router.get("/", (req, res) => {
 // @access Public
 router.get("/name/:name", (req, res) => {
   const lowerCased = req.params.name.toLowerCase();
-  console.log(lowerCased);
   Book.findAll({
     limit: 10,
     where: {

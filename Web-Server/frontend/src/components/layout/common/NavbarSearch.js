@@ -1,12 +1,9 @@
 import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 export const NavbarSearch = () => {
+  const history = useHistory();
   const [text, setText] = useState("");
-
-  const search = e => {
-    e.preventDefault();
-    console.log("Tutaj będzie wysyłany request oraz przeniesienie do searcha");
-  };
 
   return (
     <form className="form-inline my-lg-0  ba-navbar__search">
@@ -22,7 +19,8 @@ export const NavbarSearch = () => {
       <button
         className="btn btn-outline-light my-2 my-sm-0 "
         onClick={e => {
-          search(e);
+          e.preventDefault();
+          history.push("/search/" + text);
         }}
       >
         Wyszukaj

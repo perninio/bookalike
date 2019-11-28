@@ -12,17 +12,20 @@ import { Badge, Button } from "reactstrap";
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
 
-const comment = [{
-  desc: "Świetna książka. Bardzo mi się podobała",
-  imie: "Przemysław Pernak",
-  graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-  rate:2
-},{
-  desc: "Świetna książka. Bardzo mi się podobała",
-  imie: "Przemysław Pernak",
-  graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-  rate:5
-}];
+const comment = [
+  {
+    desc: "Świetna książka. Bardzo mi się podobała",
+    imie: "Przemysław Pernak",
+    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+    rate: 2
+  },
+  {
+    desc: "Świetna książka. Bardzo mi się podobała",
+    imie: "Przemysław Pernak",
+    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+    rate: 5
+  }
+];
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
@@ -31,7 +34,7 @@ export const BookPage = props => {
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);
   const [bookcomment, setBookComment] = useState("");
-  const [commentdata,setCommentData] = useState(comment);
+  const [commentdata, setCommentData] = useState(comment);
   const closebtn = () => {
     setShowPopup(false);
   };
@@ -51,42 +54,44 @@ export const BookPage = props => {
   };
 
   const sendcomment = () => {
-    if(bookcomment!=""){
-    console.log(bookcomment);
-    console.log(ratingval);
-    commentdata.push({desc: bookcomment,
-    imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-    rate:ratingval})
+    if (bookcomment != "") {
+      console.log(bookcomment);
+      console.log(ratingval);
+      commentdata.push({
+        desc: bookcomment,
+        imie: "Przemysław Pernak",
+        graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
+        rate: ratingval
+      });
     }
-    console.log(comment)
-  }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     axios
-  //       .get(dataserverAPIBooksEndpoint + "/" + idBook)
-  //       .then(result => {
-  //         setData(result.data.data);
-  //       })
-  //       .catch(err => console.log("Failed to get book data"));
-  //   };
-  //   fetchData();
-  // }, [idBook]);
-  /*Test Data*/
+    console.log(comment);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get("https://my-json-server.typicode.com/perninio/hello-world/data")
+        .get(dataserverAPIBooksEndpoint + "/" + idBook)
         .then(result => {
-          setData(result.data[0]);
-          console.log(result.data[0]);
+          setData(result.data.data);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log("Failed to get book data"));
     };
     fetchData();
   }, [idBook]);
+  /*Test Data*/
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     axios
+  //       .get("https://my-json-server.typicode.com/perninio/hello-world/data")
+  //       .then(result => {
+  //         setData(result.data[0]);
+  //         console.log(result.data[0]);
+  //       })
+  //       .catch(err => console.log(err));
+  //   };
+  //   fetchData();
+  // }, [idBook]);
 
   const commentpopup = (
     <div className="popup-comment">
@@ -98,8 +103,22 @@ export const BookPage = props => {
           size={28}
           color2={"#ffd700"}
         />
-        <textarea onChange={(event) => { setBookComment(event.target.value) }} maxLength="800" required="required" className="comment-textarea" resize="both" rows="5" cols="150" overflow="auto" placeholder="Podziel się swoją opinią na temata książki" />
-        <Button className="float-right" onClick={sendcomment} color="primary">Opublikuj</Button>
+        <textarea
+          onChange={event => {
+            setBookComment(event.target.value);
+          }}
+          maxLength="800"
+          required="required"
+          className="comment-textarea"
+          resize="both"
+          rows="5"
+          cols="150"
+          overflow="auto"
+          placeholder="Podziel się swoją opinią na temata książki"
+        />
+        <Button className="float-right" onClick={sendcomment} color="primary">
+          Opublikuj
+        </Button>
       </div>
     </div>
   );

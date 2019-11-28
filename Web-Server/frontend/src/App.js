@@ -36,6 +36,7 @@ import { NotFound } from "./components/layout/common/NotFound";
 import { setAuthorizationToken } from "./utils/jwtUtils";
 import { setCurrentUser } from "./actions/authAction";
 import jwt_decode from "jwt-decode";
+import { SearchPage } from "./components/layout/public/search/SearchPage";
 
 if (localStorage.getItem("jwtToken")) {
   setAuthorizationToken(localStorage.getItem("jwtToken"));
@@ -62,6 +63,7 @@ function App() {
             <Route exact path="/books/:category" component={BooksPage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/search/:text" component={SearchPage} />
             <PrivateRoute
               exact
               path="/profile/edit"
