@@ -48,7 +48,8 @@ def tfidf_recommendations():
 
     # uzyskaj predykcje i posortuje je malejąco
     predictions = get_predictions_for_all_unvoted(
-        data["id"], r_matrix, cosine_sim, indexes_dict, occurences)
+        data["id"], r_matrix, cosine_sim, indexes_dict, occurences, full_df)
+
     predictions.sort(reverse=True)
 
     return make_response(jsonify({"data": predictions[:30]}), 200)
@@ -61,7 +62,6 @@ def getRateFrame():
                  'Content-Type': 'application/json'})
     data = rates_resp.json()["data"]
     full_df = pd.DataFrame.from_dict(data)
-    full_df.to_csv("./rates.csv")
     return full_df
 
 
@@ -83,9 +83,6 @@ def cf_user_wmean(userid, bookid, r_matrix, cosine_sim, occurences):
             else:
                 wmean_rating = 3.0
 
-            if bookid == 72:
-                print(type(wmean_rating))
-                print_things(m_ratings, sim_scores, wmean_rating)
         else:
             wmean_rating = 3.0
 
@@ -93,14 +90,47 @@ def cf_user_wmean(userid, bookid, r_matrix, cosine_sim, occurences):
 
 
 def all_unvoted_books_for_user(userid, r_matrix, indexes_dict):
-    user_matrix = r_matrix.iloc[indexes_dict[userid]]
-    return np.array(user_matrix.loc[~user_matrix.isin(voting_system_ratings)].index)
+    try:
+        user_matrix = r_matrix.iloc[indexes_dict[userid]]
+        return np.array(user_matrix.loc[~user_matrix.isin(voting_system_ratings)].index)
+    except:
+        return []
 
 
-def get_predictions_for_all_unvoted(userid, r_matrix, cosine_sim, indexes_dict, occurences):
+def weighted_rating(book, m, avg):
+    v = book['count']
+    R = book['rate']
+    return (v/(v+m)*R) + (m/(m+v)*avg)
+
+
+def get_most_rated(full_df, occurences):
+    avg_vote = full_df['rate'].mean()
+    minimum_votes = np.quantile(list(occurences.values()), 0.9)
+    most_rated_ids = [key for key,
+                      value in occurences.items() if value >= minimum_votes]
+    most_rated_df = full_df.loc[full_df['bookid'].isin(most_rated_ids)][[
+        'bookid', 'rate']]
+    most_rated_df_groupby = most_rated_df.groupby(['bookid']).mean()
+    most_rated_df_groupby['count'] = np.nan
+    most_rated_df_groupby['score'] = np.nan
+    for idx in most_rated_ids:
+        most_rated_df_groupby.loc[most_rated_df_groupby.index == idx, [
+            'count']] = occurences[idx]
+    most_rated_df_groupby['score'] = most_rated_df_groupby.apply(
+        weighted_rating, axis=1, args=[minimum_votes, avg_vote])
+    return most_rated_df_groupby.sort_values('score', ascending=False)['score'].to_dict()
+
+
+def get_predictions_for_all_unvoted(userid, r_matrix, cosine_sim, indexes_dict, occurences, full_df):
     unvoted_array = all_unvoted_books_for_user(userid, r_matrix, indexes_dict)
-    unvoted_predictions = []
-    for bookid in unvoted_array:
-        unvoted_predictions.append(
-            str(cf_user_wmean(userid, bookid, r_matrix, cosine_sim, occurences))+":"+str(bookid))
-    return unvoted_predictions
+    predictions = []
+    if unvoted_array == []:
+        most_rated = get_most_rated(full_df, occurences)
+        for key, value in most_rated.items():
+            predictions.append(str(value)+":"+str(key))
+    else:
+        for bookid in unvoted_array:
+            predictions.append(
+                str(cf_user_wmean(userid, bookid, r_matrix, cosine_sim, occurences))+":"+str(bookid))
+
+    return predictions
