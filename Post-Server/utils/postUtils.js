@@ -1,8 +1,14 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
 
-async function getPostsData(posts) {
-  return await Promise.all(posts.map(post => fetchPostData(post)));
+async function getPostsData(posts, requestedUserId) {
+  return await Promise.all(
+    posts.map(post => {
+      if (post.scope != "private" || post.userid == requestedUserId) {
+        return fetchPostData(post);
+      }
+    })
+  );
 }
 
 async function fetchPostData(post) {
@@ -16,6 +22,7 @@ async function fetchPostData(post) {
             title: post.title,
             description: post.description,
             user: getUserData(resp, post.userid),
+            scope: post.scope,
             comments: comments
           };
         })
@@ -69,6 +76,7 @@ function getNewPostData(req, userid) {
   postData = { _id: mongoose.Types.ObjectId(), userid: userid };
   req.body.title && (postData.title = req.body.title);
   req.body.description && (postData.description = req.body.description);
+  req.body.scope && (postData.scope = req.body.scope);
 
   return postData;
 }

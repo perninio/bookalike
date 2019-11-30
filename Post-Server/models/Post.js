@@ -5,6 +5,10 @@ const PostSchema = new Schema({
   title: Schema.Types.String,
   description: Schema.Types.String,
   userid: Schema.Types.Number,
+  scope: {
+    type: Schema.Types.String,
+    enum: ["public", "friends", "private"]
+  },
   comments: [
     {
       _id: Schema.Types.ObjectId,
