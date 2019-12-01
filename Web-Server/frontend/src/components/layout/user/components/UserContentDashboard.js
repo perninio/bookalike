@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , forceUpdate } from "react";
 import Popup from "./Popup";
 import "./usercontentdashboard.css";
 import UserInformation from "./UserInformation.js"
 import Post from "./Post.js"
-import posts from "./posts.json"
+import postsjson from "./posts.json"
 
 const UserContentDashboard = () => {
 	const [showPopup, setShowPopup] = useState(false)
 	const [isActive, setisActive] = useState(true)
 	const [barAniamtion, setBarAnimation] = useState(false)
 	const [activeTag, setActiveTag] = useState(1)
-
+	const [posttext,setPostText]=useState("")
+	const [posts,setPosts]=useState(postsjson.posts)
+	const [newposts,setNewPosts]=useState([])
+	const [reload,setReload]=useState(0)
+	const [eventText,seteventText]=useState(0)
+	
 
 	const closePopup = () => {
 		setShowPopup(!showPopup)
@@ -29,23 +34,34 @@ const UserContentDashboard = () => {
 		setActiveTag(3)
 	}
 
-
-	useEffect(() => {
-		document.addEventListener('scroll', () => {
-			const isTop = window.scrollY;
-			if (isTop > 120) {
-				setBarAnimation(true);
-			} else {
-				setBarAnimation(false);
-			}
-		})
-
-	})
-
-	//endpoint dla wysyłania
 	const sendpost = () => {
-		console.log("Wyślij")
-	}
+		if(posttext!=""){
+		console.log(posttext);
+		newposts.unshift({
+            imie: "Czarek",
+            id: "1",
+            nazwisko:"Pernak",
+            text:posttext,
+            graphic:"https://skupszop.pl/images/books/9788377589915.jpg"
+		})
+		//setReload(newposts.length)
+		setPostText("");
+		eventText.value=""
+		}
+
+	  }
+	
+
+	// useEffect(() => {
+	// 	document.addEventListener('scroll', () => {
+	// 		const isTop = window.scrollY;
+	// 		if (isTop > 120) {
+	// 			setBarAnimation(true);
+	// 		} else {
+	// 			setBarAnimation(false);
+	// 		}
+	// 	})
+	// })
 
 	return (
 		<div>
@@ -53,7 +69,7 @@ const UserContentDashboard = () => {
 				<div className='stickbar-dashboard'>
 					<img className="post-photo" src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="40px" />
 
-					<textarea name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
+					<textarea onChange={(event) => { setPostText(event.target.value);seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
 					<button className="float-right" onClick={sendpost}>Opublikuj</button>
 				</div>
 			</div>
@@ -82,7 +98,10 @@ const UserContentDashboard = () => {
 						) :
 							activeTag == 1 ? (
 								<div>wszystkie
-{posts.posts.map((item) => { return <Post postingusername={item.imie+" "+item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic}/> })}
+								{/* {posts.posts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} */}
+								{/* mocup */}
+								{newposts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} 
+								{posts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} 
 								</div>
 							) :
 								null

@@ -3,7 +3,7 @@ userid INT PRIMARY KEY,
 status VARCHAR(2555),
 firstname VARCHAR(255),
 lastname VARCHAR(255),
-birthdate DATE,
+birthdate DATE DEFAULT CURRENT_DATE,
 description VARCHAR(8000),
 graphic VARCHAR(1000)
 );
@@ -37,7 +37,9 @@ bookid INT NOT NULL,
 FOREIGN KEY (bookid) REFERENCES books(bookid),
 userid INT NOT NULL,
 FOREIGN KEY (userid) REFERENCES users(userid),
-status INT,
+wants_read BOOLEAN,
+has_book BOOLEAN,
+has_read BOOLEAN,
 createdat DATE DEFAULT CURRENT_TIMESTAMP,
 updatedat DATE DEFAULT CURRENT_TIMESTAMP
 );

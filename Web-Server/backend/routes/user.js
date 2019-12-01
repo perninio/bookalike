@@ -122,11 +122,13 @@ router.put("/:userid", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id, role } = data;
-      updateData = req.params.data;
+      updateData = req.body.data;
       if (req.params.userid == id || role == "admin") {
-        userUtils.updateAccountData(user, updateData).then(user => {
-          res.status(200).json({ data: user });
-        });
+        userUtils
+          .updateAccountData(req.params.userid, updateData)
+          .then(user => {
+            res.status(200).json({ data: user });
+          });
       } else {
         res.status(409).send();
       }
@@ -147,7 +149,7 @@ router.post("/activate/:confirmationCode", (req, res) => {
     .then(user => {
       if (userUtils.checkCode(user, req.params.confirmationCode)) {
         userUtils
-          .updateAccountData(user, { status: "activated" })
+          .updateAccountData(id, { status: "activated" })
           .then(user => {
             axios
               .get(
@@ -250,4 +252,39 @@ router.get("/", (req, res) => {
   }
 });
 
+// @route GET api/user/:userid
+// @desc get all users
+// @access Admin
+router.get("/:userid", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      if (data.role == "admin") {
+        database
+          .findUserById(req.params.userid)
+          .then(user => {
+            const payload = {
+              userid: user.userid,
+              email: user.email,
+              role: user.role,
+              account_code: user.account_code,
+              status: user.status
+            };
+            res.status(200).json({ data: payload });
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(404).send();
+          });
+      } else {
+        res.status(403).send("Nie serwer");
+      }
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
 module.exports = router;

@@ -19,21 +19,24 @@ import { ActivateAccount } from "./components/layout/main/ActivateAccount";
 import { BooksPage } from "./components/layout/public/book/BooksPage";
 import { BookPage } from "./components/layout/public/book/BookPage";
 
+// private (user)
 import { PrivateRoute } from "./components/common/PrivateRoute";
 import { EditProfilePage } from "./components/layout/user/EditProfilPage";
+import { UserPage } from "./components/layout/user/UserPage";
 
+//admin
 import { RestrictedRoute } from "./components/common/RestrictedRoute";
 import { ManageUsers } from "./components/layout/admin/ManageUsers";
+import { EditUserProfile } from "./components/layout/admin/EditUserProfile";
 import { RecommendationsPage } from "./components/layout/admin/RecommendationsPage";
+
+// not found
 import { NotFound } from "./components/layout/common/NotFound";
 
 import { setAuthorizationToken } from "./utils/jwtUtils";
 import { setCurrentUser } from "./actions/authAction";
 import jwt_decode from "jwt-decode";
-
-// userlogged
-import { UserDashboard } from "./components/layout/user/UserDashboard";
-import { UserPage } from "./components/layout/user/UserPage";
+import { SearchPage } from "./components/layout/public/search/SearchPage";
 
 if (localStorage.getItem("jwtToken")) {
   setAuthorizationToken(localStorage.getItem("jwtToken"));
@@ -60,26 +63,24 @@ function App() {
             <Route exact path="/books/:category" component={BooksPage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/search/:text" component={SearchPage} />
             <PrivateRoute
               exact
               path="/profile/edit"
               component={EditProfilePage}
             />
-            <PrivateRoute
-              exact
-              path="/user-page/:id"
-              component={UserPage}
-            />
-            <PrivateRoute
-              exact
-              path="/dashboard"
-              component={UserDashboard}
-            />
+            <PrivateRoute exact path="/user-page/:id" component={UserPage} />
             <RestrictedRoute
               exact
               path="/manage/users"
               component={ManageUsers}
             />
+            <RestrictedRoute
+              exact
+              path="/manage/edit-user-profile/:id"
+              component={EditUserProfile}
+            />
+
             <RestrictedRoute
               exact
               path="/manage/recommendations"

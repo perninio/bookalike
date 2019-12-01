@@ -21,8 +21,8 @@ async function findUserById(id) {
     .catch(err => console.log(err));
 }
 
-async function updateAccountData(user, newData) {
-  return await database.updateAccountData(user, newData);
+async function updateAccountData(userid, newData) {
+  return await database.updateAccountData(userid, newData);
 }
 
 function checkCode(user, activateCode) {

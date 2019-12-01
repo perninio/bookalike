@@ -20,4 +20,8 @@
 .bookcover{
   float:left;
 }
-
+.comment-textarea{
+  max-height:50%;
+  max-width:100%;
+  font-size:18px;
+}

@@ -3,6 +3,7 @@ import axios from "axios";
 import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
 import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
+import postsjson from "./components/posts.json"
 
 const items = [
   {
@@ -16,8 +17,8 @@ const items = [
   }
 ];
 
-export const UserDashboard = () => {
-  const [posts, setPosts] = useState({});
+export const UserDashboard2 = () => {
+  const [posts, setPosts] = useState(postsjson);
 
   console.log(posts);
 
