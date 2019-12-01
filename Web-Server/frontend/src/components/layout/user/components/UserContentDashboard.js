@@ -13,7 +13,6 @@ const UserContentDashboard = () => {
 	const [posttext,setPostText]=useState("")
 	const [posts,setPosts]=useState(postsjson.posts)
 	const [newposts,setNewPosts]=useState([])
-	const [reload,setReload]=useState(0)
 	const [eventText,seteventText]=useState(0)
 	
 
@@ -44,25 +43,22 @@ const UserContentDashboard = () => {
             text:posttext,
             graphic:"https://skupszop.pl/images/books/9788377589915.jpg"
 		})
-		//setReload(newposts.length)
 		setPostText("");
 		eventText.value=""
 		}
 
 	  }
+	useEffect(() => {
+		document.addEventListener('scroll', () => {
+			const isTop = window.scrollY;
+			if (isTop > 120) {
+				setBarAnimation(true);
+			} else {
+				setBarAnimation(false);
+			}
+		})
+	})
 	
-
-	// useEffect(() => {
-	// 	document.addEventListener('scroll', () => {
-	// 		const isTop = window.scrollY;
-	// 		if (isTop > 120) {
-	// 			setBarAnimation(true);
-	// 		} else {
-	// 			setBarAnimation(false);
-	// 		}
-	// 	})
-	// })
-
 	return (
 		<div>
 			<div class="container">

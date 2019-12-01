@@ -22,6 +22,11 @@ export const UserDashboard2 = () => {
 
   console.log(posts);
 
+  const deletepost=(index)=>{
+    splice(index,1)
+    )
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       axios
