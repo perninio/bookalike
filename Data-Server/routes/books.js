@@ -103,6 +103,40 @@ router.get("/categories/all", (req, res) => {
     .catch(err => console.log(err));
 });
 
+// @route GET api/books/get-recommended-books
+// @desc send book recommendations along with its score
+// @access Server
+router.get("/recommended/get-recommended-books", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      if (data.role == "server" && data.id == "RS") {
+        predictions = req.body.predictions;
+        bookids = predictions.map(prediction => {
+          return prediction.split(":")[1];
+        });
+
+        bookUtils
+          .getRecommendedBooks(predictions)
+          .then(books => {
+            res.status(200).json({ data: books });
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(404).send();
+          });
+      } else {
+        res.status(403).send("Nie serwer");
+      }
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 // @route POST api/books/set-recommendations
 // @desc recieve book recommendations from RS and put them in database
 // @access Server

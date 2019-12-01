@@ -12,4 +12,28 @@ async function getBook(bookid) {
     .catch(err => console.log(err));
 }
 
-module.exports = { getSimilarBooks };
+async function getRecommendedBooks(predictions) {
+  return await Promise.all(
+    predictions.map(prediction => {
+      return getRecommendedBook(prediction);
+    })
+  );
+}
+
+async function getRecommendedBook(prediction) {
+  const splitted = prediction.split(":");
+  const score = splitted[0];
+  const bookid = splitted[1];
+  return await Book.findOne({ where: { bookid: bookid } })
+    .then(book => {
+      return {
+        bookid: book.bookid,
+        name: book.name,
+        graphic: book.graphic,
+        score: score
+      };
+    })
+    .catch(err => console.log(err));
+}
+
+module.exports = { getSimilarBooks, getRecommendedBooks };

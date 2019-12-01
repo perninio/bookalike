@@ -49,10 +49,18 @@ def tfidf_recommendations():
     # uzyskaj predykcje i posortuje je malejąco
     predictions = get_predictions_for_all_unvoted(
         data["id"], r_matrix, cosine_sim, indexes_dict, occurences, full_df)
-
     predictions.sort(reverse=True)
 
-    return make_response(jsonify({"data": predictions[:30]}), 200)
+    response = requests.get(
+        "http://"+os.environ["DATASERVER_IP"] +
+        ":5000/api/books/recommended/get-recommended-books",
+        headers={'Authorization': constants.token,
+                 'Content-Type': 'application/json'},
+        json={"predictions": predictions[:30]})
+
+    data = response.json()["data"]
+
+    return make_response(jsonify({"data": data}), 200)
 
 
 def getRateFrame():
