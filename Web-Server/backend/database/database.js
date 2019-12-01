@@ -150,6 +150,26 @@ function find_friends(personid) { //znajduje przyjaciół moich przyjaciół po 
   return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)="+personid+" RETURN friends")
 }
 
+function makerelationshipbetween(uid1, uid2, relation_type) {
+  Promise.all([
+      instance.findById("Person", uid1),
+      instance.findById("Person", uid2)
+  ])
+      .then(([user1, user2]) => {
+          user1.relateTo(user2, 'friends', { relation: relation_type })
+              .then(res => {
+                  console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('relation'));
+              }).catch((e) => {
+                  console.log("Failed to create relationship \n" + e);
+              })
+      });
+}
+
+function changerelation(user1,user2,relation_type){
+  instance.cypher("match (user1:Person)-[rel:friends]-(user2:Person) where id(user1)="+user1+" and id(user2)="+user2+" set rel.relation="+relation_type+" return  rel.relation").then(res=>{console.log("Success")}).catch(e=>{console.log(e)})
+}
+
+var relation_type=["accepted_request","send_request","rejected_request","deleted"]
 
 module.exports = {
   createUserNode,
