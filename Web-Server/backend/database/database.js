@@ -147,9 +147,21 @@ function findUser() {
   });
 }
 
-function find_friends(personid) { //znajduje przyjaciół moich przyjaciół po imieniu
-  return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)="+personid+" RETURN friends")
+function find_friends(personid) {
+  return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)=" + personid + " RETURN friends").catch(e=>{console.log(e)})
 }
+
+const get_ids_of_my_friends = async (personid) => {
+  const users = await find_friends(personid)
+  var tab = []
+  console.log(users ? "Succesfully found "+users.records.length+" users":"No users found")
+  Promise.all(
+      users.records.map(x => { tab.push(x._fields[0].identity.low)})).catch(e=>{console.log(e)})
+  return tab
+}
+
+get_ids_of_my_friends(371).then(res => { console.log(res) })
+
 
 function makerelationshipbetween(uid1, uid2, relation_type) {
   Promise.all([
