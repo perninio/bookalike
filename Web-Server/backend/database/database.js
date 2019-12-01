@@ -166,7 +166,7 @@ function makerelationshipbetween(uid1, uid2, relation_type) {
 }
 
 function changerelation(user1,user2,relation_type){
-  instance.cypher("match (user1:Person)-[rel:friends]-(user2:Person) where id(user1)="+user1+" and id(user2)="+user2+" set rel.relation="+relation_type+" return  rel.relation").then(res=>{console.log("Success")}).catch(e=>{console.log(e)})
+  instance.cypher("match (user1:Person)-[rel:friends]-(user2:Person) where id(user1)="+user1+" and id(user2)="+user2+" set rel.relation=relation_type return  rel.relation",{relation_type:relation_type}).then(res=>{console.log("Success")}).catch(e=>{console.log(e)})
 }
 
 var relation_type=["accepted_request","send_request","rejected_request","deleted"]
