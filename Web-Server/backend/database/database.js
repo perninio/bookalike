@@ -146,6 +146,11 @@ function findUser() {
   });
 }
 
+function find_friends(personid) { //znajduje przyjaciół moich przyjaciół po imieniu
+  return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)="+personid+" RETURN friends")
+}
+
+
 module.exports = {
   createUserNode,
   findUserByEmail,
