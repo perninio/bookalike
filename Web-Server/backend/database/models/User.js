@@ -26,13 +26,13 @@ module.exports = {
   },
   surname: "string",
   birthdate: "date",
-  friend: {
+  friends: {
     type: "relationship",
-    target: "Person",
+    target: "User",
     relationship: "friends",
     direction: "out",
     properties: {
-      since: "date"
+      relation: "string"
     },
     eager: true
   }

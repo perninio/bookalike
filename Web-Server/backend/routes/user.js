@@ -110,6 +110,70 @@ router.post("/register", (req, res) => {
     });
 });
 
+// @route GET api/user/:userid/friends
+// @desc get all friends ids from user
+// @access Private
+router.get("/:userid/friends", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      database
+        .get_ids_of_my_friends(req.params.userid)
+        .then(users_id => {
+          res.status(200).json({ friends: users_id });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(409).send();
+        });
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
+// @route POST api/user/:userid/relationship
+// @desc create relationship between two users
+// @access Private
+router.post("/:userid/relationship", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      database.makerelationshipbetween(id, req.params.userid, "send_request");
+      res.status(200).send();
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
+// @route PUT api/user/:userid/relationship
+// @desc update relationship between two users
+// @access Private
+router.put("/:userid/relationship", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      const { relation_type } = req.body;
+      database.changerelation(id, req.params.userid, relation_type);
+      res.status(200).send();
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 // @route PUT api/user/:userid
 // @desc endpoint where we can update user's data - changes can be made by admins
 // @access Private/Admin

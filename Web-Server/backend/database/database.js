@@ -148,41 +148,79 @@ function findUser() {
 }
 
 function find_friends(personid) {
-  return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)=" + personid + " RETURN friends").catch(e=>{console.log(e)})
+  return instance
+    .cypher(
+      "MATCH (me:User)-[:friends {relation:'accepted_request'}]-(friends:User) WHERE id(me)=" +
+        personid +
+        " RETURN friends"
+    )
+    .catch(e => {
+      console.log(e);
+    });
 }
 
-const get_ids_of_my_friends = async (personid) => {
-  const users = await find_friends(personid)
-  var tab = []
-  console.log(users ? "Succesfully found "+users.records.length+" users":"No users found")
-  Promise.all(
-      users.records.map(x => { tab.push(x._fields[0].identity.low)})).catch(e=>{console.log(e)})
-  return tab
-}
+const get_ids_of_my_friends = async personid => {
+  const users = await find_friends(personid);
+  var tab = [];
+  console.log(
+    users
+      ? "Succesfully found " + users.records.length + " users"
+      : "No users found"
+  );
 
-get_ids_of_my_friends(371).then(res => { console.log(res) })
+  users.records.map(x => {
+    tab.push(x._fields[0].identity.low);
+  });
 
+  return tab;
+};
 
 function makerelationshipbetween(uid1, uid2, relation_type) {
   Promise.all([
-      instance.findById("Person", uid1),
-      instance.findById("Person", uid2)
-  ])
-      .then(([user1, user2]) => {
-          user1.relateTo(user2, 'friends', { relation: relation_type })
-              .then(res => {
-                  console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('relation'));
-              }).catch((e) => {
-                  console.log("Failed to create relationship \n" + e);
-              })
+    instance.findById("User", uid1),
+    instance.findById("User", uid2)
+  ]).then(([user1, user2]) => {
+    user1
+      .relateTo(user2, "friends", { relation: relation_type })
+      .then(res => {
+        console.log(
+          res._start.get("name"),
+          " is friend ",
+          res._end.get("name"),
+          "since",
+          res.get("relation")
+        );
+      })
+      .catch(e => {
+        console.log("Failed to create relationship \n" + e);
       });
+  });
 }
 
-function changerelation(user1,user2,relation_type){
-  instance.cypher("match (user1:Person)-[rel:friends]-(user2:Person) where id(user1)="+user1+" and id(user2)="+user2+" set rel.relation=relation_type return  rel.relation",{relation_type:relation_type}).then(res=>{console.log("Success")}).catch(e=>{console.log(e)})
+function changerelation(user1, user2, relation_type) {
+  instance
+    .cypher(
+      "match (user1:User)-[rel:friends]-(user2:User) where id(user1)=" +
+        user1 +
+        " and id(user2)=" +
+        user2 +
+        " set rel.relation={relation_type} return  rel.relation",
+      { relation_type: relation_type }
+    )
+    .then(res => {
+      console.log("Success");
+    })
+    .catch(e => {
+      console.log(e);
+    });
 }
 
-var relation_type=["accepted_request","send_request","rejected_request","deleted"]
+// var relation_type = [
+// "accepted_request",
+// "send_request",
+// "rejected_request",
+// "deleted"
+// ];
 
 module.exports = {
   createUserNode,
@@ -190,5 +228,8 @@ module.exports = {
   findUserById,
   deleteUserByEmail,
   updateAccountData,
-  getAllUsers
+  getAllUsers,
+  makerelationshipbetween,
+  changerelation,
+  get_ids_of_my_friends
 };
