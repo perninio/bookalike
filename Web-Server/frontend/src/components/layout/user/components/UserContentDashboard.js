@@ -5,16 +5,18 @@ import UserInformation from "./UserInformation.js"
 import Post from "./Post.js"
 import postsjson from "./posts.json"
 
-const UserContentDashboard = () => {
+const UserContentDashboard = ({data,fun}) => {
 	const [showPopup, setShowPopup] = useState(false)
 	const [isActive, setisActive] = useState(true)
 	const [barAniamtion, setBarAnimation] = useState(false)
 	const [activeTag, setActiveTag] = useState(1)
 	const [posttext,setPostText]=useState("")
-	const [posts,setPosts]=useState(postsjson.posts)
+	const [posts,setPosts]=useState(data)
 	const [newposts,setNewPosts]=useState([])
 	const [eventText,seteventText]=useState(0)
-	
+
+console.log(data)
+
 
 	const closePopup = () => {
 		setShowPopup(!showPopup)
@@ -96,8 +98,9 @@ const UserContentDashboard = () => {
 								<div>wszystkie
 								{/* {posts.posts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} */}
 								{/* mocup */}
-								{newposts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} 
-								{posts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} /> })} 
+								{/*newposts.map((item) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic}  fun={fun}/> })*/} 
+								{data.map((item) => console.log(item))}
+								{/*{ return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} posttext={item.text} graphic={item.graphic} fun={fun}/> })}*/}
 								</div>
 							) :
 								null

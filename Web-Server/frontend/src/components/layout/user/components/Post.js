@@ -2,12 +2,17 @@ import "./post.css";
 import React, { useState, useEffect } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export const Post = (props) => {
+export const Post = ({props,fun}) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const [posts,setPosts]=useState(props)
 
 	const toggle = () => setDropdownOpen(prevState => !prevState);
 	const editpost = () => { console.log("edit post") };
-	const deletepost = () => { console.log("delete post") };
+	const deletepost=()=>{
+		console.log("ok")
+	}
+
+
 
 	return (
 		<div className="container">
@@ -31,7 +36,7 @@ export const Post = (props) => {
 							</DropdownToggle>
 							<DropdownMenu>
 								<DropdownItem onClick={editpost}>Edytuj post</DropdownItem>
-								<DropdownItem onClick={deletepost}>Usuń post</DropdownItem>
+								<DropdownItem onClick={fun}>Usuń post</DropdownItem>
 							</DropdownMenu>
 						</Dropdown>
 					</div>

@@ -18,13 +18,11 @@ const items = [
 ];
 
 export const UserDashboard2 = () => {
-  const [posts, setPosts] = useState(postsjson);
+  const [posts, setPosts] = useState(postsjson.posts);
 
-  console.log(posts);
-
-  const deletepost=(index)=>{
-    splice(index,1)
-    )
+  const deletepost=()=>{
+    //posts.splice(index,1)
+    console.log("oki")  
   }
 
   useEffect(() => {
@@ -56,7 +54,7 @@ export const UserDashboard2 = () => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}
         >
-          {posts.posts && <UserContentDashboard />}
+          {posts && <UserContentDashboard data={posts} fun={deletepost}/>}
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"
