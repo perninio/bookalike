@@ -1,18 +1,18 @@
 import "./post.css";
 import React, { useState, useEffect } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { useSelector } from 'redux';
 
 export const Post = (props) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
-
 	const toggle = () => setDropdownOpen(prevState => !prevState);
-
-
+	const {isAuthenticated}=useSelector(state->state.auth)
+	const id= isAuthenticated ? useSelector(state=>state.auth.user.id) : -1; 
 	return (
 		<div id={props.index} className="container">
 			<div className="row">
 				<div className="col-md-2 book my-col d-flex justify-content-center">
-					<img src={props.graphic} width="120px" alt="postbookimage" />
+					{props.graphic && <img src={props.graphic} width="120px" alt="postbookimage" />}
 					
 				</div>
 				<div className="col-md-10 my-col">
@@ -24,17 +24,18 @@ export const Post = (props) => {
 					<a href={"user-page/" + props.id} >
 						<div className="username-post float-left">{props.postingusername}</div>
 					</a>
-					{ <div className="username-post float-right">
+
+					{props.id==userid ? <div className="username-post float-right">
 						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
 							<DropdownToggle caret>
 							</DropdownToggle>
 							<DropdownMenu>
 								<DropdownItem id={props.index} onClick={()=>{props.show(true);props.setIndex(props.index)}}>Edytuj post</DropdownItem>
 								<DropdownItem id={props.index} onClick={data=>{props.fun(props.index)}}>Usuń post</DropdownItem>
-								{/* props.fun(this.id) */}
+								
 							</DropdownMenu>
 						</Dropdown>
-					</div>}
+					</div>: null}
 					<div className="clearfix" />
 					<div className="description">
 						{props.posttext}
