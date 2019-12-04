@@ -1,8 +1,27 @@
-import React from "react";
-import UserContent from "./components/UserContent"
-import "./components/userpage.css"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import UserContent from "./components/UserContent";
 
-export const UserPage = () => {
+import "./components/userpage.css";
+import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
+
+export const UserPage = props => {
+  const [posts, setPosts] = useState([]);
+  const id = props.match.params.id;
+  console.log(posts);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(postserverAPIEndpoint + "/user/" + id)
+        .then(result => {
+          setPosts(result.data.posts);
+        })
+        .catch(err => console.log("Failed to get post data"));
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="row vh-100">
@@ -12,7 +31,10 @@ export const UserPage = () => {
         >
           sidebar
         </div>
-        <div className="col-xs-12 col-sm-8 content-col" style={{ backgroundColor: "grey", marginLeft:0}}>
+        <div
+          className="col-xs-12 col-sm-8 content-col"
+          style={{ backgroundColor: "grey", marginLeft: 0 }}
+        >
           <UserContent></UserContent>
         </div>
         <div

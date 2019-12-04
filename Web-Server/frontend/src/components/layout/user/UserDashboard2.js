@@ -3,7 +3,6 @@ import axios from "axios";
 import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
 import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
-import postsjson from "./components/posts.json"
 
 const items = [
   {
@@ -18,22 +17,22 @@ const items = [
 ];
 
 export const UserDashboard2 = () => {
-  const [posts, setPosts] = useState(postsjson.posts);
-  const [reload,setReload]=useState(0)
+  const [posts, setPosts] = useState([]);
+  const [reload, setReload] = useState(0);
 
-  const deletepost=(index)=>{
-    var tab=posts
-    tab.splice(index,1)
-    setPosts(tab)
-    setReload(posts.length)
-  }
+  const deletepost = index => {
+    var tab = posts;
+    tab.splice(index, 1);
+    setPosts(tab);
+    setReload(posts.length);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       axios
         .get(postserverAPIEndpoint + "/")
         .then(result => {
-          setPosts(result.data);
+          setPosts(result.data.posts);
           console.log(result.data);
         })
         .catch(err => console.log("Failed to get post data"));
@@ -57,7 +56,14 @@ export const UserDashboard2 = () => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}
         >
-          {posts && <UserContentDashboard data={posts} fun={deletepost} posts={posts} setReload={setReload}/>}
+          {posts && (
+            <UserContentDashboard
+              data={posts}
+              fun={deletepost}
+              posts={posts}
+              setReload={setReload}
+            />
+          )}
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"

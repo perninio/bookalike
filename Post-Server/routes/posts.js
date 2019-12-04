@@ -66,6 +66,75 @@ router.get("/", (req, res) => {
   }
 });
 
+// @route GET api/posts/user/:userid
+// @desc get all user's posts (TODO: get all user's and his friend's posts)
+// @access Public/Private
+router.get("/user/:userid", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      axios
+        .get(
+          "http://" +
+            process.env.WS_IP_ADDR +
+            ":5000/api/user/" +
+            req.params.userid +
+            "/friends"
+        )
+        .then(resp => {
+          const {
+            data: { friends }
+          } = resp;
+
+          if (req.params.id == id) {
+            Post.find({ userid: req.params.userid }).then(posts => {
+              res.status(200).json({ posts: posts });
+            });
+          } else if (friends.includes(id)) {
+            Post.find({
+              userid: req.params.userid,
+              scope: { $in: ["public", "friends"] }
+            })
+              .then(posts => {
+                console.log(posts);
+                res.status(200).json({ posts: posts });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(404).send();
+              });
+          } else if (!friends.includes(id)) {
+            Post.find({ userid: req.params.userid, scope: "public" })
+              .then(posts => {
+                res.status(200).json({ posts: posts });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(404).send();
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).send();
+        });
+    }
+  } else {
+    Post.find({ userid: req.params.userid, scope: "public" })
+      .then(posts => {
+        res.status(200).json({ posts: posts });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(404).send();
+      });
+  }
+});
+
 // @route POST api/posts/
 // @desc add post to database
 // @access Private
