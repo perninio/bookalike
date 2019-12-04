@@ -181,14 +181,84 @@ function findPersonByName2() {
 
 //znajdowanie znajomych
 //tworzymy przykładową strukturę
-makerelationship()
+//makerelationship()
 
 function find_friends_of_my_friends_by_name(myname, name) { //znajduje przyjaciół moich przyjaciół po imieniu
     return instance.cypher("MATCH (:Person {name: {myname}})-[:friends {relation:'request_accepted'}]-(friends:Person)-[:friends {relation:'request_accepted'}]-(friend_of_myfriend:Person {name:{name}})RETURN friend_of_myfriend AS users", { myname: myname, name: name })
 }
-find_friends_of_my_friends_by_name("Arek", "Kamil").then(res => { console.log("Find dla imion"+res.records.length); console.log(res.records.map(user=>user.get('users'))) })
+//find_friends_of_my_friends_by_name("Arek", "Kamil").then(res => { console.log("Find dla imion"+res.records.length); console.log(res.records.map(user=>user.get('users'))) })
 
 function find_friends_of_my_friends_by_id(myid, personid) { //znajduje przyjaciół moich przyjaciół po imieniu
     return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person)-[:friends {relation:'request_accepted'}]-(friend_of_myfriend:Person) WHERE id(me)={myid} AND id(friend_of_myfriend)={personid} RETURN friend_of_myfriend", { myid: Number(myid), personid: Number(personid) })
 }
-find_friends_of_my_friends_by_id(292,114).then(res => { console.log("Find dla ID "+res.records.length) })
+//find_friends_of_my_friends_by_id(292,114).then(res => { console.log("Find dla ID "+res.records.length) })
+
+function make_relation(id1, id2) {
+    return instance.findById("Person", id1)
+}
+//make_relation(292,3).then(res=>{console.log(res)})
+
+function makerelationshipbetween(uid1, uid2, relation_type) {
+    Promise.all([
+        instance.findById("Person", uid1),
+        instance.findById("Person", uid2)
+    ])
+        .then(([user1, user2]) => {
+            user1.relateTo(user2, 'friends', { relation: relation_type })
+                .then(res => {
+                    console.log(res._start.get('name'), ' is friend ', res._end.get('name'), 'since', res.get('relation'));
+                }).catch((e) => {
+                    console.log("Failed to create relationship \n" + e);
+                })
+        });
+}
+//makerelationshipbetween(211,114,"friends")
+
+function changerelation(user1, user2, relation_type) {
+    instance.cypher("match (user1:Person)-[rel:friends]-(user2:Person) where id(user1)=" + user1 + " and id(user2)=" + user2 + " set rel.relation={relation_type} return  rel.relation", { relation_type: relation_type }).then(res => { console.log("Success") }).catch(e => { console.log(e) })
+}
+//changerelation(232,253,"ziomy")  
+
+function find_friends2(personid) {
+    Promise.all(
+        instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)=" + personid + " RETURN friends")
+    ).then(res => { console.log(res) }).catch(e => { console.log(e) })
+}
+
+
+function find_friends(personid) {
+    return instance.cypher("MATCH (me:Person)-[:friends {relation:'request_accepted'}]-(friends:Person) WHERE id(me)=" + personid + " RETURN friends").catch(e=>{console.log(e)})
+}
+
+const get_ids_of_my_friends = async (personid) => {
+    const users = await find_friends(personid)
+    var tab = []
+    console.log(users ? "Succesfully found "+users.records.length+" users":"No users found")
+    Promise.all(
+        users.records.map(x => { tab.push(x._fields[0].identity.low)})).catch(e=>{console.log(e)})
+    return tab
+}
+
+//get_ids_of_my_friends(371).then(res => { console.log(res) })
+//find_friends(234)
+//find_friends2(234).then(res=>console.log(res))
+
+async function findrelation(userid,relation_type){
+   var tab=[];
+   var res=await instance.cypher("match (me:Person)-[:friends {relation:{relation_type}}]-(users:Person) where id(me)="+userid+" return users",{relation_type:relation_type})
+   res.records.map(rec=>{tab.push(rec._fields[0].identity.low)})
+   return  tab
+}
+
+//console.log()
+//findrelation(411,"request_send").then(res=>console.log(res))
+
+async function test2()
+{   
+    var res=await findrelation(411,"request_accepted")
+    console.log(res)
+}
+test2()
+
+  //res.records.map(rec=>{tab.push(rec._fields[0].identity.low
+  //.records.map(rec=>{rec._fields[0].identity.low})
