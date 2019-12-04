@@ -24,7 +24,7 @@ export const Post = (props) => {
 					<a href={"user-page/" + props.id} >
 						<div className="username-post float-left">{props.postingusername}</div>
 					</a>
-					<div className="username-post float-right">
+					{ <div className="username-post float-right">
 						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
 							<DropdownToggle caret>
 							</DropdownToggle>
@@ -34,7 +34,7 @@ export const Post = (props) => {
 								{/* props.fun(this.id) */}
 							</DropdownMenu>
 						</Dropdown>
-					</div>
+					</div>}
 					<div className="clearfix" />
 					<div className="description">
 						{props.posttext}

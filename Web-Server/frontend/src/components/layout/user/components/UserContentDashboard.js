@@ -106,7 +106,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 						) :
 							activeTag == 1 ? (
 								<div>
-									{data && data.map((item, index) => { return <Post postingusername={item.imie + " " + item.nazwisko} id={item.id} index={index} posttext={item.text} graphic={item.graphic} fun={fun} show={setShowPopup} setIndex={setIndex}/> })}
+									{data && data.map((item, index) => { return <Post postingusername={item.user.firstname + " " + item.user.lastname} id={item.user.userid} index={index} posttext={item.text} graphic={item.user.graphic} fun={fun} show={setShowPopup} setIndex={setIndex} /> })}
 								</div>
 							) :
 								null
