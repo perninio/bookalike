@@ -2,20 +2,14 @@ import "./post.css";
 import React, { useState, useEffect } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export const Post = ({props,fun}) => {
+export const Post = (props) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const [posts,setPosts]=useState(props)
 
 	const toggle = () => setDropdownOpen(prevState => !prevState);
-	const editpost = () => { console.log("edit post") };
-	const deletepost=()=>{
-		console.log("ok")
-	}
-
 
 
 	return (
-		<div className="container">
+		<div id={props.index} className="container">
 			<div className="row">
 				<div className="col-md-2 book my-col d-flex justify-content-center">
 					<img src={props.graphic} width="120px" alt="postbookimage" />
@@ -35,8 +29,9 @@ export const Post = ({props,fun}) => {
 							<DropdownToggle caret>
 							</DropdownToggle>
 							<DropdownMenu>
-								<DropdownItem onClick={editpost}>Edytuj post</DropdownItem>
-								<DropdownItem onClick={fun}>Usuń post</DropdownItem>
+								<DropdownItem id={props.index} onClick={()=>{props.show(true);props.setIndex(props.index)}}>Edytuj post</DropdownItem>
+								<DropdownItem id={props.index} onClick={data=>{props.fun(props.index)}}>Usuń post</DropdownItem>
+								{/* props.fun(this.id) */}
 							</DropdownMenu>
 						</Dropdown>
 					</div>

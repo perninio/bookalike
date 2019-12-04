@@ -12,6 +12,12 @@
             "id": "2",
             "nazwisko":"",
             "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+        },
+        {
+            "imie": "Filip",
+            "id": "2",
+            "nazwisko":"Szadkowski",
+            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
         }
     ]
 }
