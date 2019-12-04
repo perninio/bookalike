@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const axios = require("axios");
 
 const Post = require("../models/Post");
 const jwtUtils = require("../utils/jwtUtils");
@@ -19,29 +20,45 @@ router.get("/", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id } = data;
-      //TODO: to get all users and his friend's posts - just fetch all ids and then use $in: []
-      // https://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
-      Post.find({ userid: id })
-        .then(posts => {
-          if (posts) {
-            postUtils
-              .getPostsData(posts)
-              .then(data =>
-                res
-                  .status(200)
-                  .json({ posts: data.filter(post => post != null) })
-              )
-              .catch(err => {
-                console.log(err);
-                res.status(404).send();
-              });
-          } else {
-            res.status(404).json({ posts: "Nie znaleziono postów" });
-          }
+      axios
+        .get(
+          "http://" +
+            process.env.WS_IP_ADDR +
+            ":5000/api/user/" +
+            id +
+            "/friends"
+        )
+        .then(resp => {
+          const {
+            data: { friends }
+          } = resp;
+          friends.push(id);
+          Post.find({ userid: { $in: friends } })
+            .then(posts => {
+              if (posts) {
+                postUtils
+                  .getPostsData(posts, id)
+                  .then(data =>
+                    res
+                      .status(200)
+                      .json({ posts: data.filter(post => post != null) })
+                  )
+                  .catch(err => {
+                    console.log(err);
+                    res.status(404).send();
+                  });
+              } else {
+                res.status(404).json({ posts: "Nie znaleziono postów" });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(409).json({ err: err });
+            });
         })
         .catch(err => {
           console.log(err);
-          res.status(409).json({ err: err });
+          res.status(500).send();
         });
     }
   } else {

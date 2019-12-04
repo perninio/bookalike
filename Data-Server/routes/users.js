@@ -107,8 +107,27 @@ router.get("/:userid", (req, res) => {
             };
             res.status(200).json({ data: profile });
           } else {
-            let profile = profileFactory.getProfileData(user);
-            res.status(200).json({ data: profile });
+            const { id } = data;
+            axios
+              .get(
+                "http://" +
+                  process.env.WS_IP_ADDR +
+                  ":5000/api/user/" +
+                  id +
+                  "/friends"
+              )
+              .then(resp => {
+                const {
+                  data: { friends }
+                } = resp;
+                const isFriend = friends.includes(id);
+                let profile = profileFactory.getProfileData(user, isFriend);
+                res.status(200).json({ data: profile });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).send();
+              });
           }
         })
         .catch(err => {

@@ -137,6 +137,7 @@ services:
       - PS_DB_IP_ADDR=172.18.0.12
       - AS_IP_ADDR=172.18.0.4
       - DS_IP_ADDR=172.18.0.6
+      - WS_IP_ADDR=172.18.0.7
     networks:
       app_net:
         ipv4_address: 172.18.0.11
