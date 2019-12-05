@@ -4,6 +4,8 @@ import "./usercontentdashboard.css";
 import UserInformation from "./UserInformation.js"
 import Post from "./Post.js"
 import postsjson from "./posts.json"
+import { Button, ButtonGroup } from 'reactstrap';
+
 
 const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 	const [showPopup, setShowPopup] = useState(false)
@@ -12,13 +14,14 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 	const [activeTag, setActiveTag] = useState(1)
 	const [posttext, setPostText] = useState("")
 	const [eventText, seteventText] = useState(0)
-	const [editindex,setIndex]=useState(0)
+	const [editindex, setIndex] = useState(0)
+	const [scope, setScope] = useState("public")
 
 	const closePopup = () => {
 		setShowPopup(!showPopup)
 		setisActive(!isActive)
 	}
-	
+
 	const switchContentComments = () => {
 		setActiveTag(2)
 	}
@@ -41,6 +44,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 				text: posttext,
 				graphic: "https://skupszop.pl/images/books/9788377589915.jpg"
 			})
+			console.log(scope)
 			setPostText("");
 			eventText.value = ""
 			setReload(posts.length)
@@ -51,7 +55,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 	const updatepost = () => {
 		if (posttext != "") {
 			console.log(posttext);
-			posts[editindex]={
+			posts[editindex] = {
 				imie: "Czarek",
 				id: "1",
 				nazwisko: "Pernak",
@@ -64,6 +68,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 			setShowPopup(false)
 			console.log(showPopup)
 		}
+		setScope('public');
 
 	}
 
@@ -83,6 +88,11 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 			<div class="container">
 				<div className='stickbar-dashboard'>
 					<img className="post-photo" src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="40px" />
+					<ButtonGroup>
+						<Button onClick={() => setScope("public")}>Publiczny</Button>
+						<Button onClick={() => setScope("private")}>Prywatny</Button>
+						<Button onClick={() => setScope("friends")}>Znajomi</Button>
+					</ButtonGroup>
 					<textarea onChange={(event) => { setPostText(event.target.value); seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
 					<button className="float-right" onClick={sendpost}>Opublikuj</button>
 				</div>
@@ -113,16 +123,21 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 				}
 			</div>
 			{showPopup ? (
-					<Popup className="image-upload-popup"
-						closePopup={closePopup.bind(this)}
-						content={<div class="container">
-							<div className='stickbar-dashboard'>
-								<textarea onChange={(event) => { setPostText(event.target.value); seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
-								<div><button className="float-right" onClick={updatepost}>Edytuj</button></div>
-							</div>
-						</div>}
-					/>
-				) : null}
+				<Popup className="image-upload-popup"
+					closePopup={closePopup.bind(this)}
+					content={<div class="container">
+						<div className='stickbar-dashboard'>
+							<ButtonGroup>
+								<Button onClick={() => setScope("public")}>Publiczny</Button>
+								<Button onClick={() => setScope("private")}>Prywatny</Button>
+								<Button onClick={() => setScope("friends")}>Znajomi</Button>
+							</ButtonGroup>
+							<textarea onChange={(event) => { setPostText(event.target.value); seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
+							<div><button className="float-right" onClick={updatepost}>Edytuj</button></div>
+						</div>
+					</div>}
+				/>
+			) : null}
 		</div>
 	);
 }
