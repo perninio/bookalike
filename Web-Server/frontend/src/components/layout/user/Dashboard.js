@@ -1,15 +1,11 @@
 import React from "react";
+import { Sidebar } from "../common/Sidebar";
 
 export const Dashboard = () => {
   return (
     <div className="container-fluid">
       <div className="row vh-100">
-        <div
-          className="d-none d-xs-block d-sm-inline col-sm-2"
-          style={{ backgroundColor: "red" }}
-        >
-          sidebar
-        </div>
+        <Sidebar />
         <div className="col-xs-12 col" style={{ backgroundColor: "grey" }}>
           content
         </div>
