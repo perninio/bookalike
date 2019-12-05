@@ -65,7 +65,10 @@ router.get("/book/:bookid", (req, res) => {
             res.status(404).json({ rate: "Nie masz oceny dla tej książki" });
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          res.status(404).send();
+        });
     }
   } else {
     res.status(401).send("Wymagana jest autoryzacja");

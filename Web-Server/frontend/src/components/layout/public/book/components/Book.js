@@ -1,37 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactStars from "react-stars";
-import "./book.css"
+import "./book.css";
 import { useSelector, useDispatch } from "react-redux";
+import { dataserverAPIUserInteractionEndpoint } from "../../../../../constants/serverEndpoint";
 
-
-const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
+const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
   const [readclicked, setReadClicked] = useState(false);
   const [wantreadclicked, setWantReadClicked] = useState(false);
   const [ownclicked, setOwnClicked] = useState(false);
   const [auth, setAuth] = useState(useSelector(state => state.auth));
 
+  console.log("rc", readclicked);
+  console.log("wrc", wantreadclicked);
+  console.log("ob", ownclicked);
 
   //let auth = useSelector(state => state.auth);
   //console.log(auth)
 
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(dataserverAPIUserInteractionEndpoint + "/book/" + bookdata.bookid)
+        .then(result => {
+          const {
+            data: { data }
+          } = result;
+          setReadClicked(data.has_read);
+          setWantReadClicked(data.wants_read);
+          setOwnClicked(data.has_book);
+        })
+        .catch(err => console.log("Failed to get book data"));
+    };
+    fetchData();
+  }, [bookdata.bookid]);
 
   const bookread = () => {
     if (auth.isAuthenticated == true) {
       setReadClicked(!readclicked);
-          /*
-    axios.post('/', {
-      userID: '1' ,     
-      info:"przeczytane"    
-    }).then(function (response) {
-      console.log(response);
-    })
-      .catch(function (error) {
-        console.log(error);
-      });
-      */
-    }
-    else {
+    } else {
       setShowPopup(true);
     }
   };
@@ -39,7 +46,7 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
   const bookwantread = () => {
     if (auth.isAuthenticated == true) {
       setWantReadClicked(!wantreadclicked);
-          /*   
+      /*   
      axios.post('/', {
       userID: '1',
       info:"chce przeczytać"      
@@ -50,8 +57,7 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
         console.log(error);
       });
       */
-    }
-    else {
+    } else {
       setShowPopup(true);
     }
   };
@@ -59,7 +65,7 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
   const ownbook = () => {
     if (auth.isAuthenticated == true) {
       setOwnClicked(!ownclicked);
-          /*
+      /*
     axios.post('/', {
       userID: '1',
       info: "posiadam ksiazke"      
@@ -70,16 +76,12 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
         console.log(error);
       });
     */
-    }
-    else {
+    } else {
       setShowPopup(true);
     }
   };
 
-
-
   return (
-
     <div className="row info-row">
       <div class="col-sm-12 col-md-2 text-center order-sm-1 book-col">
         <span class="bookcover2">
@@ -92,19 +94,55 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
               ></img>
             </div>
             <div>
-              <button className={readclicked ? "float-center btn  w-100 text-white btn-danger clicked-red" : "float-center btn  w-100 text-white btn-danger"} onClick={bookread}>
+              <button
+                className={
+                  readclicked
+                    ? "float-center btn  w-100 text-white btn-danger clicked-red"
+                    : "float-center btn  w-100 text-white btn-danger"
+                }
+                onClick={bookread}
+              >
                 {" "}
-                <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Chcę przeczytać
+                <i
+                  class="em em-book"
+                  aria-role="presentation"
+                  aria-label="OPEN BOOK"
+                ></i>{" "}
+                Chcę przeczytać
               </button>
               <br />
-              <button className={wantreadclicked ? "float-center w-100 btn text-white btn-info clicked-blue" : "float-center  w-100 btn text-white btn-info"} onClick={bookwantread}>
+              <button
+                className={
+                  wantreadclicked
+                    ? "float-center w-100 btn text-white btn-info clicked-blue"
+                    : "float-center  w-100 btn text-white btn-info"
+                }
+                onClick={bookwantread}
+              >
                 {" "}
-                <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Przeczytałem
+                <i
+                  class="em em-book"
+                  aria-role="presentation"
+                  aria-label="OPEN BOOK"
+                ></i>{" "}
+                Przeczytałem
               </button>
               <br />
-              <button className={ownclicked ? "float-center btn  w-100 text-white btn-success clicked-green" : "float-center btn  w-100 text-white btn-success"} onClick={ownbook}>
+              <button
+                className={
+                  ownclicked
+                    ? "float-center btn  w-100 text-white btn-success clicked-green"
+                    : "float-center btn  w-100 text-white btn-success"
+                }
+                onClick={ownbook}
+              >
                 {" "}
-                <i class="em em-book" aria-role="presentation" aria-label="OPEN BOOK"></i> Posiadam
+                <i
+                  class="em em-book"
+                  aria-role="presentation"
+                  aria-label="OPEN BOOK"
+                ></i>{" "}
+                Posiadam
               </button>
             </div>
           </div>
@@ -133,10 +171,9 @@ const Book = ({ bookdata,ratingChanged,setShowPopup }) => {
             size={24}
             color2={"#ffd700"}
           />
-        </span>       
+        </span>
       </div>
     </div>
-
   );
 };
 
