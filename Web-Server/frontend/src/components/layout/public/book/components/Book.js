@@ -4,6 +4,7 @@ import ReactStars from "react-stars";
 import "./book.css";
 import { useSelector, useDispatch } from "react-redux";
 import { dataserverAPIUserInteractionEndpoint } from "../../../../../constants/serverEndpoint";
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
   const [readclicked, setReadClicked] = useState(false);
@@ -115,62 +116,35 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
               ></img>
             </div>
             <div>
-              <button
-                className={
-                  readclicked
-                    ? "float-center btn  w-100 text-white btn-danger clicked-red"
-                    : "float-center btn  w-100 text-white btn-danger"
-                }
-                onClick={() => {
-                  updateInteraction();
-                }}
-              >
-                {" "}
-                <i
-                  class="em em-book"
-                  aria-role="presentation"
-                  aria-label="OPEN BOOK"
-                ></i>{" "}
-                Chcę przeczytać
-              </button>
-              <br />
-              <button
-                className={
-                  wantreadclicked
-                    ? "float-center w-100 btn text-white btn-info clicked-blue"
-                    : "float-center  w-100 btn text-white btn-info"
-                }
-                onClick={() => {
-                  updateInteraction();
-                }}
-              >
-                {" "}
-                <i
-                  class="em em-book"
-                  aria-role="presentation"
-                  aria-label="OPEN BOOK"
-                ></i>{" "}
-                Przeczytałem
-              </button>
-              <br />
-              <button
-                className={
-                  ownclicked
-                    ? "float-center btn  w-100 text-white btn-success clicked-green"
-                    : "float-center btn  w-100 text-white btn-success"
-                }
-                onClick={() => {
-                  updateInteraction();
-                }}
-              >
-                {" "}
-                <i
-                  class="em em-book"
-                  aria-role="presentation"
-                  aria-label="OPEN BOOK"
-                ></i>{" "}
-                Posiadam
-              </button>
+              <BootstrapSwitchButton
+                checked={false}
+                onlabel='Przeczytany'
+                onstyle='primary'
+                offlabel='Nie przeczytany'
+                offstyle='Secondary'
+                style='w-100 mx-3'
+                onChange={() => { setReadClicked(!readclicked) }}
+              />
+
+              <BootstrapSwitchButton
+                checked={false}
+                onlabel='Chcę przeczytać'
+                onstyle='Success'
+                offlabel='Nie chcę przczytać'
+                offstyle='Secondary'
+                style='w-100 mx-3'
+                onChange={() => { setWantreadClicked(!wantreadclicked) }}
+              />
+
+              <BootstrapSwitchButton
+                checked={false}
+                onlabel='Posiadam'
+                onstyle='Danger'
+                offlabel='Nie posiadam'
+                offstyle='Secondary'
+                style='w-100 mx-3'
+                onChange={() => { setOwnClicked(![ownclicked) }}
+              />
             </div>
           </div>
         </span>
