@@ -7,6 +7,7 @@ import {
   dataserverAPIUserEndpoint,
   dataserverAPIBooksEndpoint
 } from "../../../../constants/serverEndpoint";
+import { Sidebar } from "../../common/Sidebar";
 
 export const SearchPage = props => {
   const [activeKey, setActiveKey] = useState(2);
@@ -78,11 +79,8 @@ export const SearchPage = props => {
   return (
     <div className="container-fluid">
       <div className="row vh-100">
-        <div
-          className="d-none d-xs-block d-sm-inline col-sm-2"
-          style={{ backgroundColor: "red" }}
-        >
-          sidebar
+        <div className="d-none d-xs-block d-sm-inline col-sm-2">
+          <Sidebar />
         </div>
 
         <div
