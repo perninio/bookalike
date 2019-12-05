@@ -11,12 +11,12 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
   const [ownclicked, setOwnClicked] = useState(false);
   const [auth, setAuth] = useState(useSelector(state => state.auth));
 
-  console.log("rc", readclicked);
-  console.log("wrc", wantreadclicked);
-  console.log("ob", ownclicked);
-
   //let auth = useSelector(state => state.auth);
   //console.log(auth)
+
+  console.log("rc", readclicked);
+  console.log("wrc", wantreadclicked);
+  console.log("oc", ownclicked);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +34,27 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
     };
     fetchData();
   }, [bookdata.bookid]);
+
+  const updateInteraction = () => {
+    let updateInteraction = {
+      has_read: readclicked,
+      wants_read: wantreadclicked,
+      has_book: ownclicked,
+      bookid: bookdata.bookid
+    };
+
+    axios
+      .post(dataserverAPIUserInteractionEndpoint, updateInteraction)
+      .then(result => {
+        const {
+          data: { interaction }
+        } = result;
+        console.log(interaction);
+        setReadClicked(interaction.has_read);
+        setWantReadClicked(interaction.wants_read);
+        setOwnClicked(interaction.has_book);
+      });
+  };
 
   const bookread = () => {
     if (auth.isAuthenticated == true) {
@@ -100,7 +121,9 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
                     ? "float-center btn  w-100 text-white btn-danger clicked-red"
                     : "float-center btn  w-100 text-white btn-danger"
                 }
-                onClick={bookread}
+                onClick={() => {
+                  updateInteraction();
+                }}
               >
                 {" "}
                 <i
@@ -117,7 +140,9 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
                     ? "float-center w-100 btn text-white btn-info clicked-blue"
                     : "float-center  w-100 btn text-white btn-info"
                 }
-                onClick={bookwantread}
+                onClick={() => {
+                  updateInteraction();
+                }}
               >
                 {" "}
                 <i
@@ -134,7 +159,9 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
                     ? "float-center btn  w-100 text-white btn-success clicked-green"
                     : "float-center btn  w-100 text-white btn-success"
                 }
-                onClick={ownbook}
+                onClick={() => {
+                  updateInteraction();
+                }}
               >
                 {" "}
                 <i

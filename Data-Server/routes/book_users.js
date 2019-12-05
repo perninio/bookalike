@@ -76,7 +76,9 @@ router.post("/", (req, res) => {
           if (interaction) {
             interaction
               .update(req_data)
-              .then(res.status(200).send())
+              .then(updatedInteraction => {
+                res.status(200).json({ interaction: updatedInteraction });
+              })
               .catch(err => {
                 console.log(err);
                 res.status(400).send();
