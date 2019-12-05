@@ -15,7 +15,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 	const [posttext, setPostText] = useState("")
 	const [eventText, seteventText] = useState(0)
 	const [editindex, setIndex] = useState(0)
-	const [scope, setScope] = useState("public")
+	const [status, setStatus] = useState("public")
 
 	const closePopup = () => {
 		setShowPopup(!showPopup)
@@ -88,12 +88,22 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 			<div class="container">
 				<div className='stickbar-dashboard'>
 					<img className="post-photo" src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" height="40px" />
-					<ButtonGroup>
-						<Button onClick={() => setScope("public")}>Publiczny</Button>
-						<Button onClick={() => setScope("private")}>Prywatny</Button>
-						<Button onClick={() => setScope("friends")}>Znajomi</Button>
-					</ButtonGroup>
 					<textarea onChange={(event) => { setPostText(event.target.value); seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
+					<div className="form-group">
+						<label for="selectStatus"> Wybierz zasięg posta</label>
+						<select
+							value={_status}
+							class="form-control"
+							id="selectStatus"
+							onChange={e => {
+								setStatus(e.target.value);
+							}}
+						>
+							<option value="public">Publiczny</option>
+							<option value="friends">Przyjaciele</option>
+							<option value="private">Prywatny</option>
+						</select>
+					</div>
 					<button className="float-right" onClick={sendpost}>Opublikuj</button>
 				</div>
 			</div>
@@ -127,13 +137,23 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
 					closePopup={closePopup.bind(this)}
 					content={<div class="container">
 						<div className='stickbar-dashboard'>
-							<ButtonGroup>
-								<Button onClick={() => setScope("public")}>Publiczny</Button>
-								<Button onClick={() => setScope("private")}>Prywatny</Button>
-								<Button onClick={() => setScope("friends")}>Znajomi</Button>
-							</ButtonGroup>
 							<textarea onChange={(event) => { setPostText(event.target.value); seteventText(event.target); }} name="message" resize="both" rows="5" cols="150" overflow="auto" placeholder="Co słychać?" />
-							<div><button className="float-right" onClick={updatepost}>Edytuj</button></div>
+							<div className="float-right">
+								<div className="form-group">
+									<select
+										value={_status}
+										class="form-control"
+										id="selectStatus"
+										onChange={e => {
+											setStatus(e.target.value);
+										}}
+									>
+										<option value="public">Publiczny</option>
+										<option value="friends">Przyjaciele</option>
+										<option value="private">Prywatny</option>
+									</select>
+								</div>
+								<button onClick={updatepost}>Edytuj</button></div>
 						</div>
 					</div>}
 				/>
