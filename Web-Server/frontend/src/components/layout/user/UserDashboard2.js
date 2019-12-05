@@ -46,7 +46,9 @@ export const UserDashboard2 = () => {
   return (
     <div className="container-fluid">
       <div className="row vh-100">
-        <Sidebar />
+        <div className="d-none d-xs-block d-sm-inline col-sm-2">
+          <Sidebar />
+        </div>
         <div
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}

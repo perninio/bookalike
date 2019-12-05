@@ -7,6 +7,7 @@ import "./bookpage.css";
 import Book from "./components/Book";
 import Comment from "./components/Comment";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Popup from "./components/Popup";
 import { Badge, Button } from "reactstrap";
 
@@ -35,6 +36,8 @@ export const BookPage = props => {
   const [ratingval, setratingval] = useState(0);
   const [bookcomment, setBookComment] = useState("");
   const [commentdata, setCommentData] = useState(comment);
+
+  console.log(data);
   const closebtn = () => {
     setShowPopup(false);
   };
@@ -133,13 +136,13 @@ export const BookPage = props => {
       <div>
         <h2>
           <Badge color="primary">
-            <a href="/"> Zaloguj się </a>
+            <Link to="/login"> Zaloguj się </Link>
           </Badge>
         </h2>
         <h2>
           {" "}
           <Badge color="secondary">
-            <a href="/register">Zarejestruj</a>
+            <Link to="/register">Zarejestruj</Link>
           </Badge>
         </h2>
       </div>
@@ -148,20 +151,20 @@ export const BookPage = props => {
   return (
     <React.Fragment>
       <div className="container bookpage">
-        {/* {data.book && (
+        {data.book && (
           <Book
             bookdata={data.book}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )} */}
-        {data && (
+        )}
+        {/* {data && (
           <Book
             bookdata={data}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )}
+        )} */}
         <div className="row my-row">
           <div className="col-md-auto col-md-12 my-col">
             <div className="carousel-div">
@@ -185,7 +188,7 @@ export const BookPage = props => {
             <Popup
               className="comment-popup"
               closePopup={closebtn.bind(this)}
-              content={!auth.isAuthenticated ? commentpopup : redirectpopup}
+              content={!auth.isAuthenticated ? redirectpopup : commentpopup}
             />
           ) : null}
         </div>

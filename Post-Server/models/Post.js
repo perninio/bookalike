@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  title: Schema.Types.String,
   description: Schema.Types.String,
+  bookid: Schema.Types.Number,
   userid: Schema.Types.Number,
   scope: {
     type: Schema.Types.String,
