@@ -19,9 +19,10 @@ async function fetchPostData(post) {
         .then(comments => {
           return {
             _id: post._id,
-            title: post.title,
+            bookid: post.bookid,
             description: post.description,
             user: getUserData(resp, post.userid),
+            rate: post.rate,
             scope: post.scope,
             comments: comments
           };
@@ -65,20 +66,4 @@ function getUserData(resp, userid) {
   };
 }
 
-function getUpdatedPostData(req) {
-  updatedPostData = {};
-  req.body.title && (updatedPostData.title = req.body.title);
-  req.body.description && (updatedPostData.description = req.body.description);
-  return updatedPostData;
-}
-
-function getNewPostData(req, userid) {
-  postData = { _id: mongoose.Types.ObjectId(), userid: userid };
-  req.body.title && (postData.title = req.body.title);
-  req.body.description && (postData.description = req.body.description);
-  req.body.scope && (postData.scope = req.body.scope);
-
-  return postData;
-}
-
-module.exports = { getPostsData, getUpdatedPostData, getNewPostData };
+module.exports = { getPostsData };

@@ -44,7 +44,7 @@ router.get("/book/:bookid", (req, res) => {
       Book_User.findOne({ where: { userid: id, bookid: req.params.bookid } })
         .then(interaction => {
           if (interaction) {
-            res.status(200).json({ data: interaction });
+            res.status(200).json({ interaction: interaction });
           } else {
             res
               .status(404)
@@ -85,7 +85,7 @@ router.post("/", (req, res) => {
               });
           } else {
             Book_User.create(req_data)
-              .then(res.status(200).send())
+              .then(res.status(200).json({ interaction: updatedInteraction }))
               .catch(err => {
                 console.log(err);
                 res.status(400).send();

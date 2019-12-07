@@ -11,22 +11,10 @@ import { Link } from "react-router-dom";
 import Popup from "./components/Popup";
 import { Badge, Button } from "reactstrap";
 
-import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
-
-const comment = [
-  {
-    desc: "Świetna książka. Bardzo mi się podobała",
-    imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-    rate: 2
-  },
-  {
-    desc: "Świetna książka. Bardzo mi się podobała",
-    imie: "Przemysław Pernak",
-    graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-    rate: 5
-  }
-];
+import {
+  dataserverAPIBooksEndpoint,
+  postserverAPIEndpoint
+} from "../../../../constants/serverEndpoint";
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
@@ -35,9 +23,35 @@ export const BookPage = props => {
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);
   const [bookcomment, setBookComment] = useState("");
-  const [commentdata, setCommentData] = useState(comment);
+  const [commentData, setCommentData] = useState([]);
 
-  console.log(data);
+  console.log(commentData);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(postserverAPIEndpoint + "/book/" + idBook)
+        .then(result => {
+          console.log(result.data);
+          setCommentData(result.data.posts);
+        })
+        .catch(err => console.log("Failed to get book data"));
+    };
+    fetchData();
+  }, [idBook]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(dataserverAPIBooksEndpoint + "/" + idBook)
+        .then(result => {
+          setData(result.data.data);
+        })
+        .catch(err => console.log("Failed to get book data"));
+    };
+    fetchData();
+  }, [idBook]);
+
   const closebtn = () => {
     setShowPopup(false);
   };
@@ -56,45 +70,7 @@ export const BookPage = props => {
     setratingval(newRating);
   };
 
-  const sendcomment = () => {
-    if (bookcomment != "") {
-      console.log(bookcomment);
-      console.log(ratingval);
-      commentdata.push({
-        desc: bookcomment,
-        imie: "Przemysław Pernak",
-        graphic: "https://image.ibb.co/jw55Ex/def_face.jpg",
-        rate: ratingval
-      });
-    }
-    console.log(comment);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      axios
-        .get(dataserverAPIBooksEndpoint + "/" + idBook)
-        .then(result => {
-          setData(result.data.data);
-        })
-        .catch(err => console.log("Failed to get book data"));
-    };
-    fetchData();
-  }, [idBook]);
-  /*Test Data*/
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     axios
-  //       .get("https://my-json-server.typicode.com/perninio/hello-world/data")
-  //       .then(result => {
-  //         setData(result.data[0]);
-  //         console.log(result.data[0]);
-  //       })
-  //       .catch(err => console.log(err));
-  //   };
-  //   fetchData();
-  // }, [idBook]);
+  const sendcomment = () => {};
 
   const commentpopup = (
     <div className="popup-comment">
@@ -179,7 +155,7 @@ export const BookPage = props => {
 
         <div className="row my-row-comment">
           <div className="col-md-12 my-col text-center">
-            <Comment comments={commentdata} />
+            <Comment comments={commentData} />
           </div>
         </div>
 

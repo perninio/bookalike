@@ -10,7 +10,7 @@ const postUtils = require("../utils/postUtils");
 /* POSTS */
 
 // @route GET api/posts/
-// @desc get all user's posts (TODO: get all user's and his friend's posts)
+// @desc get all user's + friend's posts
 // @access Private
 router.get("/", (req, res) => {
   if (req.headers["authorization"]) {
@@ -66,8 +66,34 @@ router.get("/", (req, res) => {
   }
 });
 
+// @route GET api/posts/book/:bookid/average-rate
+// @desc get average rate for book
+// @access Public
+router.get("/book/:bookid/average-rate", (req, res) => {
+  Post.find({ bookid: req.params.bookid })
+    .then(posts => {
+      const rates = posts.map(post => {
+        return post.rate;
+      });
+      if (rates.length > 0) {
+        const sum_rates = rates.reduce((total, value) => {
+          return total + value;
+        });
+        const amount = posts.length;
+        const rate = sum_rates / amount;
+        res.status(200).json({ rate: rate });
+      } else {
+        res.status(200).json({ rate: 0 });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(200).json({ rate: 0 });
+    });
+});
+
 // @route GET api/posts/user/:userid
-// @desc get all user's posts (TODO: get all user's and his friend's posts)
+// @desc get all user's posts
 // @access Public/Private
 router.get("/user/:userid", (req, res) => {
   if (req.headers["authorization"]) {
@@ -89,10 +115,23 @@ router.get("/user/:userid", (req, res) => {
           const {
             data: { friends }
           } = resp;
-
-          if (req.params.id == id) {
+          if (req.params.userid == id) {
             Post.find({ userid: req.params.userid }).then(posts => {
-              res.status(200).json({ posts: posts });
+              if (posts) {
+                postUtils
+                  .getPostsData(posts, id)
+                  .then(data =>
+                    res
+                      .status(200)
+                      .json({ posts: data.filter(post => post != null) })
+                  )
+                  .catch(err => {
+                    console.log(err);
+                    res.status(404).send();
+                  });
+              } else {
+                res.status(404).json({ posts: "Nie znaleziono postów" });
+              }
             });
           } else if (friends.includes(id)) {
             Post.find({
@@ -100,8 +139,21 @@ router.get("/user/:userid", (req, res) => {
               scope: { $in: ["public", "friends"] }
             })
               .then(posts => {
-                console.log(posts);
-                res.status(200).json({ posts: posts });
+                if (posts) {
+                  postUtils
+                    .getPostsData(posts, id)
+                    .then(data =>
+                      res
+                        .status(200)
+                        .json({ posts: data.filter(post => post != null) })
+                    )
+                    .catch(err => {
+                      console.log(err);
+                      res.status(404).send();
+                    });
+                } else {
+                  res.status(404).json({ posts: "Nie znaleziono postów" });
+                }
               })
               .catch(err => {
                 console.log(err);
@@ -110,7 +162,21 @@ router.get("/user/:userid", (req, res) => {
           } else if (!friends.includes(id)) {
             Post.find({ userid: req.params.userid, scope: "public" })
               .then(posts => {
-                res.status(200).json({ posts: posts });
+                if (posts) {
+                  postUtils
+                    .getPostsData(posts, id)
+                    .then(data =>
+                      res
+                        .status(200)
+                        .json({ posts: data.filter(post => post != null) })
+                    )
+                    .catch(err => {
+                      console.log(err);
+                      res.status(404).send();
+                    });
+                } else {
+                  res.status(404).json({ posts: "Nie znaleziono postów" });
+                }
               })
               .catch(err => {
                 console.log(err);
@@ -126,7 +192,98 @@ router.get("/user/:userid", (req, res) => {
   } else {
     Post.find({ userid: req.params.userid, scope: "public" })
       .then(posts => {
-        res.status(200).json({ posts: posts });
+        if (posts) {
+          postUtils
+            .getPostsData(posts, -1)
+            .then(data =>
+              res.status(200).json({ posts: data.filter(post => post != null) })
+            )
+            .catch(err => {
+              console.log(err);
+              res.status(404).send();
+            });
+        } else {
+          res.status(404).json({ posts: "Nie znaleziono postów" });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(404).send();
+      });
+  }
+});
+
+// @route GET api/posts/book/:bookid
+// @desc get all book's posts
+// @access Public/Private
+router.get("/book/:bookid", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      axios
+        .get(
+          "http://" +
+            process.env.WS_IP_ADDR +
+            ":5000/api/user/" +
+            id +
+            "/friends"
+        )
+        .then(resp => {
+          const {
+            data: { friends }
+          } = resp;
+          friends.push(id);
+          Post.find({
+            $or: [{ userid: { $in: friends } }, { scope: "public" }],
+            bookid: req.params.bookid
+          })
+            .then(posts => {
+              if (posts) {
+                postUtils
+                  .getPostsData(posts, -1)
+                  .then(data =>
+                    res
+                      .status(200)
+                      .json({ posts: data.filter(post => post != null) })
+                  )
+                  .catch(err => {
+                    console.log(err);
+                    res.status(404).send();
+                  });
+              } else {
+                res.status(404).send();
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(404).send();
+            });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).send();
+        });
+    }
+  } else {
+    Post.find({ bookid: req.params.bookid, scope: "public" })
+      .then(posts => {
+        if (posts) {
+          postUtils
+            .getPostsData(posts, -1)
+            .then(data =>
+              res.status(200).json({ posts: data.filter(post => post != null) })
+            )
+            .catch(err => {
+              console.log(err);
+              res.status(404).send();
+            });
+        } else {
+          res.status(404).json({ posts: "Nie znaleziono postów" });
+        }
       })
       .catch(err => {
         console.log(err);
@@ -146,7 +303,8 @@ router.post("/", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id } = data;
-      let post = postUtils.getNewPostData(req, id);
+      let post = req.body;
+      post["userid"] = id;
 
       Post.collection
         .insertOne(post)
@@ -172,7 +330,7 @@ router.put("/:postId", (req, res) => {
       res.status(400).json({ error: data.error });
     } else {
       const { id } = data;
-      let updatedPost = postUtils.getUpdatedPostData(req);
+      let updatedPost = req.body;
 
       Post.findOne({ _id: req.params.postId, userid: id })
         .then(post => {

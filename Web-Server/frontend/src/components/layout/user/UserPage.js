@@ -33,7 +33,7 @@ export const UserPage = props => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "grey", marginLeft: 0 }}
         >
-          <UserContent></UserContent>
+          <UserContent posts={posts}></UserContent>
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"

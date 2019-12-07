@@ -5,6 +5,11 @@ const PostSchema = new Schema({
   description: Schema.Types.String,
   bookid: Schema.Types.Number,
   userid: Schema.Types.Number,
+  rate: {
+    type: Schema.Types.Number,
+    min: 1,
+    max: 5
+  },
   scope: {
     type: Schema.Types.String,
     enum: ["public", "friends", "private"]
