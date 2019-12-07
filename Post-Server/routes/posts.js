@@ -236,11 +236,13 @@ router.get("/book/:bookid", (req, res) => {
           const {
             data: { friends }
           } = resp;
-          friends.push(id);
-          Post.find({
-            $or: [{ userid: { $in: friends } }, { scope: "public" }],
-            bookid: req.params.bookid
-          })
+
+          Post.find()
+            .or([
+              { userid: id },
+              { userid: { $in: friends }, scope: { $in: ["friends"] } },
+              { scope: "public" }
+            ])
             .then(posts => {
               if (posts) {
                 postUtils
@@ -272,6 +274,7 @@ router.get("/book/:bookid", (req, res) => {
     Post.find({ bookid: req.params.bookid, scope: "public" })
       .then(posts => {
         if (posts) {
+          console.log(posts);
           postUtils
             .getPostsData(posts, -1)
             .then(data =>
@@ -305,6 +308,7 @@ router.post("/", (req, res) => {
       const { id } = data;
       let post = req.body;
       post["userid"] = id;
+      console.log(post);
 
       Post.collection
         .insertOne(post)

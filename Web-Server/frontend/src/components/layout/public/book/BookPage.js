@@ -70,7 +70,25 @@ export const BookPage = props => {
     setratingval(newRating);
   };
 
-  const sendcomment = () => {};
+  const sendcomment = () => {
+    const newComment = {
+      bookid: idBook,
+      description: bookcomment,
+      rate: ratingval,
+      scope: "public"
+    };
+
+    console.log("nc", newComment);
+
+    axios
+      .post(postserverAPIEndpoint, newComment)
+      .then(comm => {
+        console.log(comm);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const commentpopup = (
     <div className="popup-comment">

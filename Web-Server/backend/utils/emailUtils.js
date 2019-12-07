@@ -7,7 +7,7 @@ async function sendEmail(email, code) {
     secure: true,
     auth: {
       user: "bookalike-noreply@tlen.pl",
-      pass: "bookalike-noreply-123-KkK"
+      pass: "Palec123123"
     }
   });
 

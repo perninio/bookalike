@@ -34,7 +34,6 @@ export const UserDashboard2 = () => {
         .get(postserverAPIEndpoint + "/")
         .then(result => {
           setPosts(result.data.posts);
-          console.log(result.data);
         })
         .catch(err => console.log("Failed to get post data"));
     };
