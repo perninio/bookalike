@@ -78,8 +78,6 @@ export const BookPage = props => {
       scope: "public"
     };
 
-    console.log("nc", newComment);
-
     axios
       .post(postserverAPIEndpoint, newComment)
       .then(comm => {
