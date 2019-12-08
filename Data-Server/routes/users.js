@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const axios = require("axios");
 const User = require("../models/User");
 const jwtUtils = require("../utils/jwtUtils");
 const userUtils = require("../utils/userUtils");

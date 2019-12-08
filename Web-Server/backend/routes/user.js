@@ -154,6 +154,32 @@ router.post("/:userid/relationship", (req, res) => {
   }
 });
 
+// @route GET api/user/relationship/invites
+// @desc update relationship between two users
+// @access Private
+router.get("/relationship/invites", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      database
+        .findrelation(id, "send_request")
+        .then(ids => {
+          res.status(200).json({ invites: ids });
+        })
+        .then(err => {
+          console.log(err);
+          res.status(404).send();
+        });
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 // @route PUT api/user/:userid/relationship
 // @desc update relationship between two users
 // @access Private
@@ -166,7 +192,7 @@ router.put("/:userid/relationship", (req, res) => {
     } else {
       const { id } = data;
       const { relation_type } = req.body;
-      database.changerelation(id, req.params.userid, relation_type);
+      database.changerelation(req.params.userid, id, relation_type);
       res.status(200).send();
     }
   } else {
@@ -265,6 +291,47 @@ router.get("/init-admin", (req, res) => {
       database
         .createUserNode({
           email: "admin",
+          password: hash,
+          salt: salt,
+          status: "activated",
+          account_code: "123456",
+          role: "admin"
+        })
+        .then(user => {
+          axios
+            .post(
+              "http://" +
+                process.env.DS_IP_ADDR +
+                ":5000/api/users/initialize/" +
+                user.userid
+            )
+            .then(() => {})
+            .catch(err => {
+              console.log(err);
+              database.deleteUserByEmail(email);
+              res.status(400).json({
+                server:
+                  "Nie można się połączyć z serwerem DS, proszę spróbować później"
+              });
+              return;
+            });
+        });
+    });
+});
+
+// @route GET api/user/init-users
+// @desc initialize admin
+// @access Public
+router.post("/init-users", (req, res) => {
+  const { email, password } = req.body;
+  userUtils
+    .userExists(email)
+    .then(res.status(406).send())
+    .catch(() => {
+      const { salt, hash } = userUtils.getHashAndSalt(password);
+      database
+        .createUserNode({
+          email: email,
           password: hash,
           salt: salt,
           status: "activated",

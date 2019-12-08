@@ -215,6 +215,20 @@ function changerelation(user1, user2, relation_type) {
     });
 }
 
+async function findrelation(userid, relation_type) {
+  var tab = [];
+  var res = await instance.cypher(
+    "match (me:User)-[:friends {relation:{relation_type}}]-(users:User) where id(me)=" +
+      userid +
+      " return users",
+    { relation_type: relation_type }
+  );
+  res.records.map(rec => {
+    tab.push(rec._fields[0].identity.low);
+  });
+  return tab;
+}
+
 // var relation_type = [
 // "accepted_request",
 // "send_request",
@@ -231,5 +245,6 @@ module.exports = {
   getAllUsers,
   makerelationshipbetween,
   changerelation,
-  get_ids_of_my_friends
+  get_ids_of_my_friends,
+  findrelation
 };

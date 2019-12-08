@@ -22,6 +22,7 @@ import { BookPage } from "./components/layout/public/book/BookPage";
 // private (user)
 import { PrivateRoute } from "./components/common/PrivateRoute";
 import { EditProfilePage } from "./components/layout/user/EditProfilPage";
+import { InvitesPage } from "./components/layout/user/InvitesPage";
 import { UserPage } from "./components/layout/user/UserPage";
 
 //admin
@@ -69,6 +70,7 @@ function App() {
               path="/profile/edit"
               component={EditProfilePage}
             />
+            <PrivateRoute exact path="/invites" component={InvitesPage} />
             <PrivateRoute exact path="/user-page/:id" component={UserPage} />
             <RestrictedRoute
               exact

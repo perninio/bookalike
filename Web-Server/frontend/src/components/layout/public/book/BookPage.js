@@ -32,7 +32,7 @@ export const BookPage = props => {
       axios
         .get(postserverAPIEndpoint + "/book/" + idBook)
         .then(result => {
-          console.log(result.data);
+          console.log(result);
           setCommentData(result.data.posts);
         })
         .catch(err => console.log("Failed to get book data"));
@@ -58,7 +58,7 @@ export const BookPage = props => {
 
   const ratingChanged = newRating => {
     setShowPopup(true);
-    if (!auth.isAuthenticated == true) {
+    if (auth.isAuthenticated == true) {
       console.log("User logged");
       setratingval(newRating);
     } else {
@@ -72,11 +72,13 @@ export const BookPage = props => {
 
   const sendcomment = () => {
     const newComment = {
-      bookid: idBook,
+      bookid: parseInt(idBook),
       description: bookcomment,
       rate: ratingval,
       scope: "public"
     };
+
+    console.log(newComment);
 
     axios
       .post(postserverAPIEndpoint, newComment)

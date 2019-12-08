@@ -217,6 +217,9 @@ router.get("/user/:userid", (req, res) => {
 // @desc get all book's posts
 // @access Public/Private
 router.get("/book/:bookid", (req, res) => {
+  Post.find({ bookid: parseInt(req.params.bookid) }).then(books => {
+    console.log(books);
+  });
   if (req.headers["authorization"]) {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
@@ -274,7 +277,6 @@ router.get("/book/:bookid", (req, res) => {
     Post.find({ bookid: req.params.bookid, scope: "public" })
       .then(posts => {
         if (posts) {
-          console.log(posts);
           postUtils
             .getPostsData(posts, -1)
             .then(data =>
@@ -295,6 +297,26 @@ router.get("/book/:bookid", (req, res) => {
   }
 });
 
+// @route GET api/posts/server/rates
+// @desc get all rates, bookids, users - for UB_CF
+// @access Public
+router.get("/server/rates", (req, res) => {
+  Post.find(
+    {},
+    {
+      bookid: 1,
+      userid: 1,
+      rate: 1
+    }
+  )
+    .then(posts => {
+      res.status(200).json({ data: posts });
+    })
+    .catch(err => {
+      res.status(200).json({ data: [] });
+    });
+});
+
 // @route POST api/posts/
 // @desc add post to database
 // @access Private
@@ -308,11 +330,11 @@ router.post("/", (req, res) => {
       const { id } = data;
       let post = req.body;
       post["userid"] = id;
-      console.log(post);
-
       Post.collection
         .insertOne(post)
-        .then(() => res.status(200).send())
+        .then(post => {
+          res.status(200).send();
+        })
         .catch(err => {
           console.log(err);
           res.status(409).send();

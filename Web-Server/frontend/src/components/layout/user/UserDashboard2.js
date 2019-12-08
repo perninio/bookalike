@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
@@ -20,6 +22,9 @@ const items = [
 export const UserDashboard2 = () => {
   const [posts, setPosts] = useState([]);
   const [reload, setReload] = useState(0);
+  const history = useHistory();
+  const { profile } = useSelector(state => state.auth.user);
+  console.log(profile);
 
   const deletepost = index => {
     var tab = posts;
@@ -44,6 +49,7 @@ export const UserDashboard2 = () => {
 
   return (
     <div className="container-fluid">
+      {profile.firstname == null && history.push("/profile/edit")}
       <div className="row vh-100">
         <div className="d-none d-xs-block d-sm-inline col-sm-2">
           <Sidebar />

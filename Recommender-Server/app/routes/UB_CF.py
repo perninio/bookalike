@@ -65,7 +65,7 @@ def tfidf_recommendations():
 
 def getRateFrame():
     rates_resp = requests.get(
-        "http://"+os.environ["DATASERVER_IP"]+":5000/api/rates",
+        "http://"+os.environ["PS_IP_ADDR"]+":5000/api/posts/server/rates",
         headers={'Authorization': constants.token,
                  'Content-Type': 'application/json'})
     data = rates_resp.json()["data"]

@@ -64,6 +64,7 @@ services:
     environment:
       - AUTH_IP_ADDR=172.18.0.4
       - DS_DB_IP_ADDR=172.18.0.5
+      - WS_IP_ADDR=172.18.0.7
     networks:
       app_net:
         ipv4_address: 172.18.0.6
@@ -109,6 +110,8 @@ services:
       - dataserver
       - redis
     environment:
+      - DATASERVER_IP=172.18.0.6
+      - PS_IP_ADDR=172.18.0.11
       - RS_DB_IP_ADDR=172.18.0.8
     volumes:
       - type: bind
@@ -116,8 +119,6 @@ services:
         target: /src
     ports:
       - "5200:5000"
-    environment:
-      - DATASERVER_IP=172.18.0.6
     networks:
       app_net:
         ipv4_address: 172.18.0.9
