@@ -229,6 +229,18 @@ async function findrelation(userid, relation_type) {
   return tab;
 }
 
+async function findinvites(userid){
+  var tab = [];
+  var res = await instance.cypher(
+    "match (users:User)-[:friends {relation:'send_request'}]->(me:User) where id(me)=" +
+      userid +
+      " return users");
+  res.records.map(rec => {
+    tab.push(rec._fields[0].identity.low);
+  });
+  return tab;
+}
+
 // var relation_type = [
 // "accepted_request",
 // "send_request",
