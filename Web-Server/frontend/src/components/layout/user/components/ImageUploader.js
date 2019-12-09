@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./imageuploader.css";
 import ImageEditorRc from "react-cropper-image-editor";
 import "cropperjs/dist/cropper.css";
+import {Alert} from "reactstrap"
 
 const ImageUploader = () => {
   const [image, setImage] = useState();
@@ -10,17 +11,17 @@ const ImageUploader = () => {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(true);
   const [counter, setCounter] = useState(1);
+  const [info,setInfo]=useState(0)
 
   const handleChange = event => {
     setImage(URL.createObjectURL(event.target.files[0]));
     setImageOriginal(URL.createObjectURL(event.target.files[0]));
     setFile(event.target.files[0]);
   };
-  const uploadImage = async e => {
-    console.log("e", e);
-    const files = e.target.files;
+  const uploadImage = async () => {
+    const files = file;
     const data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", file);
     data.append("upload_preset", "book-alike");
     setLoading(true);
     const res = await fetch(
@@ -29,9 +30,21 @@ const ImageUploader = () => {
         method: "POST",
         body: data
       }
-    );
-    const file = await res.json();
-    console.log(file.secure_url);
+    )
+    const response = await res.json();
+    console.log(response.secure_url);//wyświetla się link publiczny do foteczek
+    if (response.secure_url!=null)
+    {
+      //tutaj POST na serwa?
+      //response.secure_url link do zdjęcia użytkownika
+      //u mnie 100% jakby co
+      setInfo(1)
+    }
+    else
+    {
+      setInfo(-1)
+    }
+    setLoading(false)
   };
 
   const editClick = () => {
@@ -49,27 +62,38 @@ const ImageUploader = () => {
     setCounter(counter + 1);
   };
   return (
-    <div>
+    <div className="image-uploader">
       <h3>Aktualizuj zdjęcie profilowe</h3>
+      {info==1 ?
+      <Alert color="success">
+        Zdjęcie pomyślnie zaktualizowane
+      </Alert>:
+      info==-1 ?
+      <Alert color="danger">
+        Wystąpił problem podczas dodawania zdjęcia
+      </Alert>:
+      null
+
+      } 
       <div className="image-preview">
         {loading ? (
           <h3>Loading...</h3>
         ) : edit ? (
           <img className="image-uploader-img" src={image} />
         ) : (
-          <ImageEditorRc
-            crossOrigin="true" // boolean, set it to true if your image is cors protected or it is hosted on cloud like aws s3 image server
-            src={imageoriginal}
-            aspectRatio={16 / 16}
-            className={"Cropper"}
-            guides={true}
-            rotatable={true}
-            imageName="image name with extension to download"
-            saveImage={saveedits} // it has to catch the returned data and do it whatever you want
-            responseType="blob/base64"
-            guides={true}
-          />
-        )}
+              <ImageEditorRc
+                crossOrigin="true" // boolean, set it to true if your image is cors protected or it is hosted on cloud like aws s3 image server
+                src={imageoriginal}
+                aspectRatio={16 / 16}
+                className={"Cropper"}
+                guides={true}
+                rotatable={true}
+                imageName="image name with extension to download"
+                saveImage={saveedits} // it has to catch the returned data and do it whatever you want
+                responseType="blob/base64"
+                guides={true}
+              />
+            )}
       </div>
       <input
         type="file"
@@ -77,15 +101,9 @@ const ImageUploader = () => {
         placeholder="Dodaj zdjęcie"
         onChange={handleChange}
       />
-      <button onClick={editClick}>Tryb edycji</button>
+      <button onClick={()=>{editClick();setInfo(0)}}>Tryb edycji</button>
       <div>
-        <button
-          onClick={e => {
-            uploadImage(e);
-          }}
-        >
-          Udostępnij
-        </button>
+      <button onClick={()=>{uploadImage();setInfo(0)}}>Udostępnij</button>
       </div>
     </div>
   );

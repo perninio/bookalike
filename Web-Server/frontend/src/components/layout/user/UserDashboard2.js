@@ -47,8 +47,6 @@ export const UserDashboard2 = () => {
     fetchData();
   }, []);
 
-  /*Test Data*/
-
   return (
     <div className="container-fluid">
       {profile.firstname == null && history.push("/profile/edit")}
