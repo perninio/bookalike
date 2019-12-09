@@ -7,7 +7,7 @@ const PostSchema = new Schema({
   userid: Schema.Types.Number,
   rate: {
     type: Schema.Types.Number,
-    min: 1,
+    min: 0.5,
     max: 5
   },
   scope: {

@@ -5,6 +5,8 @@ import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
 //import postsjson from "./posts.json";
 import { Button, ButtonGroup } from "reactstrap";
+import Axios from "axios";
+import { postserverAPIEndpoint } from "../../../../constants/serverEndpoint";
 
 const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -15,7 +17,7 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   const [eventText, seteventText] = useState(0);
   const [editindex, setIndex] = useState(0);
   const [status, setStatus] = useState("public");
-  const [inpurbookid, setInputbookid] = useState(-1)
+  const [inpurbookid, setInputbookid] = useState(-1);
 
   const closePopup = () => {
     setShowPopup(!showPopup);
@@ -35,24 +37,24 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   };
 
   const sendpost = () => {
-    if (posttext != "") {
-      console.log(posttext);
-      posts.unshift({
-        postingusername: "Czarek",
-        id: "1",
-        nazwisko: "Pernak",
-        text: posttext,
-        graphic: "https://skupszop.pl/images/books/9788377589915.jpg"
+    const newPost = {
+      bookid: inpurbookid == -1 ? null : parseInt(inpurbookid),
+      description: posttext,
+      scope: status
+    };
+
+    Axios.post(postserverAPIEndpoint, newPost)
+      .then(comm => {
+        console.log(comm);
+        window.location.reload(true);
+      })
+      .catch(err => {
+        console.log(err);
       });
-      setPostText("");
-      eventText.value = "";
-      setReload(posts.length);
-    }
   };
 
   const updatepost = () => {
     if (posttext != "") {
-      console.log(posttext);
       posts[editindex] = {
         postingusername: "Czarek",
         id: "1",
@@ -114,8 +116,15 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
               <option value="private">Prywatny</option>
             </select>
           </div>
-          <div className="float-left">          
-            <input type="text" name="bookid" onChange={(e) => { setInputbookid(e.target.value) }} placeholder="id książki (opcjonalnie)"/>
+          <div className="float-left">
+            <input
+              type="text"
+              name="bookid"
+              onChange={e => {
+                setInputbookid(e.target.value);
+              }}
+              placeholder="id książki (opcjonalnie)"
+            />
           </div>
           <button className="float-right" onClick={sendpost}>
             Opublikuj
@@ -139,14 +148,17 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
           <div>
             {data &&
               data.map((item, index) => {
+                console.log(item);
                 return (
                   <Post
-                    postingusername={item.user.firstname + " " + item.user.lastname}
+                    postingusername={
+                      item.user.firstname + " " + item.user.lastname
+                    }
                     userid={item.user.userid}
                     bookid={item.bookid}
                     rate={item.rate}
                     index={index}
-                    posttext={item.text}
+                    posttext={item.description}
                     graphic={item.user.graphic}
                     fun={deletepostfun}
                     show={setShowPopup}

@@ -22,8 +22,6 @@ export const Post = props => {
   const [bookdata, setBookData] = useState({});
   const [rate, setRate] = useState(props.rate);
 
-  console.log(bookdata.book);
-
   const sendcomment = () => {
     console.log(postcomment);
   };
@@ -102,7 +100,8 @@ export const Post = props => {
               {props.postingusername}
             </div>
           </a>
-          {props.id == (auth.isAuthenticated == true ? auth.user.id : -1) ? (
+          {props.userid ==
+          (auth.isAuthenticated == true ? auth.user.id : -1) ? (
             <div className="username-post float-right">
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret></DropdownToggle>

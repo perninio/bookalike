@@ -27,7 +27,6 @@ export const UserDashboard2 = () => {
   const history = useHistory();
 
   const { profile } = useSelector(state => state.auth.user);
-  console.log(profile);
 
   const deletepost = index => {
     var tab = posts;

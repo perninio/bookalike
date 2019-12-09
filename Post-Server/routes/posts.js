@@ -39,9 +39,9 @@ router.get("/", (req, res) => {
                 postUtils
                   .getPostsData(posts, id)
                   .then(data =>
-                    res
-                      .status(200)
-                      .json({ posts: data.filter(post => post != null) })
+                    res.status(200).json({
+                      posts: data.filter(post => post != null).reverse()
+                    })
                   )
                   .catch(err => {
                     console.log(err);
@@ -121,9 +121,9 @@ router.get("/user/:userid", (req, res) => {
                 postUtils
                   .getPostsData(posts, id)
                   .then(data =>
-                    res
-                      .status(200)
-                      .json({ posts: data.filter(post => post != null) })
+                    res.status(200).json({
+                      posts: data.filter(post => post != null).reverse()
+                    })
                   )
                   .catch(err => {
                     console.log(err);
@@ -143,9 +143,9 @@ router.get("/user/:userid", (req, res) => {
                   postUtils
                     .getPostsData(posts, id)
                     .then(data =>
-                      res
-                        .status(200)
-                        .json({ posts: data.filter(post => post != null) })
+                      res.status(200).json({
+                        posts: data.filter(post => post != null).reverse()
+                      })
                     )
                     .catch(err => {
                       console.log(err);
@@ -166,9 +166,9 @@ router.get("/user/:userid", (req, res) => {
                   postUtils
                     .getPostsData(posts, id)
                     .then(data =>
-                      res
-                        .status(200)
-                        .json({ posts: data.filter(post => post != null) })
+                      res.status(200).json({
+                        posts: data.filter(post => post != null).reverse()
+                      })
                     )
                     .catch(err => {
                       console.log(err);
@@ -196,7 +196,9 @@ router.get("/user/:userid", (req, res) => {
           postUtils
             .getPostsData(posts, -1)
             .then(data =>
-              res.status(200).json({ posts: data.filter(post => post != null) })
+              res
+                .status(200)
+                .json({ posts: data.filter(post => post != null).reverse() })
             )
             .catch(err => {
               console.log(err);
@@ -252,9 +254,9 @@ router.get("/book/:bookid", (req, res) => {
                 postUtils
                   .getPostsData(posts, -1)
                   .then(data =>
-                    res
-                      .status(200)
-                      .json({ posts: data.filter(post => post != null) })
+                    res.status(200).json({
+                      posts: data.filter(post => post != null).reverse()
+                    })
                   )
                   .catch(err => {
                     console.log(err);
@@ -281,7 +283,9 @@ router.get("/book/:bookid", (req, res) => {
           postUtils
             .getPostsData(posts, -1)
             .then(data =>
-              res.status(200).json({ posts: data.filter(post => post != null) })
+              res
+                .status(200)
+                .json({ posts: data.filter(post => post != null).reverse() })
             )
             .catch(err => {
               console.log(err);
@@ -331,8 +335,11 @@ router.post("/", (req, res) => {
       const { id } = data;
       let post = req.body;
       post["userid"] = id;
-      Post.collection
-        .insertOne(post)
+      Post.findOneAndUpdate(
+        { bookid: post.bookid, userid: post.userid },
+        post,
+        { upsert: true }
+      )
         .then(post => {
           res.status(200).send();
         })
