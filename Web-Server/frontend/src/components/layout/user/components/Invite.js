@@ -50,7 +50,10 @@ export const Invite = ({ id }) => {
   };
 
   return (
-    <div className="row float-left">
+    <div
+      className="row float-left rounded vw-100"
+      style={{ backgroundColor: "white" }}
+    >
       <div className="col">
         <Link to={"/user-page/" + id}>
           <img src={userProfile.graphic} width={32} height={32}></img>

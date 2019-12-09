@@ -11,6 +11,7 @@ import { setAuthorizationToken } from "../../../utils/jwtUtils";
 import { formatDate } from "../../../utils/dateUtils";
 import { setCurrentUser } from "../../../actions/authAction";
 import jwt_decode from "jwt-decode";
+import ImageUploader from "./components/ImageUploader";
 
 export const EditProfilePage = () => {
   const dispatch = useDispatch();
@@ -22,8 +23,7 @@ export const EditProfilePage = () => {
     firstname,
     lastname,
     birthdate,
-    description,
-    graphic
+    description
   } = auth.user.profile;
   const { id } = auth.user;
 
@@ -32,7 +32,6 @@ export const EditProfilePage = () => {
   const [_lastName, set_LastName] = useState(lastname);
   const [_birthdate, set_Birtdate] = useState(formatDate(birthdate));
   const [_description, set_Description] = useState(description);
-  const [_graphic, set_Graphic] = useState(graphic);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -42,8 +41,7 @@ export const EditProfilePage = () => {
       firstname: _firstName,
       lastname: _lastName,
       birthdate: _birthdate,
-      description: _description,
-      graphic: _graphic
+      description: _description
     };
 
     axios
@@ -58,7 +56,7 @@ export const EditProfilePage = () => {
             setAuthorizationToken(token);
             const decoded_data = jwt_decode(token);
             dispatch(setCurrentUser(decoded_data));
-            history.push("/");
+            // history.push("/");
           })
           .catch(err => {
             console.log(err);
@@ -102,6 +100,8 @@ export const EditProfilePage = () => {
 
   return (
     <form className="ba-form">
+      <ImageUploader />
+
       <div className="form-group">
         <label for="selectStatus"> Wybierz status profilu</label>
         <select
@@ -173,20 +173,6 @@ export const EditProfilePage = () => {
           value={_description}
           onChange={e => {
             set_Description(e.target.value);
-          }}
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="inputGraphic">Podaj link do zdjęcia</label>
-        <input
-          required
-          className="form-control"
-          id="inputGraphic"
-          aria-describedby="graphicHelp"
-          value={_graphic}
-          onChange={e => {
-            set_Graphic(e.target.value);
           }}
         />
       </div>

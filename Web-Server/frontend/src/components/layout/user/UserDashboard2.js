@@ -26,7 +26,7 @@ export const UserDashboard2 = () => {
   const [reload, setReload] = useState(0);
   const history = useHistory();
 
-  const {profile} = useSelector(state => state.auth.user);
+  const { profile } = useSelector(state => state.auth.user);
   console.log(profile);
 
   const deletepost = index => {
@@ -61,7 +61,7 @@ export const UserDashboard2 = () => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}
         >
-          {posts.posts && (
+          {posts && (
             <UserContentDashboard
               data={posts}
               deletepostfun={deletepost}

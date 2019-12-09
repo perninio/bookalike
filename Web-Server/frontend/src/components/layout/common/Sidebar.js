@@ -29,7 +29,16 @@ const arrayToButtons = array => {
 const defaultButtons = id => {
   return [
     { name: "Mój profil", path: "/user-page/" + id, icon: "fas fa-user" },
-    { name: "Rekomendacje", path: "/recommendations", icon: "fas fa-book" }
+    {
+      name: "Rekomendacje",
+      path: "/recommendations",
+      icon: "fas fa-book"
+    },
+    {
+      name: "Zaproszenia",
+      path: "/invites",
+      icon: "fas fa-envelope"
+    }
   ];
 };
 

@@ -28,7 +28,7 @@ export const InvitesPage = () => {
         </div>
         <div
           className="col-xs-12 col-sm-8 content-col"
-          style={{ backgroundColor: "white", marginLeft: 0 }}
+          style={{ marginLeft: 0, backgroundColor: "#362d27" }}
         >
           <div className="container-fluid">
             {invites &&

@@ -23,7 +23,9 @@ router.post("/initialize/:userid", (req, res) => {
       if (data.role == "server" && data.id == "WS") {
         const user = {
           userid: req.params.userid,
-          status: "public"
+          status: "public",
+          graphic:
+            "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
         };
         User.create(user)
           .then(res.status(200).send())

@@ -217,9 +217,6 @@ router.get("/user/:userid", (req, res) => {
 // @desc get all book's posts
 // @access Public/Private
 router.get("/book/:bookid", (req, res) => {
-  Post.find({ bookid: parseInt(req.params.bookid) }).then(books => {
-    console.log(books);
-  });
   if (req.headers["authorization"]) {
     token = req.headers["authorization"];
     data = jwtUtils.verifyToken(token, req.app.locals.publickey);
@@ -242,9 +239,13 @@ router.get("/book/:bookid", (req, res) => {
 
           Post.find()
             .or([
-              { userid: id },
-              { userid: { $in: friends }, scope: { $in: ["friends"] } },
-              { scope: "public" }
+              { userid: id, bookid: req.params.bookid },
+              {
+                userid: { $in: friends },
+                scope: { $in: ["friends"] },
+                bookid: req.params.bookid
+              },
+              { scope: "public", bookid: req.params.bookid }
             ])
             .then(posts => {
               if (posts) {
@@ -511,7 +512,6 @@ router.delete("/:postId/comment/:commentId", (req, res) => {
         }
       )
         .then(post => {
-          console.log(post);
           if (post.nModified > 0) {
             res.status(200).send();
           } else {
