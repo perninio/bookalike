@@ -6,6 +6,7 @@ import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
 import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
 import { Sidebar } from "../common/Sidebar";
+//import postsdata from "./components/posts.json"//mocup
 
 const items = [
   {
@@ -20,10 +21,12 @@ const items = [
 ];
 
 export const UserDashboard2 = () => {
+  //const [posts, setPosts] = useState(postsdata.posts)
   const [posts, setPosts] = useState([]);
   const [reload, setReload] = useState(0);
   const history = useHistory();
-  const { profile } = useSelector(state => state.auth.user);
+
+  const {profile} = useSelector(state => state.auth.user);
   console.log(profile);
 
   const deletepost = index => {
@@ -58,10 +61,10 @@ export const UserDashboard2 = () => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}
         >
-          {posts && (
+          {posts.posts && (
             <UserContentDashboard
               data={posts}
-              fun={deletepost}
+              deletepostfun={deletepost}
               posts={posts}
               setReload={setReload}
             />

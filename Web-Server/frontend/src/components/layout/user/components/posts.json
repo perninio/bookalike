@@ -1,23 +1,37 @@
 {
     "posts": [
         {
-            "imie": "Czarek",
             "id": "1",
-            "nazwisko":"Pernak",
+            "bookid":"20",
             "text":"Hej czy ktoś ma taką książke może do pożyczenia?",
-            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+            "rate":"3.0", 
+            "user":{
+                "firstname": "Czarek",
+                "lastname": "kowalski",
+                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+            }
         },
         {
-            "imie": "Jarek",
             "id": "2",
-            "nazwisko":"",
-            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+            "bookid":"30",    
+            "rate":"3.0",        
+            "user":{
+                "firstname": "Czarek",
+                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg",
+                "lastname": "kowalski"
+            }
         },
         {
-            "imie": "Filip",
+            "firstname": "Filip",
             "id": "2",
             "nazwisko":"Szadkowski",
-            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+            "bookid":"",
+            "rate":"3.0", 
+            "user":{
+                "firstname": "Czarek",
+                "lastname": "kowalski",
+                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+            }
         }
     ]
 }

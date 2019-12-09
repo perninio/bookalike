@@ -3,10 +3,10 @@ import Popup from "./Popup";
 import "./usercontentdashboard.css";
 import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
-import postsjson from "./posts.json";
+//import postsjson from "./posts.json";
 import { Button, ButtonGroup } from "reactstrap";
 
-const UserContentDashboard = ({ data, fun, posts, setReload }) => {
+const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isActive, setisActive] = useState(true);
   const [barAniamtion, setBarAnimation] = useState(false);
@@ -15,6 +15,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
   const [eventText, seteventText] = useState(0);
   const [editindex, setIndex] = useState(0);
   const [status, setStatus] = useState("public");
+  const [inpurbookid, setInputbookid] = useState(-1)
 
   const closePopup = () => {
     setShowPopup(!showPopup);
@@ -37,7 +38,7 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
     if (posttext != "") {
       console.log(posttext);
       posts.unshift({
-        imie: "Czarek",
+        postingusername: "Czarek",
         id: "1",
         nazwisko: "Pernak",
         text: posttext,
@@ -53,9 +54,8 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
     if (posttext != "") {
       console.log(posttext);
       posts[editindex] = {
-        imie: "Czarek",
+        postingusername: "Czarek",
         id: "1",
-        nazwisko: "Pernak",
         text: posttext,
         graphic: "https://skupszop.pl/images/books/9788377589915.jpg"
       };
@@ -114,6 +114,9 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
               <option value="private">Prywatny</option>
             </select>
           </div>
+          <div className="float-left">          
+            <input type="text" name="bookid" onChange={(e) => { setInputbookid(e.target.value) }} placeholder="id książki (opcjonalnie)"/>
+          </div>
           <button className="float-right" onClick={sendpost}>
             Opublikuj
           </button>
@@ -138,14 +141,14 @@ const UserContentDashboard = ({ data, fun, posts, setReload }) => {
               data.map((item, index) => {
                 return (
                   <Post
-                    postingusername={
-                      item.user.firstname + " " + item.user.lastname
-                    }
-                    id={item.user.userid}
+                    postingusername={item.user.firstname + " " + item.user.lastname}
+                    userid={item.user.userid}
+                    bookid={item.bookid}
+                    rate={item.rate}
                     index={index}
                     posttext={item.text}
                     graphic={item.user.graphic}
-                    fun={fun}
+                    fun={deletepostfun}
                     show={setShowPopup}
                     setIndex={setIndex}
                   />

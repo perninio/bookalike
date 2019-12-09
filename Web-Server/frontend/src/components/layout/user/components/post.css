@@ -3,10 +3,17 @@ border:red 5px solid;
 padding:1px;
 position:static;
 }
-.container{
-border:green 5px solid;
-}
 a{
     text-decoration: "none";
     color:white;
+}
+.postscontainer{
+border:2px;
+padding:5px;
+border-style: outset;
+}
+
+.comment{
+    resize:none;
+    height:auto;
 }

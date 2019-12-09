@@ -3,6 +3,7 @@ import axios from "axios";
 import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
 import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
+import postsdata from "./components/posts.json"
 
 const items = [
   {
@@ -17,22 +18,22 @@ const items = [
 ];
 
 export const UserDashboard = () => {
-  const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState(postsdata);
 
   console.log(posts);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      axios
-        .get(postserverAPIEndpoint + "/")
-        .then(result => {
-          setPosts(result.data);
-          console.log(result.data);
-        })
-        .catch(err => console.log("Failed to get post data"));
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     axios
+  //       .get(postserverAPIEndpoint + "/")
+  //       .then(result => {
+  //         setPosts(result.data);
+  //         console.log(result.data);
+  //       })
+  //       .catch(err => console.log("Failed to get post data"));
+  //   };
+  //   fetchData();
+  // }, []);
 
   /*Test Data*/
 
@@ -50,14 +51,15 @@ export const UserDashboard = () => {
           className="col-xs-12 col-sm-8 content-col"
           style={{ backgroundColor: "white", marginLeft: 0 }}
         >
-          {posts.posts && <UserContentDashboard />}
+          {/* {posts.posts && <UserContentDashboard data={posts.posts}/>} */}
+          {posts && <UserContentDashboard data={posts}/>}
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"
           style={{ backgroundColor: "red" }}
         >
           <div className="stickbar">
-            Rekomendacje:
+            Reklamy:
             <div className="side-carousel">
               <SideCarousel items={items} />
             </div>
