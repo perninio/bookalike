@@ -123,7 +123,7 @@ export const EditUserProfile = props => {
     };
 
     axios
-      .put(dataserverAPIUserEndpoint + "/" + id, { data: updatedProfile })
+      .put(dataserverAPIUserEndpoint + "/" + id, updatedProfile)
       .then()
       .catch(err => {
         const { error } = err.response.data;

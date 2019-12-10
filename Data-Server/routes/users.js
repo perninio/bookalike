@@ -158,8 +158,9 @@ router.put("/:userid", (req, res) => {
         User.findOne({ where: { userid: req.params.userid } })
           .then(user => {
             user
-              .update(req.body.data)
+              .update(req.body)
               .then(updatedUser => {
+                console.log(updatedUser);
                 res.status(200).json({ data: updatedUser });
               })
               .catch(err => console.log(err));

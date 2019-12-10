@@ -79,13 +79,7 @@ export const Post = props => {
             </div>
           </div>
         )}
-        <div
-          className={
-            props.bookid != "" || props.bookid != undefined
-              ? "col-md-10"
-              : "col-md-12"
-          }
-        >
+        <div className={bookdata.bookid != null ? "col-md-10" : "col-md-12"}>
           <div className="float-left ">
             <a href={"user-page/" + props.userid}>
               <img

@@ -45,7 +45,7 @@ export const EditProfilePage = () => {
     };
 
     axios
-      .put(dataserverAPIUserEndpoint + "/" + id, { data: updatedProfile })
+      .put(dataserverAPIUserEndpoint + "/" + id, updatedProfile)
       .then(resp => {
         auth.user.profile = resp.data.data;
         axios
@@ -56,7 +56,7 @@ export const EditProfilePage = () => {
             setAuthorizationToken(token);
             const decoded_data = jwt_decode(token);
             dispatch(setCurrentUser(decoded_data));
-            // history.push("/");
+            history.push("/");
           })
           .catch(err => {
             console.log(err);

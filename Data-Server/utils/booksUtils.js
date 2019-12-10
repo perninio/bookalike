@@ -24,13 +24,15 @@ async function getRecommendedBook(prediction) {
   const splitted = prediction.split(":");
   const score = splitted[0];
   const bookid = splitted[1];
-  return await Book.findOne({ where: { bookid: bookid } })
+  return await Book.findOne({ where: { bookid: parseInt(bookid) } })
     .then(book => {
       return {
         bookid: book.bookid,
         name: book.name,
         graphic: book.graphic,
-        score: score
+        author: book.author,
+        score: score,
+        percentage: score * 20
       };
     })
     .catch(err => console.log(err));

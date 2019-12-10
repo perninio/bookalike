@@ -19,6 +19,8 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   const [status, setStatus] = useState("public");
   const [inpurbookid, setInputbookid] = useState(-1);
 
+  console.log(posttext);
+
   const closePopup = () => {
     setShowPopup(!showPopup);
     setisActive(!isActive);
@@ -36,13 +38,12 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
     setActiveTag(3);
   };
 
-  const sendpost = () => {
+  const sendpost = bookid => {
     const newPost = {
-      bookid: inpurbookid == -1 ? null : parseInt(inpurbookid),
+      bookid: bookid == -1 ? null : parseInt(bookid),
       description: posttext,
       scope: status
     };
-
     Axios.post(postserverAPIEndpoint, newPost)
       .then(comm => {
         console.log(comm);
@@ -51,23 +52,6 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
       .catch(err => {
         console.log(err);
       });
-  };
-
-  const updatepost = () => {
-    if (posttext != "") {
-      posts[editindex] = {
-        postingusername: "Czarek",
-        id: "1",
-        text: posttext,
-        graphic: "https://skupszop.pl/images/books/9788377589915.jpg"
-      };
-      setPostText("");
-      eventText.value = "";
-      setReload(posts.length);
-      setShowPopup(false);
-      console.log(showPopup);
-    }
-    setStatus("public");
   };
 
   useEffect(() => {
@@ -126,7 +110,12 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
               placeholder="id książki (opcjonalnie)"
             />
           </div>
-          <button className="float-right" onClick={sendpost}>
+          <button
+            className="float-right"
+            onClick={() => {
+              sendpost(inpurbookid);
+            }}
+          >
             Opublikuj
           </button>
         </div>
@@ -203,7 +192,13 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
                       <option value="private">Prywatny</option>
                     </select>
                   </div>
-                  <button onClick={updatepost}>Edytuj</button>
+                  <button
+                    onClick={() => {
+                      sendpost(data[editindex].bookid);
+                    }}
+                  >
+                    Edytuj
+                  </button>
                 </div>
               </div>
             </div>
