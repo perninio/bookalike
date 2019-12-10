@@ -1,8 +1,12 @@
 .bookstitle {
+	position:relative;
 	overflow: hidden;
 	text-overflow: ellipsis;
     color:#2d160e;
 	font-family:"Libertad-Bold";	
+	width:auto;
+	height:60px;
+	top:-15px;
 }
 .bookstitle:hover{
 	color:#823317;
@@ -10,13 +14,12 @@
 
 .my-col-books {
 	width: 162px;
+	max-width: 162px;
 	height: 275px;	
+	max-height: 275px;	
 	background-color: rgb(255,255,255,0.35);
 	border-radius:5px;
 	margin:5px;
-}
-.my-row-books2 {
-	.border: 3px solid red;
 }
 
 .bookscontainer{
@@ -44,4 +47,12 @@ div.my-col-books:hover
   transform: scale(1.1); 
 }
 
-
+.zoomtext {
+	
+	transition: transform .2s;
+  }
+  .zoomtext:hover {
+	-ms-transform: scale(1.1); 
+	-webkit-transform: scale(1.1); 
+	transform: scale(1.1); 
+  }

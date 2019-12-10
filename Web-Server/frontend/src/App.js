@@ -18,6 +18,7 @@ import { ActivateAccount } from "./components/layout/main/ActivateAccount";
 // public
 import { BooksPage } from "./components/layout/public/book/BooksPage";
 import { BookPage } from "./components/layout/public/book/BookPage";
+import { Recommendation } from "./components/layout/user/Recommendation";
 
 // private (user)
 import { PrivateRoute } from "./components/common/PrivateRoute";
@@ -65,6 +66,7 @@ function App() {
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/search/:text" component={SearchPage} />
+            <Route exact path="/recommendations" component={Recommendation} />
             <PrivateRoute
               exact
               path="/profile/edit"

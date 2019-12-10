@@ -1,0 +1,90 @@
+{
+    "type":"0",
+    "recommendations": [
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"80"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"70"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"60"
+        },
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"50"
+        },
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"80"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"70"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"60"
+        },
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"50"
+        },
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga ,Kapłanka w bielii, era pięciorga,Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"80"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"70"
+        },
+        {
+            "bookid":"6",
+            "graphic":"https://skupszop.pl/images/books/9788381167208.jpg",
+            "bookname":"śmiertelne oczyszczenie",
+            "author":"Polte Agata",
+            "perc":"60"
+        },
+        {
+            "bookid":"5",
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookname":"Kapłanka w bielii, era pięciorga",
+            "author":"Trudi canavan",
+            "perc":"50"
+        }
+    ]
+
+}
