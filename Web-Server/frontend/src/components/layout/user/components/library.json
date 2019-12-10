@@ -1,0 +1,84 @@
+{
+    "data": [
+        {
+            "bookid": 1,
+            "userid": 1,
+            "wants_read": false,
+            "has_book": false,
+            "has_read": true,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 695,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 696,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 1,
+            "userid": 1,
+            "wants_read": false,
+            "has_book": false,
+            "has_read": true,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 695,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 696,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },{
+            "bookid": 1,
+            "userid": 1,
+            "wants_read": false,
+            "has_book": false,
+            "has_read": true,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 695,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        },
+        {
+            "bookid": 696,
+            "userid": 1,
+            "wants_read": true,
+            "has_book": false,
+            "has_read": false,
+            "createdat": "2019-12-10",
+            "updatedat": "2019-12-10"
+        }
+    ]
+}

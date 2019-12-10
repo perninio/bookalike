@@ -1,0 +1,34 @@
+{
+    "similar_books":[
+        {
+            "graphic":"https://skupszop.pl/images/books/9788375744675.jpg",
+            "bookid":"1",
+            "name":"książka1"
+        },
+        {
+            "graphic":"https://skupszop.pl/images/books/9788362170487.jpg",
+            "bookid":"1",
+            "name":"Książka 2"
+        },
+        {
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookid":"1",
+            "name":"Bardzo długa nazwa książki aby sprawdzić czy text nie rozjeżdża się za bardzo, jesli tak trzeba będzie zdefiniować coś w cssie"
+        },
+        {
+            "graphic":"https://skupszop.pl/images/books/9788375744675.jpg",
+            "bookid":"1",
+            "name":"książka1"
+        },
+        {
+            "graphic":"https://skupszop.pl/images/books/9788362170487.jpg",
+            "bookid":"1",
+            "name":"Książka 2"
+        },
+        {
+            "graphic":"https://skupszop.pl/images/books/9788392883753.jpg",
+            "bookid":"1",
+            "name":"Era Pięciorga T1. Kapłanka w bieli"
+        }
+    ]
+}

@@ -4,7 +4,7 @@ import ImageUploader from "./ImageUploader";
 import "./usercontent.css";
 import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
-
+import Library from "./Library.js"
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
 const UserContent = ({ posts }) => {
@@ -99,7 +99,7 @@ const UserContent = ({ posts }) => {
           {activeTag == 3 ? (
             <UserInformation />
           ) : activeTag == 2 ? (
-            <div>Biblioteka </div>
+            <Library/>
           ) : activeTag == 1 ? (
             <div>
               {posts &&

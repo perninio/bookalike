@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AliceCarouselRecomendation from "./AliceCarouselRecomendation";
+import Carousel from "../../user/components/Carousel.js";
 import ReactStars from "react-stars";
 import "./alice-carousel.css";
 import "./bookpage.css";
@@ -11,6 +11,9 @@ import { Link } from "react-router-dom";
 import Popup from "./components/Popup";
 import { Badge, Button } from "reactstrap";
 
+
+import bookdata from "./book.json"//mocup
+
 import {
   dataserverAPIBooksEndpoint,
   postserverAPIEndpoint
@@ -18,7 +21,8 @@ import {
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
-  const [data, setData] = useState({});
+  //const [data, setData] = useState({});
+  const [data, setData] = useState(bookdata);//mockup
   const [auth, setAuth] = useState(useSelector(state => state.auth));
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);
@@ -156,14 +160,14 @@ export const BookPage = props => {
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )} */}
+        )} mockup*/}
         <div className="row my-row">
           <div className="col-md-auto col-md-12 my-col">
             <div className="carousel-div">
               {data.similar_books && (
-                <AliceCarouselRecomendation
-                  books={data.similar_books}
-                ></AliceCarouselRecomendation>
+                <Carousel
+                  data={data.similar_books} numberofrows={1} numberofbookstoview={data.similar_books<4 ? 1 : 4}
+                ></Carousel>
               )}
             </div>
           </div>

@@ -51,7 +51,7 @@ export const UserDashboard2 = () => {
 
   return (
     <div className="container-fluid">
-      {profile.firstname == null && history.push("/profile/edit")}
+      {/* {profile.firstname == null && history.push("/profile/edit")} */}
       <div className="row vh-100">
         <div className="d-none d-xs-block d-sm-inline col-sm-2">
           <Sidebar />

@@ -101,7 +101,7 @@ button {
   float: left;
   background: white;
   width: 130%;
-  height: auto;
+  height:25px;
 }
 
 .tag-bar-move {
@@ -124,6 +124,10 @@ img.user-profile-img:hover {
   float: left;
   margin: 3px;
   transition: 0.5s;
+}
+
+.tag-bar-button{
+  height:30px;
 }
 
 .tag-bar-name-phone {

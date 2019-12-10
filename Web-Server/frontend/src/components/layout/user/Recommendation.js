@@ -78,14 +78,14 @@ export const Recommendation = () => {
                                                 height="190"
                                             ></img>
                                         </a>
-                                        { item.perc!="" ?
+                                        { item.score!="" ?
                                         <div className="percentagevaluerecommendation"
                                             style={{
-                                                backgroundColor: returnColor(item.perc),
+                                                backgroundColor: returnColor(item.score*20),
                                                 color: "white"
                                             }}                                       
                                         >
-                                            {item.perc}
+                                            {item.score*20}
                                         </div>
                                         :null
                                         }
