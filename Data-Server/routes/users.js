@@ -98,7 +98,8 @@ router.get("/:userid", (req, res) => {
               lastname,
               birthdate,
               description,
-              graphic
+              graphic,
+              userid
             } = user;
             const profile = {
               status: status,
@@ -106,7 +107,8 @@ router.get("/:userid", (req, res) => {
               lastname: lastname,
               birthdate: birthdate,
               description: description,
-              graphic: graphic
+              graphic: graphic,
+              id: userid
             };
             res.status(200).json({ data: profile });
           } else {
@@ -139,7 +141,15 @@ router.get("/:userid", (req, res) => {
         });
     }
   } else {
-    res.status(401).send("Wymagana jest autoryzacja");
+    User.findOne({ where: { userid: req.params.userid } })
+      .then(user => {
+        let profile = profileFactory.getProfileData(user, false);
+        res.status(200).json({ data: profile });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(404).send();
+      });
   }
 });
 

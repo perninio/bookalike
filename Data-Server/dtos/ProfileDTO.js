@@ -9,6 +9,7 @@ class PublicOrFriendProfileDTO extends ProfileInterface {
     this.birthdate = profile.birthdate;
     this.description = profile.description;
     this.graphic = profile.graphic;
+    this.id = profile.userid;
   }
 }
 class PrivateProfileDTO extends ProfileInterface {
@@ -18,6 +19,7 @@ class PrivateProfileDTO extends ProfileInterface {
     this.firstname = profile.firstname;
     this.lastname = profile.lastname;
     this.graphic = profile.graphic;
+    this.id = profile.userid;
   }
 }
 

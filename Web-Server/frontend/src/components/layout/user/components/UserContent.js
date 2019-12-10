@@ -4,14 +4,18 @@ import ImageUploader from "./ImageUploader";
 import "./usercontent.css";
 import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
+import { useSelector } from "react-redux";
+import Axios from "axios";
+import { webserverAPIUserEndpoint } from "../../../../constants/serverEndpoint";
 
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
-const UserContent = ({ posts }) => {
+const UserContent = ({ posts, profile }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isActive, setisActive] = useState(true);
   const [barAniamtion, setBarAnimation] = useState(false);
   const [activeTag, setActiveTag] = useState(1);
+  const user = useSelector(state => state.auth.user);
 
   const closePopup = () => {
     setShowPopup(!showPopup);
@@ -28,6 +32,16 @@ const UserContent = ({ posts }) => {
 
   const switchContentPosts = () => {
     setActiveTag(1);
+  };
+
+  const addToFriend = () => {
+    Axios.post(webserverAPIUserEndpoint + "/" + profile.id + "/relationship")
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -48,21 +62,25 @@ const UserContent = ({ posts }) => {
           <div className="user-image float-left">
             <img
               className="user-profile-img"
-              src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
+              src={profile.graphic}
               height="100px"
             />
-            <div>
-              <button onClick={closePopup.bind(this)}>
-                Aktualizuj zdjęcie
-              </button>
-            </div>
+            {user.id == profile.id && (
+              <div>
+                <button onClick={closePopup.bind(this)}>
+                  Aktualizuj zdjęcie
+                </button>
+              </div>
+            )}
           </div>
           <div className="float-left">
-            <h4>Imię Nazwisko</h4>
+            <h4>{profile.firstname + " " + profile.lastname} </h4>
           </div>
-          <div className="float-right">
-            <button>Dodaj znajomego</button>
-          </div>
+          {user.id != undefined && user.id != profile.id && (
+            <div className="float-right">
+              <button onClick={addToFriend()}>Dodaj znajomego</button>
+            </div>
+          )}
         </div>
 
         <div class="clearfix" />
@@ -86,7 +104,7 @@ const UserContent = ({ posts }) => {
               className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
             >
               {" "}
-              <h5>Imię Nazwisko</h5>
+              <h5>{profile.firstname + " " + profile.lastname}</h5>
             </div>
             <button onClick={switchContentPosts.bind(this)}>Posty</button>
             <button onClick={switchContentLibrary.bind(this)}>

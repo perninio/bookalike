@@ -41,7 +41,7 @@ const AdminOptions = ({ id }) => {
         </Link>
         <Link
           className="dropdown-item ba-navbar__menu--options vw-100"
-          to={"/dashboard"}
+          to={"/"}
         >
           Aktualności
         </Link>

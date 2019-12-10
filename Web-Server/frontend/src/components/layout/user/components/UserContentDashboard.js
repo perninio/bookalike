@@ -19,8 +19,6 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
   const [status, setStatus] = useState("public");
   const [inpurbookid, setInputbookid] = useState(-1);
 
-  console.log(posttext);
-
   const closePopup = () => {
     setShowPopup(!showPopup);
     setisActive(!isActive);
@@ -137,7 +135,6 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
           <div>
             {data &&
               data.map((item, index) => {
-                console.log(item);
                 return (
                   <Post
                     postingusername={

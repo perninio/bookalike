@@ -155,7 +155,7 @@ router.post("/:userid/relationship", (req, res) => {
 });
 
 // @route GET api/user/relationship/invites
-// @desc update relationship between two users
+// @desc get all invites towards current user
 // @access Private
 router.get("/relationship/invites", (req, res) => {
   if (req.headers["authorization"]) {
@@ -166,8 +166,9 @@ router.get("/relationship/invites", (req, res) => {
     } else {
       const { id } = data;
       database
-        .findrelation(id, "send_request")
+        .findinvites(id)
         .then(ids => {
+          console.log(ids);
           res.status(200).json({ invites: ids });
         })
         .then(err => {
