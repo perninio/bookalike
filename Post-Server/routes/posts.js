@@ -32,6 +32,7 @@ router.get("/", (req, res) => {
           const {
             data: { friends }
           } = resp;
+          console.log(friends);
           friends.push(id);
           Post.find({ userid: { $in: friends } })
             .then(posts => {

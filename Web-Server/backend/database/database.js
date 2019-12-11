@@ -184,9 +184,9 @@ function makerelationshipbetween(uid1, uid2, relation_type) {
       .relateTo(user2, "friends", { relation: relation_type })
       .then(res => {
         console.log(
-          res._start.get("name"),
+          res._start.get("email"),
           " is friend ",
-          res._end.get("name"),
+          res._end.get("email"),
           "since",
           res.get("relation")
         );
@@ -208,7 +208,7 @@ function changerelation(user1, user2, relation_type) {
       { relation_type: relation_type }
     )
     .then(res => {
-      console.log("Success");
+      console.log("relacja zmieniona");
     })
     .catch(e => {
       console.log(e);
@@ -229,12 +229,13 @@ async function findrelation(userid, relation_type) {
   return tab;
 }
 
-async function findinvites(userid){
+async function findinvites(userid) {
   var tab = [];
   var res = await instance.cypher(
     "match (users:User)-[:friends {relation:'send_request'}]->(me:User) where id(me)=" +
       userid +
-      " return users");
+      " return users"
+  );
   res.records.map(rec => {
     tab.push(rec._fields[0].identity.low);
   });
@@ -258,5 +259,6 @@ module.exports = {
   makerelationshipbetween,
   changerelation,
   get_ids_of_my_friends,
-  findrelation
+  findrelation,
+  findinvites
 };

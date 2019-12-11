@@ -28,7 +28,7 @@ export const Invite = ({ id }) => {
     axios
       .put(webserverAPIUserEndpoint + "/" + id + "/relationship", payload)
       .then(() => {
-        console.log("OK");
+        window.location.reload(false);
       })
       .catch(err => {
         console.log(err);
@@ -42,7 +42,7 @@ export const Invite = ({ id }) => {
     axios
       .put(webserverAPIUserEndpoint + "/" + id + "/relationship", payload)
       .then(() => {
-        console.log("OK");
+        window.location.reload(false);
       })
       .catch(err => {
         console.log(err);
@@ -51,22 +51,23 @@ export const Invite = ({ id }) => {
 
   return (
     <div
-      className="row float-left rounded vw-100"
-      style={{ backgroundColor: "white" }}
+      className="row float-left rounded mt-2 ml-auto mr-auto"
+      style={{ backgroundColor: "white", width: "100%", height: "100px" }}
     >
-      <div className="col">
+      <div className="col mb-auto mt-auto">
         <Link to={"/user-page/" + id}>
-          <img src={userProfile.graphic} width={32} height={32}></img>
+          <img src={userProfile.graphic} width={120} height={90}></img>
         </Link>
       </div>
-      <div className="col">
+      <div className="col mb-auto mt-auto">
         <Link to={"/user-page/" + id} className="text-primary">
           <strong>{userProfile.firstname + " " + userProfile.lastname}</strong>
         </Link>
       </div>
       <div className="col">
         <button
-          className="btn btn-primary"
+          className="btn btn-primary mt-2"
+          style={{ width: "100%" }}
           onClick={() => {
             acceptInvite();
           }}
@@ -74,7 +75,8 @@ export const Invite = ({ id }) => {
           Zaakceptuj
         </button>
         <button
-          className="btn btn-danger"
+          className="btn btn-danger mt-2"
+          style={{ width: "100%" }}
           onClick={() => {
             rejectInvite();
           }}

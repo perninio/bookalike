@@ -6,7 +6,6 @@ import { Sidebar } from "../common/Sidebar";
 
 export const InvitesPage = () => {
   const [invites, setInvites] = useState([]);
-  console.log(invites);
   useEffect(() => {
     const fetchData = async () => {
       axios

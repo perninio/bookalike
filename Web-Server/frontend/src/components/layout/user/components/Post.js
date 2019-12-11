@@ -79,14 +79,10 @@ export const Post = props => {
             </div>
           </div>
         )}
-        <div className={bookdata.bookid != null ? "col-md-10" : "col-md-12"}>
+        <div className={bookdata.bookid == null ? "col-md-10" : "col-md-12"}>
           <div className="float-left ">
             <a href={"user-page/" + props.userid}>
-              <img
-                src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
-                alt="userimage"
-                height="55px"
-              />
+              <img src={props.graphic} alt="userimage" height="55px" />
             </a>
           </div>
           <a href={"user-page/" + props.userid}>
@@ -133,31 +129,35 @@ export const Post = props => {
               : "my-col col-md-12 float-left"
           }
         >
-          <img
-            src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
-            alt="userimage"
-            height="30px"
-          />
-          <textarea
-            className="comment"
-            onChange={event => {
-              setPostComment(event.target.value);
-              setTextAreaRef(event.target);
-            }}
-            name="message"
-            resize="both"
-            rows="1"
-            cols="140"
-            placeholder="Tutaj wpisz treść komentarza..."
-          />
-          <button
-            onClick={() => {
-              sendcomment();
-              textarearef.value = "";
-            }}
-          >
-            Skomentuj
-          </button>
+          {auth.isAuthenticated == true && (
+            <React.Fragment>
+              <img
+                src={auth.user.profile.graphic}
+                alt="userimage"
+                height="30px"
+              />
+              <textarea
+                className="comment"
+                onChange={event => {
+                  setPostComment(event.target.value);
+                  setTextAreaRef(event.target);
+                }}
+                name="message"
+                resize="both"
+                rows="1"
+                cols="140"
+                placeholder="Tutaj wpisz treść komentarza..."
+              />
+              <button
+                onClick={() => {
+                  sendcomment();
+                  textarearef.value = "";
+                }}
+              >
+                Skomentuj
+              </button>
+            </React.Fragment>
+          )}
         </div>
       </div>
     </div>
