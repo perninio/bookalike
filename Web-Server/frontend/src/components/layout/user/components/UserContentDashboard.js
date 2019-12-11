@@ -8,7 +8,7 @@ import { Button, ButtonGroup } from "reactstrap";
 import Axios from "axios";
 import { postserverAPIEndpoint } from "../../../../constants/serverEndpoint";
 
-const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
+const UserContentDashboard = ({ data, posts, setReload }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isActive, setisActive] = useState(true);
   const [barAniamtion, setBarAnimation] = useState(false);
@@ -143,10 +143,10 @@ const UserContentDashboard = ({ data, deletepostfun, posts, setReload }) => {
                     userid={item.user.userid}
                     bookid={item.bookid}
                     rate={item.rate}
+                    postid={item._id}
                     index={index}
                     posttext={item.description}
                     graphic={item.user.graphic}
-                    fun={deletepostfun}
                     show={setShowPopup}
                     setIndex={setIndex}
                   />
