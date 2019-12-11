@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ReactStars from "react-stars";
-import "./book.css";
+import "./book.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   dataserverAPIUserInteractionEndpoint,
@@ -152,7 +152,7 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
       </div>*/}
 
       <div class="col-md-12 my-col order-md-4 order-sm-3">
-        <span class="stars">
+        <span class="stars ba-stars">
           <ReactStars
             count={5}
             onChange={ratingChanged}
