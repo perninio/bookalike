@@ -54,7 +54,7 @@ export const UserPage = props => {
         </div>
         <div
           className="d-none d-xs-block d-sm-inline col-sm-2"
-          style={{ backgroundColor: "red" }}
+          // style={{ backgroundColor: "red" }}
         >
           znajomi
         </div>

@@ -96,11 +96,11 @@ button {
 }
 
 .tag-bar {
-  margin-left: -173px;
+  margin-left: -233px;
   transition: margin 1s;
   float: left;
   background: white;
-  width: 130%;
+  width: 150%;
   height:25px;
 }
 
