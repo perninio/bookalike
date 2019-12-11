@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import Popup from "./Popup";
 import ImageUploader from "./ImageUploader";
 import "./usercontent.css";
 import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
-<<<<<<< HEAD
 import Library from "./Library.js"
-=======
-import { useSelector } from "react-redux";
-import Axios from "axios";
-import { webserverAPIUserEndpoint } from "../../../../constants/serverEndpoint";
-
->>>>>>> 262a238d9f7450c82e8e2222a0836a6e4c4bdd53
+import {useSelector} from "react-redux"
+import Axios from "axios"
+import {webserverAPIUserEndpoint}  from "../../../../constants/serverEndpoint";
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
 const UserContent = ({ posts, profile }) => {

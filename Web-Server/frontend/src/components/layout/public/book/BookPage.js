@@ -10,9 +10,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Popup from "./components/Popup";
 import { Badge, Button } from "reactstrap";
-
-
-import bookdata from "./book.json"//mocup
+//import bookdata from "./book.json"//mocup
 
 import {
   dataserverAPIBooksEndpoint,
@@ -21,8 +19,8 @@ import {
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
-  //const [data, setData] = useState({});
-  const [data, setData] = useState(bookdata);//mockup
+  const [data, setData] = useState({});
+  //const [data, setData] = useState(bookdata);//mockup
   const [auth, setAuth] = useState(useSelector(state => state.auth));
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);

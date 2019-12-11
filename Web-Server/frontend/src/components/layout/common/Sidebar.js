@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 export const Sidebar = () => {
   const { id, role } = useSelector(state => state.auth.user);
   return (
-    <div className="sticky-top" style={{ zIndex: "1", paddingTop: "50px" }}>
+    // <div className="sticky-top" style={{ zIndex: "1", paddingTop: "50px" }}>
+    <div className="sticky-top" style={{ zIndex: "1" }}>
       {arrayToButtons(defaultButtons(id))}
       {role == "admin" && <hr></hr>}
       {arrayToButtons(role == "admin" ? AdminButtons : [])}
