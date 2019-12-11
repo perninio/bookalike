@@ -13,6 +13,7 @@ import {
   webserverAPIBookEndpoint,
   postserverAPIEndpoint
 } from "../../../../constants/serverEndpoint";
+import { templateLiteral } from "@babel/types";
 
 export const Post = props => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -91,7 +92,7 @@ export const Post = props => {
         <div className={bookdata.bookid == null ? "col-md-10" : "col-md-12"}>
           <div className="float-left ">
             <a href={"user-page/" + props.userid}>
-              <img src={props.graphic} alt="userimage" height="55px" />
+              <img className="user-profile-img" src={props.graphic} alt="userimage" height="55px" width="55" />
             </a>
           </div>
           <a href={"user-page/" + props.userid}>
@@ -100,32 +101,32 @@ export const Post = props => {
             </div>
           </a>
           {props.userid ==
-          (auth.isAuthenticated == true ? auth.user.id : -1) ? (
-            <div className="username-post float-right">
-              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                <DropdownToggle caret></DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem
-                    id={props.index}
-                    onClick={() => {
-                      props.show(true);
-                      props.setIndex(props.index);
-                    }}
-                  >
-                    Edytuj post
+            (auth.isAuthenticated == true ? auth.user.id : -1) ? (
+              <div className="username-post float-right">
+                <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                  <DropdownToggle caret></DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem
+                      id={props.index}
+                      onClick={() => {
+                        props.show(true);
+                        props.setIndex(props.index);
+                      }}
+                    >
+                      Edytuj post
                   </DropdownItem>
-                  <DropdownItem
-                    id={props.index}
-                    onClick={() => {
-                      deletePost(props.postid);
-                    }}
-                  >
-                    Usuń post
+                    <DropdownItem
+                      id={props.index}
+                      onClick={() => {
+                        deletePost(props.postid);
+                      }}
+                    >
+                      Usuń post
                   </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
-          ) : null}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+            ) : null}
           <div className="clearfix" />
           <div className="description">{props.posttext}</div>
         </div>
@@ -138,35 +139,47 @@ export const Post = props => {
               : "my-col col-md-12 float-left"
           }
         >
-          {auth.isAuthenticated == true && (
-            <React.Fragment>
-              <img
-                src={auth.user.profile.graphic}
-                alt="userimage"
-                height="30px"
-              />
-              <textarea
-                className="comment"
-                onChange={event => {
-                  setPostComment(event.target.value);
-                  setTextAreaRef(event.target);
-                }}
-                name="message"
-                resize="both"
-                rows="1"
-                cols="140"
-                placeholder="Tutaj wpisz treść komentarza..."
-              />
-              <button
-                onClick={() => {
-                  sendcomment();
-                  textarearef.value = "";
-                }}
-              >
-                Skomentuj
+          <div>
+            {props.comments.map(item => {
+              return <div className="comment row pb-2 ml-2 mr-1"><div className="col-sm-12">
+                <a>
+                  <img className="comment-image float-left user-profile-img" width="30px" height="30px" />
+                  {item.user.firstname} {item.user.lastname}
+                </a>
+              </div>
+                <div className="postcomments col-sm-11 ml-3">{item.text}
+                </div>
+              </div>
+            })}
+          </div>
+          {
+            auth.isAuthenticated == true && (
+              <React.Fragment>
+                <div className="col-sm-11 pl=0 pr-0 ml-0">
+                <textarea
+                  className="commentbox"
+                  onChange={event => {
+                    setPostComment(event.target.value);
+                    setTextAreaRef(event.target);
+                  }}
+                  name="message"
+                  resize="both"
+                  rows="1"
+                  cols="140"
+                  placeholder="Tutaj wpisz treść komentarza..."
+                />
+                <button
+                  onClick={() => {
+                    sendcomment();
+                    textarearef.value = "";
+                  }}
+                >
+                  Skomentuj
               </button>
-            </React.Fragment>
-          )}
+              </div>
+              </React.Fragment>
+            )
+          }
         </div>
       </div>
     </div>

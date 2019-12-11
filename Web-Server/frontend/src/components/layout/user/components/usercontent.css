@@ -115,6 +115,7 @@ button {
 
 img.user-profile-img {
   transition: 0.5s ease;
+  border-radius: 50%;
 }
 
 img.user-profile-img:hover {

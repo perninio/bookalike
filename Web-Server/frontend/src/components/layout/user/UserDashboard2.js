@@ -6,7 +6,8 @@ import UserContentDashboard from "./components/UserContentDashboard";
 import SideCarousel from "./components/SideCarousel";
 import { postserverAPIEndpoint } from "../../../constants/serverEndpoint";
 import { Sidebar } from "../common/Sidebar";
-//import postsdata from "./components/posts.json"//mocup
+
+//import postsdata from "./components/posts.json"//mokcup
 
 const items = [
   {
@@ -21,7 +22,8 @@ const items = [
 ];
 
 export const UserDashboard2 = () => {
-  //const [posts, setPosts] = useState(postsdata.posts)
+
+//const [posts, setPosts] = useState(postsdata.posts) mockup
   const [posts, setPosts] = useState([]);
   const [reload, setReload] = useState(0);
   const history = useHistory();
@@ -46,7 +48,7 @@ export const UserDashboard2 = () => {
 
   return (
     <div className="container-fluid">
-      {/* {profile.firstname == null && history.push("/profile/edit")} */}
+      {profile.firstname == null && history.push("/profile/edit")}
       <div className="row vh-100">
         <div className="d-none d-xs-block d-sm-inline col-sm-2">
           <Sidebar />

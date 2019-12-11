@@ -149,6 +149,7 @@ const UserContentDashboard = ({ data, posts, setReload }) => {
                     graphic={item.user.graphic}
                     show={setShowPopup}
                     setIndex={setIndex}
+                    comments={item.comments}
                   />
                 );
               })}

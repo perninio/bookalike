@@ -2,36 +2,98 @@
     "posts": [
         {
             "id": "1",
-            "bookid":"20",
-            "text":"Hej czy ktoś ma taką książke może do pożyczenia?",
-            "rate":"3.0", 
-            "user":{
+            "bookid": "20",
+            "text": "Hej czy ktoś ma taką książke może do pożyczenia?",
+            "rate": "3.0",
+            "user": {
                 "firstname": "Czarek",
                 "lastname": "kowalski",
-                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
-            }
+                "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+            },
+            "comments": [
+                {
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                },{
+                    "id": "2",
+                    "user": {
+                        "firstname": "Czarek",
+                        "lastname": "kowalski",
+                        "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+                    },
+                    "text":"No zgadzam się, moim zdaniem to też jest spoko"
+                }
+              
+            ]
         },
         {
             "id": "2",
-            "bookid":"30",    
-            "rate":"3.0",        
-            "user":{
+            "bookid": "30",
+            "rate": "3.0",
+            "user": {
                 "firstname": "Czarek",
-                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg",
+                "graphic": "https://skupszop.pl/images/books/9788377589915.jpg",
                 "lastname": "kowalski"
-            }
+            },
+            "comments": []
         },
         {
             "firstname": "Filip",
             "id": "2",
-            "nazwisko":"Szadkowski",
-            "bookid":"",
-            "rate":"3.0", 
-            "user":{
+            "nazwisko": "Szadkowski",
+            "bookid": "",
+            "rate": "3.0",
+            "user": {
                 "firstname": "Czarek",
                 "lastname": "kowalski",
-                "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
-            }
+                "graphic": "https://skupszop.pl/images/books/9788377589915.jpg"
+            },
+            "comments": []
         }
     ]
 }

@@ -11,6 +11,7 @@ import {
   webserverAPIUserEndpoint,
   postserverAPIEndpoint
 } from "../../../../constants/serverEndpoint";
+
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
 const UserContent = ({ posts, profile }) => {
@@ -60,7 +61,7 @@ const UserContent = ({ posts, profile }) => {
 
   return (
     <div>
-      {/* <div class="container user-container"> */}
+      <div class="container user-container">
       <div class="user-container">
         <div class={"userpanel"}>
           <div className="user-image float-left">
@@ -113,11 +114,11 @@ const UserContent = ({ posts, profile }) => {
               <h5>{profile.firstname + " " + profile.lastname}</h5>
             </div>
             <div className="buttons">
-            <button onClick={switchContentPosts.bind(this)}>Posty</button>
+            <button onClick={switchContentPosts.bind(this)}><i class="fas fa-sticky-note"></i> Posty</button>
             <button id="biblioteczka" onClick={switchContentLibrary.bind(this)}>
             <i class="fas fa-book"></i>
             </button>
-            <button onClick={switchContentInfo.bind(this)}>Informacje</button>
+            <button onClick={switchContentInfo.bind(this)}><i class="far fa-address-book"></i> Informacje</button>
             </div>
           </div>
         </div>
@@ -152,6 +153,7 @@ const UserContent = ({ posts, profile }) => {
           ) : null}
         </div>
       </div>
+    </div>
     </div>
   );
 };
