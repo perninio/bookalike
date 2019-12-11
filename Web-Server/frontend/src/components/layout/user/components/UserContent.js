@@ -68,6 +68,7 @@ const UserContent = ({ posts, profile }) => {
               className="user-profile-img"
               src={profile.graphic}
               height="100px"
+              width="100px"
             />
             {user.id == profile.id && (
               <div>
@@ -103,6 +104,7 @@ const UserContent = ({ posts, profile }) => {
               className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
               src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
               height="30px"
+              width="30px"
             />
             <div
               className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
@@ -110,11 +112,13 @@ const UserContent = ({ posts, profile }) => {
               {" "}
               <h5>{profile.firstname + " " + profile.lastname}</h5>
             </div>
+            <div className="buttons">
             <button onClick={switchContentPosts.bind(this)}>Posty</button>
-            <button onClick={switchContentLibrary.bind(this)}>
-              Biblioteczka
+            <button id="biblioteczka" onClick={switchContentLibrary.bind(this)}>
+            <i class="fas fa-book"></i>
             </button>
             <button onClick={switchContentInfo.bind(this)}>Informacje</button>
+            </div>
           </div>
         </div>
         <div className="profile-content">
