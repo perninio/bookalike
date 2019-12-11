@@ -107,7 +107,6 @@ button {
 .tag-bar-move {
   transition: margin 1s;
   float: left;
-  margin-top: 45px;
   background: white;
   width: 130%;
 }
@@ -152,7 +151,6 @@ img.user-profile-img:hover {
     float: left;
     opacity: 0;
     transition: 0.5s;
-    margin-left: -140px;
   }
   .tag-bar-name-phone {
     float: left;
@@ -161,7 +159,8 @@ img.user-profile-img:hover {
   }
   .tag-bar {
     float: left;
-    margin: 0px;
+    width: 170%;
+
   }
   .float-right {
     float: left !important;
@@ -169,7 +168,7 @@ img.user-profile-img:hover {
   .tag-bar-move {
     transition: margin 1s;
     float: left;
-    margin-top: 45px;
+    /* margin-top: 45px; */
     background: white;
     width: 130%;
   }

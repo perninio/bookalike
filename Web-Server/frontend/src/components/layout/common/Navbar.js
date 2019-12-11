@@ -13,6 +13,7 @@ export const Navbar = () => {
   const { role } = useSelector(state => state.auth.user);
 
   return (
+    <div >
     <nav className="navbar navbar-expand-lg navbar-light bg-light ba-navbar sticky-top">
       <Link className="navbar-brand" to="/">
         <i className="fas fa-book-open ba-navbar__logo"> Book Alike</i>
@@ -43,5 +44,6 @@ export const Navbar = () => {
         <NavbarLinks isAuthenticated={isAuthenticated} />
       </div>
     </nav>
+    </div>
   );
 };

@@ -43,8 +43,9 @@ const UserContent = ({ posts }) => {
 
   return (
     <div>
-      <div class="container user-container">
-        <div class={barAniamtion ? "userpanel-inactive" : "userpanel"}>
+      {/* <div class="container user-container"> */}
+      <div class="user-container">
+        <div class={"userpanel"}>
           <div className="user-image float-left">
             <img
               className="user-profile-img"

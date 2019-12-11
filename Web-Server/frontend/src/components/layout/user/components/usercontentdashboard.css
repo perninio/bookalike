@@ -115,7 +115,7 @@ button {
 .tag-bar-move {
   transition: margin 1s;
   float: left;
-  margin-top: 45px;
+  /* margin-top: 45px; */
   background: white;
   width: 130%;
 }
@@ -172,7 +172,7 @@ img.user-profile-img:hover {
   .tag-bar-move {
     transition: margin 1s;
     float: left;
-    margin-top: 45px;
+    /* margin-top: 45px; */
     background: white;
     width: 130%;
   }
