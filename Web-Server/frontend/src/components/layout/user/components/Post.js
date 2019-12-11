@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import {
   dataserverAPIBooksEndpoint,
-  webserverAPIBookEndpoint
+  webserverAPIBookEndpoint,
+  postserverAPIEndpoint
 } from "../../../../constants/serverEndpoint";
 
 export const Post = props => {
@@ -54,6 +55,14 @@ export const Post = props => {
     };
     fetchData();
   }, []);
+
+  const deletePost = postid => {
+    console.log(postid);
+    axios
+      .delete(postserverAPIEndpoint + "/" + postid)
+      .then(window.location.reload(false))
+      .catch(err => console.log(err));
+  };
 
   return (
     <div id={props.index} className="container postscontainer">
@@ -107,8 +116,8 @@ export const Post = props => {
                   </DropdownItem>
                   <DropdownItem
                     id={props.index}
-                    onClick={data => {
-                      props.fun(props.index);
+                    onClick={() => {
+                      deletePost(props.postid);
                     }}
                   >
                     Usuń post

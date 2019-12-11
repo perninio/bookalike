@@ -71,7 +71,6 @@ router.post("/", (req, res) => {
       const { id } = data;
       const req_data = req.body;
       req_data["userid"] = id;
-      console.log(req_data);
       Book_User.findOne({ where: { userid: id, bookid: req_data.bookid } })
         .then(interaction => {
           if (interaction) {

@@ -1,13 +1,16 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
 import ImageUploader from "./ImageUploader";
 import "./usercontent.css";
 import UserInformation from "./UserInformation.js";
 import Post from "./Post.js";
-import Library from "./Library.js"
-import {useSelector} from "react-redux"
-import Axios from "axios"
-import {webserverAPIUserEndpoint}  from "../../../../constants/serverEndpoint";
+import Library from "./Library.js";
+import { useSelector } from "react-redux";
+import Axios from "axios";
+import {
+  webserverAPIUserEndpoint,
+  postserverAPIEndpoint
+} from "../../../../constants/serverEndpoint";
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
 const UserContent = ({ posts, profile }) => {
@@ -122,7 +125,7 @@ const UserContent = ({ posts, profile }) => {
           {activeTag == 3 ? (
             <UserInformation />
           ) : activeTag == 2 ? (
-            <Library/>
+            <Library />
           ) : activeTag == 1 ? (
             <div>
               {posts &&
@@ -135,8 +138,11 @@ const UserContent = ({ posts, profile }) => {
                       id={item.user.userid}
                       index={index}
                       posttext={item.text}
+                      userid={item.user.userid}
+                      bookid={item.bookid}
+                      rate={item.rate}
                       graphic={item.user.graphic}
-                      fun={() => {}}
+                      postid={item._id}
                       show={setShowPopup}
                       setIndex={() => {}}
                     />

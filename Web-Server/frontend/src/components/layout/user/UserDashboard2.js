@@ -26,14 +26,9 @@ export const UserDashboard2 = () => {
   const [reload, setReload] = useState(0);
   const history = useHistory();
 
-  const { profile } = useSelector(state => state.auth.user);
+  console.log(posts);
 
-  const deletepost = index => {
-    var tab = posts;
-    tab.splice(index, 1);
-    setPosts(tab);
-    setReload(posts.length);
-  };
+  const { profile } = useSelector(state => state.auth.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +58,6 @@ export const UserDashboard2 = () => {
           {posts && (
             <UserContentDashboard
               data={posts}
-              deletepostfun={deletepost}
               posts={posts}
               setReload={setReload}
             />

@@ -337,7 +337,7 @@ router.post("/init-users", (req, res) => {
           salt: salt,
           status: "activated",
           account_code: "123456",
-          role: "admin"
+          role: "user"
         })
         .then(user => {
           axios

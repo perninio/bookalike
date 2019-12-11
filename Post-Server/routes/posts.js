@@ -401,17 +401,21 @@ router.delete("/:postId", (req, res) => {
     } else {
       const { id } = data;
 
-      Post.findOne({ _id: req.params.postId, userid: id })
+      Post.findById(req.params.postId)
         .then(post => {
-          post
-            .remove()
-            .then(() => {
-              res.status(200).send();
-            })
-            .catch(err => {
-              console.log(err);
-              res.status(409).send();
-            });
+          if (post.userid == id) {
+            post
+              .remove()
+              .then(() => {
+                res.status(200).send();
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(409).send();
+              });
+          } else {
+            res.status(409).send();
+          }
         })
         .catch(err => {
           console.log(err);
