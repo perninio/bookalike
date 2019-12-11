@@ -151,8 +151,8 @@ function find_friends(personid) {
   return instance
     .cypher(
       "MATCH (me:User)-[:friends {relation:'accepted_request'}]-(friends:User) WHERE id(me)=" +
-        personid +
-        " RETURN friends"
+      personid +
+      " RETURN friends"
     )
     .catch(e => {
       console.log(e);
@@ -201,10 +201,10 @@ function changerelation(user1, user2, relation_type) {
   instance
     .cypher(
       "match (user1:User)-[rel:friends]-(user2:User) where id(user1)=" +
-        user1 +
-        " and id(user2)=" +
-        user2 +
-        " set rel.relation={relation_type} return  rel.relation",
+      user1 +
+      " and id(user2)=" +
+      user2 +
+      " set rel.relation={relation_type} return  rel.relation",
       { relation_type: relation_type }
     )
     .then(res => {
@@ -219,8 +219,8 @@ async function findrelation(userid, relation_type) {
   var tab = [];
   var res = await instance.cypher(
     "match (me:User)-[:friends {relation:{relation_type}}]-(users:User) where id(me)=" +
-      userid +
-      " return users",
+    userid +
+    " return users",
     { relation_type: relation_type }
   );
   res.records.map(rec => {
@@ -233,14 +233,48 @@ async function findinvites(userid) {
   var tab = [];
   var res = await instance.cypher(
     "match (users:User)-[:friends {relation:'send_request'}]->(me:User) where id(me)=" +
-      userid +
-      " return users"
+    userid +
+    " return users"
   );
   res.records.map(rec => {
     tab.push(rec._fields[0].identity.low);
   });
   return tab;
 }
+
+async function deleterealtion(uid1, uid2) {
+  return instance.cypher("match (u1:User)-[r:friends]-(u2:User) where id(u1)=" + uid1 + " and id(u2)=" + uid2 + " delete r return u1").then(res => { if (res.records.length == 0) { return 0 } else { return 1 } })
+}
+
+async function checkstatusbetweenusers(uid1, uid2) {
+  var rel = await instance.cypher("match (u1:User)-[r:friends]-(u2:User) where id(u1)=" + uid1 + " and id(u2)=" + uid2 + " return type(r)").then(res => { if (res.records[0] == undefined) { return 0 } else { return 1 } })
+  if (rel != 0) {
+    var reqac = await instance.cypher("match (u1:User)-[r:friends {relation:'accepted_request'}]-(u2:User) where id(u1)=" + uid1 + " and id(u2)=" + uid2 + " return type(r)").then(res => { console.log(res.records.length); if (res.records[0] == undefined) { return 0 } else { return 1 } })
+    if (reqac == 0) {
+      var reqse = await instance.cypher("match (u1:User)-[r:friends {relation:'send_request'}]->(u2:User) where id(u1)=" + uid1 + " and id(u2)=" + uid2 + " return type(r)").then(res => { if (res.records.length == 0) { return 0 } else { return 1 } })
+      if (reqse == 0) {
+        var reqse2 = await instance.cypher("match (u1:User)<-[r:friends {relation:'send_request'}]-(u2:User) where id(u1)=" + uid1 + " and id(u2)=" + uid2 + " return type(r)").then(res => { if (res.records.length == 0) { return 0 } else { return 1 } })
+        if (reqse2 == 0) {
+          return "another_relation"
+        }
+        else {
+          return "uid1_got_request"//gdy uid2 wysle do uid1 send_request
+        }
+      }
+      else {
+        return "uid1_send_request"//gdy uid1 wysle do uid2
+      }
+
+    }
+    else {
+      return "friends"
+    }
+  }
+  else {
+    return "no_relation"
+  }
+}
+
 
 // var relation_type = [
 // "accepted_request",
