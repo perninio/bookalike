@@ -74,7 +74,8 @@ const Library = () => {
                 settings: {
                     slidesPerRow: 1,
                     slidesToScroll: 1,
-                    slidesPerRow: 1
+                    slidesPerRow: 1,
+                    dots:false
                 }
             }
         ]

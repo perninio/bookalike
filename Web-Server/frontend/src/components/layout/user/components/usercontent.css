@@ -103,7 +103,9 @@ button {
   width: 150%;
   height:25px;
 }
-
+#biblioteczka:after{
+  content:" Biblioteczka";
+}
 .tag-bar-move {
   transition: margin 1s;
   float: left;
@@ -123,6 +125,7 @@ img.user-profile-img:hover {
   float: left;
   margin: 3px;
   transition: 0.5s;
+  /* width:110px; */
 }
 
 .tag-bar-button{
@@ -134,6 +137,7 @@ img.user-profile-img:hover {
   float: left;
   margin: 3px;
   transition: 0.5s;
+  
 }
 
 .userpanel {
@@ -157,6 +161,10 @@ img.user-profile-img:hover {
     opacity: 1;
     transition: 0.5s;
   }
+  .buttons {
+    float: none;
+    display: inline-block;
+  }
   .tag-bar {
     float: left;
     width: 170%;
@@ -172,6 +180,7 @@ img.user-profile-img:hover {
     background: white;
     width: 130%;
   }
+
 }
 
 .my-col2 {
