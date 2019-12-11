@@ -258,7 +258,45 @@ async function test2()
     console.log(res)
 }
 //makerelationship();
-test2();
+//test2();
 
   //res.records.map(rec=>{tab.push(rec._fields[0].identity.low
   //.records.map(rec=>{rec._fields[0].identity.low})
+
+async function deleterealtion(uid1,uid2){
+	return instance.cypher("match (u1:User)-[r:friends]-(u2:User) where id(u1)="+uid1+" and id(u2)="+uid2+" delete r return u1").then(res=>{if(res.records.length==0){return 0} else{return 1}})
+}
+//deleterealtion(755,20).then(res=>{console.log(res)})  
+async function checkrelationtype(uid1,uid2){
+var rel=await instance.cypher("match (u1:User)-[r:friends]-(u2:User) where id(u1)="+uid1+" and id(u2)="+uid2+" return type(r)").then(res=>{if(res.records[0]==undefined){return 0} else{return 1}})
+if(rel!=0){ 
+var reqac=await instance.cypher("match (u1:User)-[r:friends {relation:'request_accepted'}]-(u2:User) where id(u1)="+uid1+" and id(u2)="+uid2+" return type(r)").then(res=>{console.log(res.records.length);if(res.records[0]==undefined){return 0} else{return 1}})
+ if (reqac==0){
+	 var reqse= await instance.cypher("match (u1:User)-[r:friends {relation:'request_send'}]->(u2:User) where id(u1)="+uid1+" and id(u2)="+uid2+" return type(r)").then(res=>{if(res.records.length==0){return 0}else{return 1}})
+	 if(reqse==0)
+	 {
+		 var reqse2= await instance.cypher("match (u1:User)<-[r:friends {relation:'request_send'}]-(u2:User) where id(u1)="+uid1+" and id(u2)="+uid2+" return type(r)").then(res=>{if(res.records.length==0){return 0}else{return 1}})
+	 if(reqse2==0)
+	 {
+		 return "another_relation"
+	 }
+	 else
+	 {
+		return "waiting_for_you_to_accept"//gdy uid2 wysle do uid1
+	 }
+	 }
+	 else{
+		 return "request_send"//gdy uid1 wysle do uid2
+	 }
+	 
+}
+else{
+	return "friends"
+}}
+else
+{
+	return "no_relation"
+}
+}
+
+checkrelationtype(755,20).then(res=>{console.log(res)});
