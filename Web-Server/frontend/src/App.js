@@ -66,7 +66,11 @@ function App() {
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/search/:text" component={SearchPage} />
-            <Route exact path="/recommendations" component={Recommendation} />
+            <PrivateRoute
+              exact
+              path="/recommendations"
+              component={Recommendation}
+            />
             <PrivateRoute
               exact
               path="/profile/edit"

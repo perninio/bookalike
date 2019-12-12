@@ -46,7 +46,7 @@ export const UserDashboard2 = () => {
 
   return (
     <div className="container-fluid">
-      {/* {profile.firstname == null && history.push("/profile/edit")} */}
+      {profile.firstname == null && history.push("/profile/edit")}
       <div className="row vh-100">
         <div className="d-none d-xs-block d-sm-inline col-sm-2">
           <Sidebar />
@@ -63,11 +63,8 @@ export const UserDashboard2 = () => {
             />
           )}
         </div>
-        <div
-          className="d-none d-xs-block d-sm-inline col-sm-2"
-          style={{ backgroundColor: "red" }}
-        >
-          <div className="stickbar">
+        <div className="d-none d-xs-block d-sm-inline col-sm-2">
+          {/* <div className="stickbar">
             Rekomendacje:
             <div className="side-carousel">
               <SideCarousel items={items} />
@@ -75,7 +72,7 @@ export const UserDashboard2 = () => {
             <div className="side-carousel">
               <SideCarousel items={items} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

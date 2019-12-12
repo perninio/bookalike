@@ -36,11 +36,8 @@ export const Invite = ({ id }) => {
   };
 
   const rejectInvite = () => {
-    const payload = {
-      relation_type: "rejected_request"
-    };
     axios
-      .put(webserverAPIUserEndpoint + "/" + id + "/relationship", payload)
+      .delete(webserverAPIUserEndpoint + "/" + id + "/relationship")
       .then(() => {
         window.location.reload(false);
       })
@@ -61,7 +58,9 @@ export const Invite = ({ id }) => {
       </div>
       <div className="col mb-auto mt-auto">
         <Link to={"/user-page/" + id} className="text-primary">
-          <strong>{userProfile.firstname + " " + userProfile.lastname}</strong>
+          <strong>
+            {userProfile.firstname + "   " + userProfile.lastname}
+          </strong>
         </Link>
       </div>
       <div className="col">

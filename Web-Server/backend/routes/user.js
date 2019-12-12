@@ -201,6 +201,51 @@ router.put("/:userid/relationship", (req, res) => {
   }
 });
 
+// @route DELETE api/user/:userid/relationship
+// @desc delete relationship between users
+// @access Private
+router.delete("/:userid/relationship", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      database.deleterealtion(id, req.params.userid).then(result => {
+        if (result == 1) {
+          res.status(200).send();
+        } else {
+          res.status(404).send();
+        }
+      });
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
+// @route GET api/user/:userid/relationship
+// @desc get relationship between users
+// @access Private
+router.get("/:userid/relationship", (req, res) => {
+  if (req.headers["authorization"]) {
+    token = req.headers["authorization"];
+    data = jwtUtils.verifyToken(token, req.app.locals.publickey);
+    if (data.error) {
+      res.status(400).json({ error: data.error });
+    } else {
+      const { id } = data;
+      console.log(req.params.userid);
+      database.checkstatusbetweenusers(id, req.params.userid).then(result => {
+        res.status(200).json({ relation_type: result });
+      });
+    }
+  } else {
+    res.status(401).send("Wymagana jest autoryzacja");
+  }
+});
+
 // @route PUT api/user/:userid
 // @desc endpoint where we can update user's data - changes can be made by admins
 // @access Private/Admin

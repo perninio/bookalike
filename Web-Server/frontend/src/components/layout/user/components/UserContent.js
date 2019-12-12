@@ -7,18 +7,28 @@ import Post from "./Post.js";
 import Library from "./Library.js";
 import { useSelector } from "react-redux";
 import Axios from "axios";
-import {
-  webserverAPIUserEndpoint,
-  postserverAPIEndpoint
-} from "../../../../constants/serverEndpoint";
+import { webserverAPIUserEndpoint } from "../../../../constants/serverEndpoint";
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
-const UserContent = ({ posts, profile }) => {
+const UserContent = ({ posts, profile, userid }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isActive, setisActive] = useState(true);
   const [barAniamtion, setBarAnimation] = useState(false);
   const [activeTag, setActiveTag] = useState(1);
+  const [relation, setRelation] = useState("");
+  console.log(relation);
   const user = useSelector(state => state.auth.user);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      Axios.get(webserverAPIUserEndpoint + "/" + userid + "/relationship")
+        .then(result => {
+          setRelation(result.data.relation_type);
+        })
+        .catch(err => console.log("Failed to get book data"));
+    };
+    fetchData();
+  }, [userid]);
 
   const closePopup = () => {
     setShowPopup(!showPopup);
@@ -37,10 +47,91 @@ const UserContent = ({ posts, profile }) => {
     setActiveTag(1);
   };
 
-  const addToFriend = () => {
-    Axios.post(webserverAPIUserEndpoint + "/" + profile.id + "/relationship")
+  const deleteButton = (
+    <div className="float-right">
+      <button
+        onClick={() => {
+          deleteFriend();
+        }}
+      >
+        Usuń znajomego
+      </button>
+    </div>
+  );
+  const deleteFriend = () => {
+    Axios.delete(webserverAPIUserEndpoint + "/" + userid + "/relationship")
+      .then(() => {
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const acceptButton = (
+    <div className="float-right">
+      <button
+        onClick={() => {
+          acceptInvitation();
+        }}
+      >
+        Zaakceptuj zaproszenie
+      </button>
+    </div>
+  );
+  const acceptInvitation = () => {
+    const payload = {
+      relation_type: "accepted_request"
+    };
+    Axios.put(
+      webserverAPIUserEndpoint + "/" + userid + "/relationship",
+      payload
+    )
+      .then(() => {
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const cancelButton = (
+    <div className="float-right">
+      <button
+        onClick={() => {
+          cancelInvitation();
+        }}
+      >
+        Anuluj zaproszenie
+      </button>
+    </div>
+  );
+
+  const cancelInvitation = () => {
+    Axios.delete(webserverAPIUserEndpoint + "/" + userid + "/relationship")
       .then(res => {
-        console.log(res);
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const addButton = (
+    <div className="float-right">
+      <button
+        onClick={() => {
+          addToFriend();
+        }}
+      >
+        Dodaj znajomego
+      </button>
+    </div>
+  );
+  const addToFriend = () => {
+    Axios.post(webserverAPIUserEndpoint + "/" + userid + "/relationship")
+      .then(res => {
+        window.location.reload(false);
       })
       .catch(err => {
         console.log(err);
@@ -81,11 +172,22 @@ const UserContent = ({ posts, profile }) => {
           <div className="float-left">
             <h4>{profile.firstname + " " + profile.lastname} </h4>
           </div>
-          {user.id != undefined && user.id != profile.id && (
-            <div className="float-right">
-              <button onClick={addToFriend()}>Dodaj znajomego</button>
-            </div>
-          )}
+          {user.id != undefined &&
+            user.id != profile.id &&
+            relation == "no_relation" &&
+            addButton}
+          {user.id != undefined &&
+            user.id != profile.id &&
+            relation == "uid1_send_request" &&
+            cancelButton}
+          {user.id != undefined &&
+            user.id != profile.id &&
+            relation == "uid1_got_request" &&
+            acceptButton}
+          {user.id != undefined &&
+            user.id != profile.id &&
+            relation == "friends" &&
+            deleteButton}
         </div>
 
         <div class="clearfix" />
@@ -113,11 +215,14 @@ const UserContent = ({ posts, profile }) => {
               <h5>{profile.firstname + " " + profile.lastname}</h5>
             </div>
             <div className="buttons">
-            <button onClick={switchContentPosts.bind(this)}>Posty</button>
-            <button id="biblioteczka" onClick={switchContentLibrary.bind(this)}>
-            <i class="fas fa-book"></i>
-            </button>
-            <button onClick={switchContentInfo.bind(this)}>Informacje</button>
+              <button onClick={switchContentPosts.bind(this)}>Posty</button>
+              <button
+                id="biblioteczka"
+                onClick={switchContentLibrary.bind(this)}
+              >
+                <i class="fas fa-book"></i>
+              </button>
+              <button onClick={switchContentInfo.bind(this)}>Informacje</button>
             </div>
           </div>
         </div>

@@ -26,6 +26,10 @@ def tfidf_recommendations():
 
     full_df = getRateFrame()
 
+    amount_of_votes_by_user = full_df.loc[full_df["userid"]
+                                          == data["id"]].shape[0]
+    status_type = 0 if amount_of_votes_by_user < 5 else 1
+
     # zlicz wszystkie wystąpienia danej książki
     occurences = full_df.groupby('bookid')['rate'].count().to_dict()
 
@@ -60,7 +64,7 @@ def tfidf_recommendations():
 
     data = response.json()["data"]
 
-    return make_response(jsonify({"data": data}), 200)
+    return make_response(jsonify({"predictions": data, "type": status_type}), 200)
 
 
 def getRateFrame():
