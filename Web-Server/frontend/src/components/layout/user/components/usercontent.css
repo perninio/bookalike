@@ -96,15 +96,15 @@ button {
 }
 
 .tag-bar {
-  margin-left: -233px;
+  margin-left: -170px;
   transition: margin 1s;
   float: left;
   background: white;
   width: 150%;
-  height:25px;
+  height: 25px;
 }
-#biblioteczka:after{
-  content:" Biblioteczka";
+#biblioteczka:after {
+  content: " Biblioteczka";
 }
 .tag-bar-move {
   transition: margin 1s;
@@ -129,8 +129,8 @@ img.user-profile-img:hover {
   /* width:110px; */
 }
 
-.tag-bar-button{
-  height:30px;
+.tag-bar-button {
+  height: 30px;
 }
 
 .tag-bar-name-phone {
@@ -138,7 +138,6 @@ img.user-profile-img:hover {
   float: left;
   margin: 3px;
   transition: 0.5s;
-  
 }
 
 .userpanel {
@@ -169,7 +168,6 @@ img.user-profile-img:hover {
   .tag-bar {
     float: left;
     width: 170%;
-
   }
   .float-right {
     float: left !important;
@@ -181,7 +179,6 @@ img.user-profile-img:hover {
     background: white;
     width: 130%;
   }
-
 }
 
 .my-col2 {

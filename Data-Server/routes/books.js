@@ -12,7 +12,7 @@ const bookUtils = require("../utils/booksUtils");
 router.get("/", (req, res) => {
   Book.findAll()
     .then(books => {
-      if (books) {
+      if (books.length > 0) {
         res.status(200).json({ data: books });
       } else {
         res.status(404).json({ Msg: "Nie można znaleźć książek" });
@@ -71,7 +71,7 @@ router.get("/:bookID", (req, res) => {
 router.get("/category/:category", (req, res) => {
   Book.findAll({ where: { booktype: req.params.category } })
     .then(books => {
-      if (books) {
+      if (books.length > 0) {
         res.status(200).json({ data: books });
       } else {
         res.status(404).json({ Msg: "Nie można znaleźć takiego typu" });

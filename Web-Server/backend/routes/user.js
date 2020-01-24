@@ -421,7 +421,7 @@ router.get("/", (req, res) => {
           res.status(200).json({ data: users });
         });
       } else {
-        res.status(403).send("Nie serwer");
+        res.status(403).send("Dostęp wyłączny dla admina");
       }
     }
   } else {
@@ -461,7 +461,7 @@ router.get("/:userid", (req, res) => {
       }
     }
   } else {
-    res.status(401).send("Wymagana jest autoryzacja");
+    res.status(401).send("Dostęp wyłączny dla admina");
   }
 });
 module.exports = router;

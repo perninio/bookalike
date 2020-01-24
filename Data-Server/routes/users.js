@@ -24,6 +24,7 @@ router.post("/initialize/:userid", (req, res) => {
         const user = {
           userid: req.params.userid,
           status: "public",
+          description: "",
           graphic:
             "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
         };
@@ -64,11 +65,14 @@ router.get("/name/:name", (req, res) => {
       ]
     }
   })
-    .then(books => {
-      if (books) {
-        res.status(200).json({ data: books });
+    .then(users => {
+      if (users.length > 0) {
+        usersData = users.map(user => {
+          return profileFactory.getProfileData(user, false);
+        });
+        res.status(200).json({ data: usersData });
       } else {
-        res.status(404).json({ Msg: "Nie można znaleźć książek" });
+        res.status(404).json({ Msg: "Nie można znaleźć użytkowników" });
       }
     })
     .catch(err => console.log(err));

@@ -1,58 +1,54 @@
 .bookstitle {
-	position:relative;
-	overflow: hidden;
-	text-overflow: ellipsis;
-    color:#2d160e;
-	font-family:"Libertad-Bold";	
-	width:auto;
-	height:60px;
-	top:-15px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #2d160e;
+  font-family: "Libertad-Bold";
+  width: auto;
+  height: 60px;
 }
-.bookstitle:hover{
-	color:#823317;
+.bookstitle:hover {
+  color: #823317;
 }
 
 .my-col-books {
-	width: 162px;
-	max-width: 162px;
-	height: 275px;	
-	max-height: 275px;	
-	background-color: rgb(255,255,255,0.35);
-	border-radius:5px;
-	margin:5px;
+  width: 162px;
+  max-width: 162px;
+  height: 275px;
+  max-height: 275px;
+  background-color: rgb(255, 255, 255, 0.35);
+  border-radius: 5px;
+  margin: 5px;
 }
 
-.bookscontainer{
-background-color: rgb(255,255,255,0.3);
- -moz-box-shadow: 0px 0px 30px rgba(255, 255, 255,0.3);
- -webkit-box-shadow: 0px 0px 30px rgba(255, 255, 255, .33);
- box-shadow: 0px 0px 30px rgba(255, 255, 255, .4);
- padding-bottom:5px;
-
+.bookscontainer {
+  background-color: rgb(255, 255, 255, 0.3);
+  -moz-box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.33);
+  box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.4);
+  padding-bottom: 5px;
 }
-div.my-col-books:hover 
-{
-  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
-  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-  box-shadow: 1px 2px 5px rgba(255,255, 255, .5);
+div.my-col-books:hover {
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 5px rgba(255, 255, 255, 0.5);
 }
 
 .zoom {
-  padding-top:10px; 
-  transition: transform .2s;
+  padding-top: 10px;
+  transition: transform 0.2s;
 }
 .zoom:hover {
-  -ms-transform: scale(1.1); 
-  -webkit-transform: scale(1.1); 
-  transform: scale(1.1); 
+  -ms-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .zoomtext {
-	
-	transition: transform .2s;
-  }
-  .zoomtext:hover {
-	-ms-transform: scale(1.1); 
-	-webkit-transform: scale(1.1); 
-	transform: scale(1.1); 
-  }
+  transition: transform 0.2s;
+}
+.zoomtext:hover {
+  -ms-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}

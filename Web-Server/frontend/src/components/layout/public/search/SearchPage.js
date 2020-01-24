@@ -37,11 +37,11 @@ export const SearchPage = props => {
 
   let userAccordion = users.map(user => {
     return (
-      <Panel header={user.firstname + user.lastname}>
+      <Panel header={user.firstname + " " + user.lastname}>
         {user.birthdate && <p>Data urodzenia: {user.birthdate}</p>}
         {user.description && <p>Opis: {user.description}</p>}
         <img src={user.graphic} width={width} height={height}></img>
-        <Link to={"/user-page/" + user.userid} className="btn btn-primary">
+        <Link to={"/user-page/" + user.id} className="btn btn-primary">
           Przejdź do profilu użytkownika
         </Link>
       </Panel>
@@ -109,12 +109,7 @@ export const SearchPage = props => {
             </Panel>
           </Collapse>
         </div>
-        <div
-          className="d-none d-xs-block d-sm-inline col-sm-2"
-          style={{ backgroundColor: "red" }}
-        >
-          <div className="stickbar">Rekomendacje:</div>
-        </div>
+        <div className="d-none d-xs-block d-sm-inline col-sm-2"></div>
       </div>
     </div>
   );

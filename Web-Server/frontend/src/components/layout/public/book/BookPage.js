@@ -83,7 +83,7 @@ export const BookPage = props => {
     axios
       .post(postserverAPIEndpoint, newComment)
       .then(comm => {
-        console.log(comm);
+        window.location.reload(false);
       })
       .catch(err => {
         console.log(err);
@@ -164,7 +164,9 @@ export const BookPage = props => {
             <div className="carousel-div">
               {data.similar_books && (
                 <Carousel
-                  data={data.similar_books} numberofrows={1} numberofbookstoview={data.similar_books<4 ? 1 : 4}
+                  data={data.similar_books}
+                  numberofrows={1}
+                  numberofbookstoview={data.similar_books < 4 ? 1 : 4}
                 ></Carousel>
               )}
             </div>

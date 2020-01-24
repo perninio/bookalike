@@ -62,9 +62,9 @@ export const Recommendation = () => {
             </Alert>
           ) : data.type == 1 ? (
             <Alert color="success">
-              Widzimy i doceniamy twoją aktwność w ocenianiu książek :).
-              Pamiętaj im więcej wystawisz opinii tym lepsze rekomendacje możemy
-              tobię przesłać :)
+              Widzimy i doceniamy twoją aktywność w ocenianiu książek :).
+              Pamiętaj im więcej wystawisz opinii, tym lepsze rekomendacje
+              możemy Tobie przesłać :)
             </Alert>
           ) : null}
           <div className="row">

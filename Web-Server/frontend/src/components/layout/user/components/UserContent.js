@@ -7,15 +7,12 @@ import Post from "./Post.js";
 import Library from "./Library.js";
 import { useSelector } from "react-redux";
 import Axios from "axios";
-<<<<<<< HEAD
-import { webserverAPIUserEndpoint } from "../../../../constants/serverEndpoint";
-=======
 import {
   webserverAPIUserEndpoint,
   postserverAPIEndpoint
 } from "../../../../constants/serverEndpoint";
+import { Link } from "react-router-dom";
 
->>>>>>> dc440efde5662b80034cd44e37f140a265b73d43
 const x = React.createContext({ myprops1: "prop1", myProp2: "prop2" });
 
 const UserContent = ({ posts, profile, userid }) => {
@@ -58,6 +55,7 @@ const UserContent = ({ posts, profile, userid }) => {
   const deleteButton = (
     <div className="float-right">
       <button
+        className="btn btn-danger"
         onClick={() => {
           deleteFriend();
         }}
@@ -79,6 +77,7 @@ const UserContent = ({ posts, profile, userid }) => {
   const acceptButton = (
     <div className="float-right">
       <button
+        className="btn btn-primary"
         onClick={() => {
           acceptInvitation();
         }}
@@ -106,6 +105,7 @@ const UserContent = ({ posts, profile, userid }) => {
   const cancelButton = (
     <div className="float-right">
       <button
+        className="btn btn-danger"
         onClick={() => {
           cancelInvitation();
         }}
@@ -128,6 +128,7 @@ const UserContent = ({ posts, profile, userid }) => {
   const addButton = (
     <div className="float-right">
       <button
+        className="btn btn-success"
         onClick={() => {
           addToFriend();
         }}
@@ -160,109 +161,114 @@ const UserContent = ({ posts, profile, userid }) => {
   return (
     <div>
       <div class="container user-container">
-      <div class="user-container">
-        <div class={"userpanel"}>
-          <div className="user-image float-left">
-            <img
-              className="user-profile-img"
-              src={profile.graphic}
-              height="100px"
-              width="100px"
-            />
-            {user.id == profile.id && (
-              <div>
-                <button onClick={closePopup.bind(this)}>
-                  Aktualizuj zdjęcie
+        <div class="user-container">
+          <div class={"userpanel"}>
+            <div className="user-image float-left">
+              <img
+                className="user-profile-img"
+                src={profile.graphic}
+                height="100px"
+                width="100px"
+              />
+              {user.id == profile.id && (
+                <div>
+                  <Link to={"/profile/edit"}>Aktualizuj profil</Link>
+                </div>
+              )}
+            </div>
+            <div className="float-left">
+              <h4>{profile.firstname + " " + profile.lastname} </h4>
+            </div>
+            {user.id != undefined &&
+              user.id != profile.id &&
+              relation == "no_relation" &&
+              addButton}
+            {user.id != undefined &&
+              user.id != profile.id &&
+              relation == "uid1_send_request" &&
+              cancelButton}
+            {user.id != undefined &&
+              user.id != profile.id &&
+              relation == "uid1_got_request" &&
+              acceptButton}
+            {user.id != undefined &&
+              user.id != profile.id &&
+              relation == "friends" &&
+              deleteButton}
+          </div>
+
+          <div class="clearfix" />
+          <div>
+            {showPopup ? (
+              <Popup
+                className="image-upload-popup"
+                closePopup={closePopup.bind(this)}
+                content={<ImageUploader />}
+              />
+            ) : null}
+          </div>
+          <div className={isActive ? "stickbar" : "stickbar-inactive"}>
+            <div className={barAniamtion ? " tag-bar-move" : "tag-bar"}>
+              <img
+                className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
+                src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
+                height="30px"
+                width="30px"
+              />
+              <div
+                className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
+              >
+                {" "}
+                <h5>{profile.firstname + " " + profile.lastname}</h5>
+              </div>
+              <div className="buttons">
+                <button onClick={switchContentPosts.bind(this)}>
+                  <i class="fas fa-sticky-note"></i> Posty
+                </button>
+                <button
+                  id="biblioteczka"
+                  onClick={switchContentLibrary.bind(this)}
+                >
+                  <i class="fas fa-book"></i>
+                </button>
+                <button onClick={switchContentInfo.bind(this)}>
+                  <i class="far fa-address-book"></i> Informacje
                 </button>
               </div>
-            )}
-          </div>
-          <div className="float-left">
-            <h4>{profile.firstname + " " + profile.lastname} </h4>
-          </div>
-          {user.id != undefined &&
-            user.id != profile.id &&
-            relation == "no_relation" &&
-            addButton}
-          {user.id != undefined &&
-            user.id != profile.id &&
-            relation == "uid1_send_request" &&
-            cancelButton}
-          {user.id != undefined &&
-            user.id != profile.id &&
-            relation == "uid1_got_request" &&
-            acceptButton}
-          {user.id != undefined &&
-            user.id != profile.id &&
-            relation == "friends" &&
-            deleteButton}
-        </div>
-
-        <div class="clearfix" />
-        <div>
-          {showPopup ? (
-            <Popup
-              className="image-upload-popup"
-              closePopup={closePopup.bind(this)}
-              content={<ImageUploader />}
-            />
-          ) : null}
-        </div>
-        <div className={isActive ? "stickbar" : "stickbar-inactive"}>
-          <div className={barAniamtion ? " tag-bar-move" : "tag-bar"}>
-            <img
-              className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
-              src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
-              height="30px"
-              width="30px"
-            />
-            <div
-              className={barAniamtion ? "tag-bar-name-phone" : "tag-bar-name"}
-            >
-              {" "}
-              <h5>{profile.firstname + " " + profile.lastname}</h5>
-            </div>
-            <div className="buttons">
-            <button onClick={switchContentPosts.bind(this)}><i class="fas fa-sticky-note"></i> Posty</button>
-            <button id="biblioteczka" onClick={switchContentLibrary.bind(this)}>
-            <i class="fas fa-book"></i>
-            </button>
-            <button onClick={switchContentInfo.bind(this)}><i class="far fa-address-book"></i> Informacje</button>
             </div>
           </div>
-        </div>
-        <div className="profile-content">
-          {activeTag == 3 ? (
-            <UserInformation />
-          ) : activeTag == 2 ? (
-            <Library />
-          ) : activeTag == 1 ? (
-            <div>
-              {posts &&
-                posts.map((item, index) => {
-                  return (
-                    <Post
-                      postingusername={
-                        item.user.firstname + " " + item.user.lastname
-                      }
-                      id={item.user.userid}
-                      index={index}
-                      posttext={item.text}
-                      userid={item.user.userid}
-                      bookid={item.bookid}
-                      rate={item.rate}
-                      graphic={item.user.graphic}
-                      postid={item._id}
-                      show={setShowPopup}
-                      setIndex={() => {}}
-                    />
-                  );
-                })}
-            </div>
-          ) : null}
+          <div className="profile-content">
+            {activeTag == 3 ? (
+              <UserInformation />
+            ) : activeTag == 2 ? (
+              <Library />
+            ) : activeTag == 1 ? (
+              <div>
+                {posts &&
+                  posts.map((item, index) => {
+                    return (
+                      <Post
+                        postingusername={
+                          item.user.firstname + " " + item.user.lastname
+                        }
+                        id={item.user.userid}
+                        index={index}
+                        posttext={item.description}
+                        userid={item.user.userid}
+                        bookid={item.bookid}
+                        rate={item.rate}
+                        graphic={item.user.graphic}
+                        postid={item._id}
+                        show={setShowPopup}
+                        setIndex={() => {}}
+                      />
+                    );
+                  })}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -19,6 +19,7 @@ class PrivateProfileDTO extends ProfileInterface {
     this.firstname = profile.firstname;
     this.lastname = profile.lastname;
     this.graphic = profile.graphic;
+    this.description = profile.description;
     this.id = profile.userid;
   }
 }
