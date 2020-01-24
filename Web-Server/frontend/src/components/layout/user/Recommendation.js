@@ -57,14 +57,11 @@ export const Recommendation = () => {
         >
           {data && data.type == 0 ? (
             <Alert color="primary">
-              Postaraj się wystawić kilka więcej komentarzów pod przeczytanymi
-              książkami aby otrzymać lepsze rekomendacje
+              Postaraj się wystawić więcej ocen aby otrzymać lepsze rekomendacje
             </Alert>
           ) : data.type == 1 ? (
             <Alert color="success">
               Widzimy i doceniamy twoją aktywność w ocenianiu książek :).
-              Pamiętaj im więcej wystawisz opinii, tym lepsze rekomendacje
-              możemy Tobie przesłać :)
             </Alert>
           ) : null}
           <div className="row">

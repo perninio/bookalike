@@ -172,7 +172,9 @@ const UserContent = ({ posts, profile, userid }) => {
               />
               {user.id == profile.id && (
                 <div>
-                  <Link to={"/profile/edit"}>Aktualizuj profil</Link>
+                  <Link className="btn btn-secondary" to={"/profile/edit"}>
+                    Aktualizuj profil
+                  </Link>
                 </div>
               )}
             </div>
