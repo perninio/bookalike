@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import axios from "axios";
 import ReactStars from "react-stars";
 import "./book.css";
@@ -6,14 +6,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { dataserverAPIUserInteractionEndpoint } from "../../../../../constants/serverEndpoint";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
-const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
+const Book = ({ bookdata, ratingChanged, setShowPopup} ) => {
   const [readclicked, setReadClicked] = useState(false);
   const [wantreadclicked, setWantReadClicked] = useState(false);
   const [ownclicked, setOwnClicked] = useState(false);
   const [auth, setAuth] = useState(useSelector(state => state.auth));
-
+  const [reload,setReload]=useState(0)
   //let auth = useSelector(state => state.auth);
   //console.log(auth)
+  const checkbox1 = useRef(null)
+  const checkbox2 = useRef(null)
+  const checkbox3 = useRef(null)
+
 
   console.log("rc", readclicked);
   console.log("wrc", wantreadclicked);
@@ -22,16 +26,25 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(dataserverAPIUserInteractionEndpoint + "/book/" + bookdata.bookid)
+        // .get(dataserverAPIUserInteractionEndpoint + "/book/" + bookdata.bookid)
+        .get("https://my-json-server.typicode.com/perninio/hello-world/db")
+        // my-json-server.typicode.com/perninio/hello-world/book")
         .then(result => {
-          const {
-            data: { data }
-          } = result;
-          setReadClicked(data.has_read);
-          setWantReadClicked(data.wants_read);
-          setOwnClicked(data.has_book);
+          // const {
+          //   data: { data }
+          // } = result;       
+          var re=result.data.interaction.has_read;
+          var wr=result.data.interaction.wants_read;
+          var ow=result.data.interaction.has_book;
+          setReadClicked(result.data.interaction.has_read);
+          setWantReadClicked(result.data.interaction.wants_read);
+          setOwnClicked(result.data.interaction.has_book);
+          checkbox1.current.state.checked=re;
+          checkbox2.current.state.checked=wr;
+          checkbox3.current.state.checked=ow;
+          setReload(reload+1)
         })
-        .catch(err => console.log("Failed to get book data"));
+        .catch(err => console.log("Failed to get interaction data"));       
     };
     fetchData();
   }, [bookdata.bookid]);
@@ -54,6 +67,7 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
         setReadClicked(interaction.has_read);
         setWantReadClicked(interaction.wants_read);
         setOwnClicked(interaction.has_book);
+
       });
   };
 
@@ -87,6 +101,8 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
   const ownbook = () => {
     if (auth.isAuthenticated == true) {
       setOwnClicked(!ownclicked);
+      //setReload(reload+1);
+      console.log(ownclicked)
       /*
     axios.post('/', {
       userID: '1',
@@ -117,33 +133,37 @@ const Book = ({ bookdata, ratingChanged, setShowPopup }) => {
             </div>
             <div>
               <BootstrapSwitchButton
-                checked={false}
+                ref={checkbox1}
+                //id="readbutton"
+                checked={readclicked}
                 onlabel='Przeczytany'
                 onstyle='primary'
                 offlabel='Nie przeczytany'
-                offstyle='Secondary'
+                offstyle='secondary'
                 style='w-100 mx-3'
                 onChange={() => { setReadClicked(!readclicked) }}
               />
 
               <BootstrapSwitchButton
-                checked={false}
+                ref={checkbox2}
+                checked={wantreadclicked}
                 onlabel='Chcę przeczytać'
-                onstyle='Success'
+                onstyle='success'
                 offlabel='Nie chcę przczytać'
-                offstyle='Secondary'
+                offstyle='secondary'
                 style='w-100 mx-3'
-                onChange={() => { setWantreadClicked(!wantreadclicked) }}
+                onChange={() => { setWantReadClicked(!wantreadclicked) }}
               />
 
               <BootstrapSwitchButton
-                checked={false}
+                ref={checkbox3}
+                checked={ownclicked}
                 onlabel='Posiadam'
-                onstyle='Danger'
+                onstyle='danger'
                 offlabel='Nie posiadam'
-                offstyle='Secondary'
+                offstyle='secondary'
                 style='w-100 mx-3'
-                onChange={() => { setOwnClicked(![ownclicked) }}
+                onChange={(checked) => { setOwnClicked(checked) }}
               />
             </div>
           </div>

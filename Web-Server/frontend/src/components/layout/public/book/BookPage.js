@@ -12,6 +12,7 @@ import Popup from "./components/Popup";
 import { Badge, Button } from "reactstrap";
 
 import { dataserverAPIBooksEndpoint } from "../../../../constants/serverEndpoint";
+import book from "./components/bookdata.json"
 
 const comment = [
   {
@@ -30,13 +31,15 @@ const comment = [
 
 export const BookPage = props => {
   const idBook = props.match.params.id;
-  const [data, setData] = useState({});
+  const [data, setData] = useState(book);
   const [auth, setAuth] = useState(useSelector(state => state.auth));
   const [showPopup, setShowPopup] = useState(false);
   const [ratingval, setratingval] = useState(0);
   const [bookcomment, setBookComment] = useState("");
   const [commentdata, setCommentData] = useState(comment);
+  const [reload,setReload]= useState(0);
 
+  console.log(reload)
   console.log(data);
   const closebtn = () => {
     setShowPopup(false);
@@ -151,20 +154,22 @@ export const BookPage = props => {
   return (
     <React.Fragment>
       <div className="container bookpage">
-        {data.book && (
+        {/* {data.book && (
           <Book
             bookdata={data.book}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
+            reload={reload}
+            setReload={setReload}
           />
-        )}
-        {/* {data && (
+        )} */}
+        {data && (//mocup
           <Book
             bookdata={data}
             ratingChanged={ratingChanged}
             setShowPopup={setShowPopup}
           />
-        )} */}
+        )}
         <div className="row my-row">
           <div className="col-md-auto col-md-12 my-col">
             <div className="carousel-div">

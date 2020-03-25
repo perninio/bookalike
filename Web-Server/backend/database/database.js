@@ -215,6 +215,14 @@ function changerelation(user1, user2, relation_type) {
     });
 }
 
+async function finduserswithspecificrelation(userid,relation_type){//function returns ids of users bound with specified realtiontype to given user
+  //like for example: finduserswithspecificrealtion(451,"deleted") will retrun all users that were our firends in the past
+  var tab=[];
+  var res=await instance.cypher("match (me:User)-[:friends {relation:{relation_type}}]-(users:User) where id(me)="+userid+" return users",{relation_type:relation_type})
+  res.records.map(rec=>{tab.push(rec._fields[0].identity.low)})
+  return  tab
+}
+
 // var relation_type = [
 // "accepted_request",
 // "send_request",
