@@ -1,0 +1,13 @@
+@media only screen and (max-width: 400px) {
+  .user-imgage {
+    width: 50px;
+	height: 50px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .user-imgage {
+    width: 100px;
+	height: 100px;
+  }
+}

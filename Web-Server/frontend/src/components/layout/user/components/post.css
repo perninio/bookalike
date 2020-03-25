@@ -1,0 +1,12 @@
+.my-col{
+border:red 5px solid;
+padding:1px;
+position:static;
+}
+.container{
+border:green 5px solid;
+}
+a{
+    text-decoration: "none";
+    color:white;
+}

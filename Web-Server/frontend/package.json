@@ -1,0 +1,55 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "chart.js": "^2.8.0",
+    "classnames": "^2.2.6",
+    "jwt-decode": "^2.2.0",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "node-sass": "^4.12.0",
+    "rc-collapse": "^1.11.7",
+    "react": "^16.10.1",
+    "react-addons": "^0.9.1-deprecated",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-alice-carousel": "^1.15.3",
+    "react-chartjs-2": "^2.8.0",
+    "react-cropper-image-editor": "^1.0.10",
+    "react-dom": "^16.10.1",
+    "react-paginate": "^6.3.0",
+    "react-redux": "^7.1.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-stars": "^2.2.5",
+    "react-table": "^6.10.3",
+    "react-webpack": "^0.4.1",
+    "reactstrap": "^8.1.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "wbuild": "react-scripts build && move build ../backend/",
+    "lbuild": "react-scripts build && sudo cp -r -T build ../backend/build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

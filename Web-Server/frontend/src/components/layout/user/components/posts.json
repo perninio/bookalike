@@ -1,0 +1,23 @@
+{
+    "posts": [
+        {
+            "imie": "Czarek",
+            "id": "1",
+            "nazwisko":"Pernak",
+            "text":"Hej czy ktoś ma taką książke może do pożyczenia?",
+            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+        },
+        {
+            "imie": "Jarek",
+            "id": "2",
+            "nazwisko":"",
+            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+        },
+        {
+            "imie": "Filip",
+            "id": "2",
+            "nazwisko":"Szadkowski",
+            "graphic":"https://skupszop.pl/images/books/9788377589915.jpg"
+        }
+    ]
+}

@@ -1,0 +1,161 @@
+version: "2.4"
+
+services:
+  # chat-server:
+  #   build: ./Chat-Server
+  #   command: python -u app.py
+  #   ports:
+  #     - "5069:5000"
+  #   environment:
+  #     - DB_IP_ADDR=172.18.0.3
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.18.0.2
+
+  # db-chat:
+  #   image: mongo:3-xenial
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.18.0.3
+
+  authorization-server:
+    build: ./Authorization-Server
+    command: python -u authorization_server.py
+    ports:
+      - "5300:5000"
+    depends_on:
+      - dataserver
+      - webserver
+      - recommenderserver
+    volumes:
+      - type: bind
+        source: ./Authorization-Server/
+        target: /src
+    environment:
+      - DATASERVER_IP=172.18.0.6
+      - WEBSERVER_IP=172.18.0.7
+      - RECSERVER_IP=172.18.0.9
+      - POSTSERVER_IP=172.18.0.11
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.4
+
+  db-dataserver:
+    build: ./Database
+    environment:
+      POSTGRES_DB: "bookalike"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.5
+
+  dataserver:
+    build: ./Data-Server
+    command: npm run dev
+    volumes:
+      - type: bind
+        source: ./Data-Server/
+        target: /usr/src/app/
+    depends_on:
+      - db-dataserver
+    ports:
+      - "5060:5000"
+    environment:
+      - AUTH_IP_ADDR=172.18.0.4
+      - DS_DB_IP_ADDR=172.18.0.5
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.6
+
+  webserver:
+    build: ./Web-Server/backend
+    volumes:
+      - type: bind
+        source: ./Web-Server/backend/
+        target: /usr/src/app/
+    command: npm run dev
+    depends_on:
+      - webserver-database
+    ports:
+      - "5150:5000"
+    environment:
+      - DS_IP_ADDR=172.18.0.6
+      - AS_IP_ADDR=172.18.0.4
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.7
+
+  webserver-database:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=neo4j/admin
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.10
+
+  redis:
+    build: ./Redis-Server
+    ports:
+      - "5201:6379"
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.8
+
+  recommenderserver:
+    build: ./Recommender-Server
+    command: python -u recommender_system.py
+    depends_on:
+      - dataserver
+      - redis
+    environment:
+      - RS_DB_IP_ADDR=172.18.0.8
+    volumes:
+      - type: bind
+        source: ./Recommender-Server/
+        target: /src
+    ports:
+      - "5200:5000"
+    environment:
+      - DATASERVER_IP=172.18.0.6
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.9
+
+  postserver:
+    build: ./Post-Server
+    volumes:
+      - type: bind
+        source: ./Post-Server/
+        target: /usr/src/app/
+    command: npm run dev
+    depends_on:
+      - postserver-database
+    ports:
+      - "5400:5000"
+    environment:
+      - PS_DB_IP_ADDR=172.18.0.12
+      - AS_IP_ADDR=172.18.0.4
+      - DS_IP_ADDR=172.18.0.6
+      - WS_IP_ADDR=172.18.0.7
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.11
+
+  postserver-database:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    networks:
+      app_net:
+        ipv4_address: 172.18.0.12
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/28
+          gateway: 172.18.0.1
