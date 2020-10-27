@@ -2,7 +2,7 @@ asn1crypto==0.24.0
 autopep8==1.4.4
 cffi==1.12.3
 Click==7.0
-cryptography==2.7
+cryptography==3.2
 dnspython==1.16.0
 entrypoints==0.3
 eventlet==0.25.0
