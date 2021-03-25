@@ -19,7 +19,7 @@ pycparser==2.19
 pycryptodome==3.8.2
 pyflakes==2.1.1
 PyJWT==1.7.1
-PyYAML==5.1.1
+PyYAML==5.4
 requests==2.22.0
 rope==0.14.0
 shellescape==3.4.1
