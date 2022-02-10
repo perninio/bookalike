@@ -9,7 +9,7 @@
     "jwt-decode": "^2.2.0",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "rc-collapse": "^1.11.7",
     "react": "^16.10.1",
     "react-addons": "^0.9.1-deprecated",
