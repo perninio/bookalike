@@ -21,6 +21,6 @@ six==1.12.0
 stop-words==2018.7.23
 urllib3==1.25.6
 Werkzeug==0.16.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 cryptography==2.7
 redis==3.2.1
